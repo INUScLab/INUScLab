@@ -1,5 +1,11 @@
 package jsptable.dbtable;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class DbUserTableCtrl{
 	DbConnector dbconnerctor = new DbConnector();
 	Connection conn = dbconnerctor.getConn();
@@ -102,7 +108,7 @@ public class DbUserTableCtrl{
 		finally {
 			dbconnerctor.disconnect();
 		}
-		return dbuser;
+		return dbusertable;
 	}
 	
 	// 전체 목록을 가져오는 메서드

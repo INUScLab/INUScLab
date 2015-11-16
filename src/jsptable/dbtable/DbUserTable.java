@@ -38,7 +38,7 @@ public class DbUserTable{
 	public void setUser_do(String user_do) {
 		this.user_do = user_do;
 	}
-	public String getUser_size() {
+	public int getUser_size() {
 		return user_size;
 	}
 	public void setUser_size(int user_size) {
