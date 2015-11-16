@@ -118,13 +118,13 @@ public String queryAddress() throws Exception {
 %>
 
 function querying(id_num) {
-	// address = "<%= queryAddress() %>";
+	 address = "<%= queryAddress() %>";
 	switch(id_num) {
-		case "1" : address = "송내역"
-		case "2" : address = "부천시 중동"
-		case "3" : address = "부산광역시"
-		case "4" : address = "인천대학교 정보기술대학"
-		case "5" : address = "서울시청"
+		case 0001 : address = "송내역"
+		case 0002 : address = "부천시 중동"
+		case 0003 : address = "부산광역시"
+		case 0004 : address = "인천대학교 정보기술대학"
+		case 0005 : address = "서울시청"
 		default : address = "대한민국"
 	}
 	geocodeAddress(globalGeocoder, globalMap);
