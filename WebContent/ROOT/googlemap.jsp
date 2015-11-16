@@ -118,8 +118,7 @@ public String queryAddress() throws Exception {
 %>
 
 function querying(id_num) {
-	//address = "<%= queryAddress() %>";
-	//커밋테스트 ㄱㄱ
+	// address = "<%= queryAddress() %>";
 	switch(id_num) {
 		case "1" : address = "송내역"
 		case "2" : address = "부천시 중동"
