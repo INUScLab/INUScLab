@@ -1,4 +1,4 @@
-﻿<%@ page import = "java.sql.*" %>
+﻿<%@ page import = "java.sql.*" pageEncoding="utf-8"  %>
 
 <script type="text/javascript"
     src="http://maps.google.com/maps/api/js?sensor=false&region=KR"> 
@@ -24,7 +24,7 @@ function initialize(x, y) { // 맵 초기화
 		center: latlng, 
 		//disableDoubleClickZoom:false,
         
-		navigationControl: false,    // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택.
+		navigationControl: false,    // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택..
 		navigationControlOptions: { 
 			position: google.maps.ControlPosition.TOP_RIGHT,
 			style: google.maps.NavigationControlStyle.DEFAULT // ANDROID, DEFAULT, SMALL, ZOOM_PAN
@@ -86,6 +86,8 @@ public String queryAddress() throws Exception {
 			return res;
 		}
 
+		
+		/*
 		if(conn != null) {
 			String sql = "SELECT ADDRESS FROM USER WHERE NUMBER='MT_00"+ userid + "'";
 			PreparedStatement pstmt = null;
@@ -108,6 +110,7 @@ public String queryAddress() throws Exception {
 				conn.close();
 			}
 		}
+		*/
 	}
 
 	return res;
