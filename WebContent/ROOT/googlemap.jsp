@@ -141,8 +141,8 @@ function test(element) {
 	case "2" : address = "서울시청"; break;
 	case "3" : address = "인천시청"; break;
 	default : break;
-	geocodeAddress(globalGeocoder, globalMap);
 	}
+	geocodeAddress(globalGeocoder, globalMap);
 }
 	
 
@@ -150,12 +150,12 @@ function test(element) {
 </script>
 
 <br>
-<form name="id_form" align="left" method="get" action="googlemap.jsp" >
+<form name="id_form" align="left" method="post" action="googlemap.jsp" >
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
 	<select onChange="test(this)">
-		<option value="0">부천시청</option>
-		<option value="1">서울시청</option>
-		<option value="2">인천시청</option>
+		<option value="1">부천시청</option>
+		<option value="2">서울시청</option>
+		<option value="3">인천시청</option>
 	</select>
 </form>
 
