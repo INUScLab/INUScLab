@@ -69,7 +69,7 @@ public class DbUserTableCtrl{
 			pstmt.setString(2,dbusertable.getUser_gu());
 			pstmt.setString(3,dbusertable.getUser_do());
 			pstmt.setString(4,dbusertable.getUser_gu());
-			pstmt.setString(5,dbusertable.getUser_size());
+			pstmt.setInt(5,dbusertable.getUser_size());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
