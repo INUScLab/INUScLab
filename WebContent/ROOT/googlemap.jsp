@@ -116,12 +116,7 @@ public String queryAddress() throws Exception {
 	return res;
 }
 %>
-function initMap1() {
-	  var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 8,
-	    center: {lat: -34.397, lng: 150.644}
-	  });
-	}
+
 
 <%-- function querying(id_num) {
 	 address = "<%= queryAddress() %>";
@@ -142,11 +137,11 @@ function test(element) {
 	var content = element.options[idx].innerHTML;
 
 	switch(val) {
-	case "1" : initMap1; break;
-	case "2" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
-	case "3" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
-	case "4" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
+	case "1" : address = "부천시청"; break;
+	case "2" : address = "서울시청"; break;
+	case "3" : address = "인천시청"; break;
 	default : break;
+	geocodeAddress(globalGeocoder, globalMap);
 	}
 }
 	
@@ -158,11 +153,9 @@ function test(element) {
 <form name="id_form" align="left" method="get" action="googlemap.jsp" >
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
 	<select onChange="test(this)">
-		<option value="0">초기화</option>
-		<option value="1">0001</option>
-		<option value="2">0002</option>
-		<option value="3">0003</option>
-		<option value="4">0004</option>
+		<option value="0">부천시청</option>
+		<option value="1">서울시청</option>
+		<option value="2">인천시청</option>
 	</select>
 </form>
 
