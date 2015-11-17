@@ -131,31 +131,33 @@ public String queryAddress() throws Exception {
 	geocodeAddress(globalGeocoder, globalMap);
 } --%>
 
-function test(element) {
-	var idx = element.selectedIndex;
-	var val = element.options[idx].value;
-	var content = element.options[idx].innerHTML;
+function querying(element) { 
+	var idx = element.selectedIndex; 
+	var val = element.options[idx].value; 
 
-	switch(val) {
-	case "1" : address = "부천시청"; break;
-	case "2" : address = "서울시청"; break;
-	case "3" : address = "인천시청"; break;
-	default : break;
-	}
-	geocodeAddress(globalGeocoder, globalMap);
+	switch(val) { 
+		case "1" : address = "부산시청"; break;
+		case "2" : address = "부천시청"; break;
+		case "3" : address = "광주시청"; break;
+		case "4" : address = "인천대학교 정보기술대학"; break;
+		case "5" : address = "서울시청"; break;
+		default : address = "대한민국"; break;
+	} 
+	geocodeAddress(globalGeocoder, globalMap); 
 }
-	
-
 
 </script>
 
 <br>
-<form name="id_form" align="left" method="post" action="googlemap.jsp" >
+<form name="id_form" align="left" method="post" action="">
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
-	<select onChange="test(this)">
-		<option value="1">부천시청</option>
-		<option value="2">서울시청</option>
-		<option value="3">인천시청</option>
+	<select onChange="querying(this)">
+		<option value="0">초기화</option>
+		<option value="1">0001</option>
+		<option value="2">0002</option>
+		<option value="3">0003</option>
+		<option value="4">0004</option>
+		<option value="5">0005</option>
 	</select>
 </form>
 
