@@ -1,4 +1,4 @@
-package jsptable.dbtable;
+package jsptable;
 
 import java.sql.*;
 import java.util.*;

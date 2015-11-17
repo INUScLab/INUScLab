@@ -1,4 +1,4 @@
-package jsptable.dbtable;
+package jsptable;
 
 public class DbConsumptionTable{
 	private int consumption_code;

@@ -1,4 +1,4 @@
-package jsptable.dbtable;
+package jsptable;
 
 public class DbUserTable{
 	private int user_code;
