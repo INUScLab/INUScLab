@@ -68,8 +68,8 @@ function querying(element) {
 	var val = element.options[idx].value; 
 
 	switch(val) { 
-		case "1" : address = "부산시청"; break;
-		case "2" : address = "부천시청"; break;
+		case "1" : address = "부천시청"; break;
+		case "2" : address = "부천시 원미구 중4동 은하마을"; break;
 		case "3" : address = "광주시청"; break;
 		case "4" : address = "인천대학교 정보기술대학"; break;
 		case "5" : address = "서울시청"; break;
@@ -85,8 +85,8 @@ function querying(element) {
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
 	<select onChange="querying(this)">
 		<option value="0">초기화</option>
-		<option value="1">부산시청</option>
-		<option value="2">부천시청</option>
+		<option value="1">부천시청</option>
+		<option value="2">은하마을</option>
 		<option value="3">광주시청</option>
 		<option value="4">인천대학교 정보기술대학</option>
 		<option value="5">서울시청</option>
