@@ -1,5 +1,5 @@
 ﻿<%!
-	boolean isset(String str)
+	boolean isset(String stri)
 	{
 		if(str == null) return false;
 		if(str.equals("")) return false;
