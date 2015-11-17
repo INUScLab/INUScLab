@@ -102,7 +102,7 @@ public class DbConsumptionTableCtrl{
 		finally {
 			dbconnerctor.disconnect();
 		}
-		return dbconsumption;
+		return dbconsumptiontable;
 	}
 	
 	// 전체 목록을 가져오는 메서드

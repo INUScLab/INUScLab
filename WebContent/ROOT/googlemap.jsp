@@ -9,7 +9,7 @@ var StreetViewPanorama = new function(){}
 var globalGeocoder;
 var globalMap;
 var globalMarker;
-var address = "송내역";
+var address = "부천시청";
 
 function initialize(x, y) { // 맵 초기화
 	// 입력된 좌표가 없으면 기본좌표를 역삼동으로 설정.
@@ -116,11 +116,17 @@ public String queryAddress() throws Exception {
 	return res;
 }
 %>
+function initMap1() {
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 8,
+	    center: {lat: -34.397, lng: 150.644}
+	  });
+	}
 
-function querying(id_num) {
+<%-- function querying(id_num) {
 	 address = "<%= queryAddress() %>";
 	switch(id_num) {
-		case 0001 : address = "송내역"
+		case 0001 : initMap1;
 		case 0002 : address = "부천시 중동"
 		case 0003 : address = "부산광역시"
 		case 0004 : address = "인천대학교 정보기술대학"
@@ -128,19 +134,35 @@ function querying(id_num) {
 		default : address = "대한민국"
 	}
 	geocodeAddress(globalGeocoder, globalMap);
+} --%>
+
+function test(element) {
+	var idx = element.selectedIndex;
+	var val = element.options[idx].value;
+	var content = element.options[idx].innerHTML;
+
+	switch(val) {
+	case "1" : initMap1; break;
+	case "2" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
+	case "3" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
+	case "4" : alert("선택한 제품은 " +val+"항목"+content+"입니다."); break;
+	default : break;
+	}
 }
+	
+
+
 </script>
 
 <br>
-<form name="id_form" align="left" method="post" action="">
+<form name="id_form" align="left" method="get" action="googlemap.jsp" >
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
-	<select onChange="querying(this.value)">
+	<select onChange="test(this)">
 		<option value="0">초기화</option>
 		<option value="1">0001</option>
 		<option value="2">0002</option>
 		<option value="3">0003</option>
 		<option value="4">0004</option>
-		<option value="5">0005</option>
 	</select>
 </form>
 
