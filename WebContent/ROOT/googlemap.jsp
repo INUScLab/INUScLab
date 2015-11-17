@@ -9,7 +9,7 @@ var StreetViewPanorama = new function(){}
 var globalGeocoder;
 var globalMap;
 var globalMarker;
-var address = "부천시청";
+var address = "역삼동";
 
 function initialize(x, y) { // 맵 초기화
 	// 입력된 좌표가 없으면 기본좌표를 역삼동으로 설정.
@@ -61,75 +61,7 @@ function geocodeAddress(geocoder, resultsMap) {
 	);
 }
 
-<%!
-public String queryAddress() throws Exception {
-	String url = "jdbc:mysql://sclab-database.ccf2v8m44pmt.ap-northeast-1.rds.amazonaws.com:3306/sclab";
-	String id = "sclab";						// 사용자 계정
-	String pw = "sclab422";						// 사용자 계정의 패스워드
-	String res = "송내역";
-	String userid = "1";
 
-	//userid = (String)request.getAttribute("USERID");
-
-	if(!userid.equals("0")) {
-		Connection conn = null;					// null로 초기화 한다.
-		Class.forName("com.mysql.jdbc.Driver");			// 데이터베이스와 연동하기 위해 DriverManager에 등록한다.
-
-		String strTemp = " ";
-		try{
-			conn = DriverManager.getConnection(url,id,pw);	// DriverManager 객체로부터 Connection 객체를 얻어온다.
-			strTemp = "제대로 연결되었습니다.";			// 커넥션이 제대로 연결되면 수행된다.
-		}
-		catch(Exception e) {					// 예외가 발생하면 예외 상황을 처리한다.
-			strTemp = "문제 발생.";
-			e.printStackTrace();
-			return res;
-		}
-
-		
-		/*
-		if(conn != null) {
-			String sql = "SELECT ADDRESS FROM USER WHERE NUMBER='MT_00"+ userid + "'";
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-
-			try{
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-
-				while(rs.next()){
-					res = rs.getString(1);
-				}
-			}
-			catch(Exception e) {
-				System.out.println(e);
-			}
-			finally {
-				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
-				conn.close();
-			}
-		}
-		*/
-	}
-
-	return res;
-}
-%>
-
-
-<%-- function querying(id_num) {
-	 address = "<%= queryAddress() %>";
-	switch(id_num) {
-		case 0001 : initMap1;
-		case 0002 : address = "부천시 중동"
-		case 0003 : address = "부산광역시"
-		case 0004 : address = "인천대학교 정보기술대학"
-		case 0005 : address = "서울시청"
-		default : address = "대한민국"
-	}
-	geocodeAddress(globalGeocoder, globalMap);
-} --%>
 
 function querying(element) { 
 	var idx = element.selectedIndex; 
@@ -141,7 +73,7 @@ function querying(element) {
 		case "3" : address = "광주시청"; break;
 		case "4" : address = "인천대학교 정보기술대학"; break;
 		case "5" : address = "서울시청"; break;
-		default : address = "대한민국"; break;
+		default : address = "역삼동"; break;
 	} 
 	geocodeAddress(globalGeocoder, globalMap); 
 }
@@ -153,11 +85,11 @@ function querying(element) {
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
 	<select onChange="querying(this)">
 		<option value="0">초기화</option>
-		<option value="1">0001</option>
-		<option value="2">0002</option>
-		<option value="3">0003</option>
-		<option value="4">0004</option>
-		<option value="5">0005</option>
+		<option value="1">부산시청</option>
+		<option value="2">부천시청</option>
+		<option value="3">광주시청</option>
+		<option value="4">인천대학교 정보기술대학</option>
+		<option value="5">서울시청</option>
 	</select>
 </form>
 
