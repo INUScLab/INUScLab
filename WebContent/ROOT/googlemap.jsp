@@ -79,7 +79,7 @@ function querying(element) {
 }
 
 </script>
-
+<!-- 이건 주석 -->
 <br>
 <form name="id_form" align="left" method="post" action="">
 	<span>  지도에 출력할 사용자의 번호를 선택하세요 :   </span>
