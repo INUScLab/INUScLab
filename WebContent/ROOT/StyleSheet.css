@@ -130,12 +130,11 @@ body {
 	height: 580px;
 	background-color: #ffffff;
 }
-/*
 
 .tree_section_box {
 	overflow-y: auto;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 25px;
+	font-size: 15px;
 	color: #666;
 	white-space: nowrap;
 	text-align: left;
@@ -162,7 +161,6 @@ body {
 .tree_section_box .clip {
 	overflow: hidden;
 }
-*/
 
 #main_content .graph_section_box {
 	border: thin solid black;
