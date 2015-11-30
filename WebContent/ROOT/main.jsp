@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="StyleSheet.css">
+	<link rel="stylesheet" type="text/css" href="StyleSheet2.css">
 	<script type="text/javascript" src="dtree.js"></script>
 </head>
 <body>
@@ -45,15 +45,11 @@
 		<!--본문-->
 		<div id="main_content">
 			<!--본문 Left (tree)-->
-			<div class="tree_section_box">
-			<!--Tree-->
-				<jsp:include page="treemenu.jsp" flush="false"/>
-			</div>
+			<div class="tree_section_box">Tree</div>
 			<!--본문 Right top (graph)-->
 			<div class="graph_section_box">
-				<jsp:include page="control.jsp" flush="false">
-					<jsp:param name="action" value="list" />
-				</jsp:include>
+				<!--jsp:include page="index.jsp"/-->
+				<jsp:include page="googleGraph.jsp"/>
 			</div>
 			<!--본문 Right top (service)-->
 			<div class="service_section_box">
@@ -65,12 +61,11 @@
 			<!--본문 Right bottom (map)-->
 			<div class="map_section_box">
 				<!--Map Section-->
-				<jsp:include page="googlemap.jsp" flush="false"/>
+				<jsp:include page="googlemap.jsp"/>
 			</div>
 		</div> 
 		<!--footer-->
 		<div id="footer"><a href="https://sites.google.com/site/uisclab" target="_blank">© SCLAB. ALL RIGHTS RESERVED.</a></div>
-
 	</div>
 </body>
 </html>

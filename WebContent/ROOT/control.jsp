@@ -16,8 +16,8 @@
 	if(action.equals("list")) {
 		ArrayList<Consumption> datas = tb.getDBList();
 		request.setAttribute("datas", datas);
-		//pageContext.include("hello.jsp");
-		pageContext.include("graph.jsp");
+		//pageContext.forward("hello.jsp");
+		pageContext.include("hello.jsp");
 	}
 	// 주소록 등록 요청인 경우
 	else if(action.equals("insert")) {		
