@@ -94,7 +94,7 @@ function querying(element) {
 </form>
 
 <br>
-<div id="map_canvas" style="width: 450px; height: 450px;" >
+<div id="map_canvas" style="width: 100%; height: 80%;" >
 	<script type="text/javascript"> initialize(0, 0); </script>
 </div>
 <br>

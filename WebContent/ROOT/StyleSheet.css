@@ -1,0 +1,236 @@
+html {overflow: auto;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,form,fieldset,p,button{margin:0;padding:0}
+body{background-color: #E6E6E6; text-align: center; color: black;}
+a {color: white; text-decoration: none; }
+
+body {
+	width: 100%;
+	height: 100%;
+	font-family: 'Copperplate Gothic Bold', 'malgun Gothic', Gothic, sans-serif;
+}
+
+#main_page {
+	top: 0; left: 0;
+	background-color: #2c6965;
+	margin: 0 auto;
+	width: 90%;
+	height: 100%;
+	/*min-width: 970px;*/
+}
+
+ #main_page #main_header {
+	/*top: 0; left: 0;*/
+	position: absolute;
+	width: 90%;
+	height: 170px;
+	color: white;
+}
+
+#main_header .info_r {
+	/*top: 50; right: 20;*/
+	position: relative;
+	height: 30px;
+	/*width: 300px;*/
+	width: 100%
+}
+
+.info_r .info_r_list {
+	position: absolute;
+	top: 6px;
+	right: 10px;
+	font-size: 15px;
+	line-height: 20px;
+	color: white;
+}
+
+.info_r_list a {
+	float: left;
+	height: 17px;
+	margin: 0 5px 0 6px;
+}
+
+.info_r_list a.info_r_ADMIN {width: 56px;}
+.info_r_list a.info_r_LOGOUT {width: 65px;}
+.info_r_list a.info_r_SETTING {width: 72px;}
+.info_r_list a.info_r_HELP {width: 40px;}
+
+ #main_header .main_title {
+	/*top: 80px;*/
+	position: relative;
+	width: 100%;
+	height: 100px;
+}
+
+.main_title h1 {
+	top: 0; left: 40px;
+	width: 700px;
+	height: 40px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.main_title .main_menu {
+	position: relative;
+	top: 0; /*left: 40;*/
+	height: 40px;
+	width: 100%;
+}
+
+.main_menu .main_menu_list{
+	position: absolute;
+	width: 300px; height: 40px;
+	line-height: 35px;
+	color: white;
+}
+
+.main_menu_list a {
+	float: left;
+	height: 37px;
+	margin: 0 5px 0 6px;
+}
+
+.main_menu_list a.main_menu_HOME { width: 86px;}
+.main_menu_list a.main_menu_MENU1 { width: 90px;}
+.main_menu_list a.main_menu_MENU2 { width: 90px;}
+
+.main_menu_HOME:active{
+	background-color: #E6E6E6;
+	padding-bottom: 20px;
+	border-radius: 20px 20px 0 0;
+}
+
+.main_menu .main_logo_list {
+	position: absolute;
+	top:0; right: 10px;
+}
+
+.main_logo_list img {
+	float: right;
+	height: 40;
+	margin: 0 5px 0 6px;
+}
+
+.main_logo_list img.logo_istec { width: 50px}
+.main_logo_list img.logo_sclab { width: 60px}
+.main_logo_list img.logo_inu { width: 40px}
+
+#main_content {
+	top: 170px; left: 0;
+	position: relative;
+	width: 100%;
+	height: 600px;
+	background-color: #E6E6E6;
+}
+
+#main_content .tree_section_box {
+	border: thin solid black;
+	position: absolute;
+	top: 0.55%; left: 0.55%;
+	width: 32.77%;
+	height: 580px;
+	background-color: #ffffff;
+}
+
+.tree_section_box {
+	overflow-y: auto;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #666;
+	white-space: nowrap;
+	text-align: left;
+}
+.tree_section_box img {
+	border: 0px;
+	vertical-align: middle;
+}
+.tree_section_box a {
+	color: #333;
+	text-decoration: none;
+}
+.tree_section_box a.node, .tree_section_box a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.tree_section_box a.node:hover, .tree_section_box a.nodeSel:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.tree_section_box a.nodeSel {
+	background-color: #c0d2ec;
+}
+.tree_section_box .clip {
+	overflow: hidden;
+}
+
+#main_content .graph_section_box {
+	border: thin solid black;
+	position: absolute;
+	top: 0.55%; right: 25.55%;
+	width: 40.55%;
+	height: 190px;
+	background-color: #ffffff;
+}
+
+#main_content .service_section_box {
+	position: absolute;
+	top: 0.55%; right: 0.55%;
+	width: 24.44%;
+	height: 190px;
+	padding-left: 5px;
+	background-color: #ffffff;
+}
+
+.service_section_box .leak{
+	border: thin solid black;
+	position: absolute;
+	top: 1.13%; left: 1.13%;
+	width: 47.27%;
+	height: 85px;
+	background-color: #cd8f8f;
+}
+
+.service_section_box .freeze{
+	border: thin solid black;
+	position: absolute;
+	top: 1.13%; right: 1.13%;
+	width: 47.27%;
+	height: 85px;
+	background-color: #8f9acd;
+}
+
+.service_section_box .absence{
+	border: thin solid black;
+	position: absolute;
+	bottom: 1.13%; left: 1.13%;
+	width: 47.27%;
+	height: 85px;
+	background-color: #8fba90;
+}
+
+.service_section_box .service{
+	border: thin solid black;
+	position: absolute;
+	bottom: 1.13%; right: 1.13%;
+	width: 47.27%;
+	height: 85px;
+	background-color: #bababa;
+}
+
+
+
+#main_content .map_section_box {
+	border: thin solid black;
+	position: absolute;
+	bottom: 0.55%; right: 0.55%;
+	width: 65.55%;
+	height: 380px;
+	background-color: #ffffff;
+}
+
+#footer {
+	top: 200px; left: 0;
+	position: relative;
+	width: 100%;
+	height: 100px;
+	color: white;
+}
