@@ -41,10 +41,12 @@ function dTree(objName) {
 		inOrder			: false
 	}	
 	this.icon = {
-		root			: 'img/base.gif',
-		folder			: 'img/folder.gif',
-		folderOpen		: 'img/folderopen.gif',
-		node			: 'img/page.gif',
+		none			: '',
+		root			: 'img/root_plus.gif',
+		rootOpen		: 'img/root_minus.gif',
+		folder			: '',
+		folderOpen		: '',
+		node			: '',
 		empty			: 'img/empty.gif',
 		line			: 'img/line.gif',
 		join			: 'img/join.gif',
@@ -111,7 +113,8 @@ dTree.prototype.addNode = function(pNode) {
 					cn._is = true;
 					this.selectedNode = n;
 					this.selectedFound = true;
-			}			str += this.node(cn, n);
+			}
+			str += this.node(cn, n);
 			if (cn._ls) break;
 		}
 	}
@@ -124,27 +127,29 @@ dTree.prototype.node = function(node, nodeId) {
 	var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
 
 	if (this.config.useIcons) {
-		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);
+		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.none : ((node._hc) ? this.icon.folder : this.icon.node);
 		if (!node.iconOpen) node.iconOpen = (node._hc) ? this.icon.folderOpen : this.icon.node;
-		if (this.root.id == node.pid) {
-			node.icon = this.icon.root;
-			node.iconOpen = this.icon.root;
-		}		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" />';
+		str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" />';
 	}
 
 	if (node.url) {
-		str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';		if (node.title) str += ' title="' + node.title + '"';
+		str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
+		if (node.title) str += ' title="' + node.title + '"';
 		if (node.target) str += ' target="' + node.target + '"';
 		if (this.config.useStatusText) str += ' onmouseover="window.status=\'' + node.name + '\';return true;" onmouseout="window.status=\'\';return true;" ';
 		if (this.config.useSelection && ((node._hc && this.config.folderLinks) || !node._hc))
 			str += ' onclick="javascript: ' + this.obj + '.s(' + nodeId + ');"';
 		str += '>';
 	}
-	else if ((!this.config.folderLinks || !node.url) && node._hc && node.pid != this.root.id)
-		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');" class="node">';
+	else if ((!this.config.folderLinks || !node.url) /*&& node._hc && node.pid != this.root.id*/) {
+		str += '<a href="javascript: ' + this.obj + '.ot(' + nodeId + ');" class="node">';
+	}
 	
-	str += node.name;	if (node.url || ((!this.config.folderLinks || !node.url) && node._hc)) str += '</a>';
-	str += '</div>';	if (node._hc) {
+	str += node.name;
+	/*if (node.url || ((!this.config.folderLinks || !node.url) && node._hc))*/ str += '</a>';
+	str += '</div>';
+	
+	if (node._hc) {
 		str += '<div id="d' + this.obj + nodeId + '" class="clip" style="display:' + ((this.root.id == node.pid || node._io) ? 'block' : 'none') + ';">';
 		str += this.addNode(node);		str += '</div>';
 	}	this.aIndent.pop();
@@ -155,7 +160,13 @@ dTree.prototype.node = function(node, nodeId) {
 // Adds the empty and line icons
 dTree.prototype.indent = function(node, nodeId) {
 	var str = '';	
-	if (this.root.id != node.pid) {
+	if (this.root.id == node.pid) {
+		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';
+			
+		if (!this.config.useLines) str += (node._io) ? this.icon.nlMinus : this.icon.nlPlus;
+		else str += ( (node._io) ? this.icon.root : this.icon.rootOpen );			str += '" alt="" /></a>';
+	}else{
+	//if (this.root.id != node.pid) {
 		for (var n=0; n<this.aIndent.length; n++)
 			str += '<img src="' + ( (this.aIndent[n] == 1 && this.config.useLines) ? this.icon.line : this.icon.empty ) + '" alt="" />';
 		(node._ls) ? this.aIndent.push(0) : this.aIndent.push(1);		
@@ -163,7 +174,9 @@ dTree.prototype.indent = function(node, nodeId) {
 			str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';			
 			if (!this.config.useLines) str += (node._io) ? this.icon.nlMinus : this.icon.nlPlus;
 			else str += ( (node._io) ? ((node._ls && this.config.useLines) ? this.icon.minusBottom : this.icon.minus) : ((node._ls && this.config.useLines) ? this.icon.plusBottom : this.icon.plus ) );			str += '" alt="" /></a>';
-		}		else str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" />';
+		}		else {
+			str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" />';
+		}
 	}
 
 	return str;
@@ -171,7 +184,9 @@ dTree.prototype.indent = function(node, nodeId) {
 
 // Checks if a node has any children and if it is the last sibling
 dTree.prototype.setCS = function(node) {
-	var lastId;	for (var n=0; n<this.aNodes.length; n++) {
+	var lastId;
+	
+	for (var n=0; n<this.aNodes.length; n++) {
 		if (this.aNodes[n].pid == node.id) node._hc = true;
 		if (this.aNodes[n].pid == node.pid) lastId = this.aNodes[n].id;
 	}
@@ -188,7 +203,11 @@ dTree.prototype.getSelected = function() {
 
 // Highlights the selected node
 dTree.prototype.s = function(id) {
-	if (!this.config.useSelection) return;	var cn = this.aNodes[id];	if (cn._hc && !this.config.folderLinks) return;
+	if (!this.config.useSelection) return;
+	
+	var cn = this.aNodes[id];
+	
+	if (cn._hc && !this.config.folderLinks) return;
 	if (this.selectedNode != id) {
 		if (this.selectedNode || this.selectedNode==0) {
 			eOld = document.getElementById("s" + this.obj + this.selectedNode);
@@ -206,15 +225,24 @@ dTree.prototype.o = function(id) {
 	var cn = this.aNodes[id];
 	this.nodeStatus(!cn._io, id, cn._ls);
 	cn._io = !cn._io;
-
+	
 	if (this.config.closeSameLevel) this.closeLevel(cn);
 	if (this.config.useCookies) this.updateCookie();
+};
+
+dTree.prototype.ot = function(id) {
+	var nodeId = this.aNodes[id].id;
+	var mapzoom = 6 + (nodeId >= 1 ? 3 : 0) + (nodeId >= 10 ? 3 : 0) + (nodeId >= 100 ? 3 : 0);
+	
+	address = this.aNodes[id].name;
+	globalMap.setOptions({'zoom':mapzoom});
+	geocodeAddress(globalGeocoder, globalMap);   
 };
 
 // Open or close all nodes
 dTree.prototype.oAll = function(status) {
 	for (var n=0; n<this.aNodes.length; n++) {
-		if (this.aNodes[n]._hc && this.aNodes[n].pid != this.root.id) {
+		if (this.aNodes[n]._hc && this.aNodes[n].id != this.root.id) {
 			this.nodeStatus(status, n, this.aNodes[n]._ls)
 			this.aNodes[n]._io = status;
 		}
@@ -229,17 +257,21 @@ dTree.prototype.openTo = function(nId, bSelect, bFirst) {
 			if (this.aNodes[n].id == nId) {
 				nId=n;
 				break;
-			}		}	}	var cn=this.aNodes[nId];	if (cn.pid==this.root.id || !cn._p) return;	cn._io = true;	cn._is = bSelect;
+			}		}	}	var cn=this.aNodes[nId];
+	if (cn.id==this.root.id || !cn._p) return;	cn._io = true;	cn._is = bSelect;
 
 	if (this.completed && cn._hc) this.nodeStatus(true, cn._ai, cn._ls);
+	
 	if (this.completed && bSelect) this.s(cn._ai);
-	else if (bSelect) this._sn=cn._ai;	this.openTo(cn._p._ai, false, true);
+	else if (bSelect) this._sn=cn._ai;
+	
+	this.openTo(cn._p._ai, false, true);
 };
 
 // Closes all nodes on the same level as certain node
 dTree.prototype.closeLevel = function(node) {
 	for (var n=0; n<this.aNodes.length; n++) {
-		if (this.aNodes[n].pid == node.pid && this.aNodes[n].id != node.id && this.aNodes[n]._hc) {
+		if (this.aNodes[n].pid == node.pid && this.aNodes[n].id != node.id /*&& this.aNodes[n]._hc*/) {
 			this.nodeStatus(false, n, this.aNodes[n]._ls);
 			this.aNodes[n]._io = false;
 			this.closeAllChildren(this.aNodes[n]);
@@ -264,7 +296,7 @@ dTree.prototype.nodeStatus = function(status, id, bottom) {
 		eIcon	= document.getElementById('i' + this.obj + id);
 		eIcon.src = (status) ? this.aNodes[id].iconOpen : this.aNodes[id].icon;
 	}
-
+		
 	eJoin.src = (this.config.useLines)?
 	((status)?((bottom)?this.icon.minusBottom:this.icon.minus):((bottom)?this.icon.plusBottom:this.icon.plus)):
 	((status)?this.icon.nlMinus:this.icon.nlPlus);
@@ -304,7 +336,7 @@ dTree.prototype.getCookie = function(cookieName) {
 // [Cookie] Returns ids of open nodes as a string
 dTree.prototype.updateCookie = function() {	var str = '';	
 	for (var n=0; n<this.aNodes.length; n++) {
-		if (this.aNodes[n]._io && this.aNodes[n].pid != this.root.id) {
+		if (this.aNodes[n]._io && this.aNodes[n].id != this.root.id) {
 			if (str) str += '.';
 			str += this.aNodes[n].id;
 		}

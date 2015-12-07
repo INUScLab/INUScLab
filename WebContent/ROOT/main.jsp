@@ -5,6 +5,14 @@
 	<meta charset="utf-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="StyleSheet.css">
+	<!--script type="text/javascript">
+		var address = "대한민국";
+		var globalMap;
+	</script-->
+	<script type="text/javascript"
+		src="http://maps.google.com/maps/api/js?sensor=false&region=KR"> 
+	</script>
+	<script type="text/javascript" src="googlemap.js"></script>
 	<script type="text/javascript" src="dtree.js"></script>
 </head>
 <body>
