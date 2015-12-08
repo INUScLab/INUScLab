@@ -94,7 +94,6 @@ dTree.prototype.toString = function() {
 	return str;
 };
 
-// Creates the tree structure
 dTree.prototype.addNode = function(pNode) {
 	var str = '';
 	var n=0;	
@@ -234,6 +233,7 @@ dTree.prototype.ot = function(id) {
 	var nodeId = this.aNodes[id].id;
 	var mapzoom = 6 + (nodeId >= 1 ? 3 : 0) + (nodeId >= 10 ? 3 : 0) + (nodeId >= 100 ? 3 : 0);
 	
+	//set map Center for Tree's locatoin
 	address = this.aNodes[id].name;
 	globalMap.setOptions({'zoom':mapzoom});
 	geocodeAddress(globalGeocoder, globalMap);   
