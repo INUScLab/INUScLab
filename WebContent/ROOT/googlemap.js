@@ -3,8 +3,7 @@ var globalGeocoder;
 var globalMap;
 var globalMarker;
 var markers = [ ] ;
-
-//var address = "대한민국";
+var address = "대한민국";
 
 function initialize(x, y) { // 맵 초기화
 
