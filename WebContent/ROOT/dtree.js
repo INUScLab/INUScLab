@@ -42,8 +42,8 @@ function dTree(objName) {
 	}	
 	this.icon = {
 		none			: '',
-		root			: 'img/root_plus.gif',
-		rootOpen		: 'img/root_minus.gif',
+		root			: '',
+		rootOpen		: '',
 		folder			: '',
 		folderOpen		: '',
 		node			: '',
@@ -231,12 +231,31 @@ dTree.prototype.o = function(id) {
 
 dTree.prototype.ot = function(id) {
 	var nodeId = this.aNodes[id].id;
-	var mapzoom = 6 + (nodeId >= 1 ? 3 : 0) + (nodeId >= 10 ? 3 : 0) + (nodeId >= 100 ? 3 : 0);
+	var mapzoom = init_zoom + (nodeId >= 1 ? 1 : 0) + (nodeId >= 10 ? 3 : 0);
 	
 	//set map Center for Tree's locatoin
 	address = this.aNodes[id].name;
+	
+	var k = addname.indexOf(address);
+	
+	for (var i in visable) visable[i] = false;
+	for (var i=id; i<this.aNodes.length; i++) {
+		var tmpId = this.aNodes[i].id;
+		
+		if( nodeId > 0 && i != id) {
+			if( tmpId < nodeId*10 ) continue;
+			else if( tmpId >= (nodeId+1)*10 ) break;
+		}
+		
+		var idx = addname.indexOf(this.aNodes[i].name);
+		if( nodeId == 0 || i == id || (tmpId >= nodeId*10 && tmpId < (nodeId+1)*10) )
+			visable[idx] = true;
+	}
+	
+	//alert(k + ": " + addname[k] + ", " + markers[k].position);
+	setMapOnAll(globalMap);	
 	globalMap.setOptions({'zoom':mapzoom});
-	geocodeAddress(globalGeocoder, globalMap);   
+	globalMap.setCenter(markers[k].position);
 };
 
 // Open or close all nodes
