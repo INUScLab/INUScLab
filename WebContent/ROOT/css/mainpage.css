@@ -181,7 +181,7 @@ img, fieldset, iframe {	border: 0 none;}
 	border: thin solid black;
 	position: absolute;
 	top: 0.55%; left: 0;
-	width: 32.77%;
+	width: 20%;
 	height: 580px;
 	background-color: #ffffff;
 }
@@ -193,6 +193,7 @@ img, fieldset, iframe {	border: 0 none;}
 	color: #666;
 	white-space: nowrap;
 	text-align: left;
+	
 }
 .tree_section_box img {
 	border: 0px;
@@ -259,7 +260,7 @@ img, fieldset, iframe {	border: 0 none;}
 	border: thin solid black;
 	position: absolute;
 	top: 0.55%; right: 0;
-	width: 65.55%;
+	width: 79.55%;
 	height: 580px;
 	background-color: #ffffff;
 }
