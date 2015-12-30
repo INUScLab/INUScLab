@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, temp.db.*"%>
+    pageEncoding="UTF-8" import="java.util.*, sclab.db.*"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -13,23 +13,20 @@
 <body>
 <div align="center">
 <HR>
+안녕
 <form>
 		<table border="1">
 			<%
-				for(Consumption  ab : (ArrayList<Consumption>)datas) {
+				for(User  ab : (ArrayList<User>)datas) {
 			%>
 			  <tr>
-			   <td><%=ab.getCode() %></td>
-				<td><%=ab.getDate() %></td>
-				<td><%=ab.getPredict_value() %></td>
-				<td><%=ab.getRaw_value() %></td>
+				<td><%=ab.getSigoon() %></td>
 			  </tr>
 			 <%
 				}
 			 %>
 		</table>
 </form>
-
 </div>
 </body>
 </html>

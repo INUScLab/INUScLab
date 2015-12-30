@@ -1,4 +1,4 @@
-﻿/*--------------------------------------------------|
+/*--------------------------------------------------|
 | dTree 2.05 | www.destroydrop.com/javascript/tree/ |
 |---------------------------------------------------|
 | Copyright (c) 2002-2003 Geir Landr?              |
@@ -39,7 +39,8 @@ function dTree(objName) {
 		useStatusText	: false,
 		closeSameLevel	: false,
 		inOrder			: false
-	}	
+	}
+	
 	this.icon = {
 		none			: '',
 		root			: '',
@@ -79,24 +80,30 @@ dTree.prototype.openAll = function() {
 };
 
 dTree.prototype.closeAll = function() {
-	this.oAll(false);};
+	this.oAll(false);
+};
 
 // Outputs the tree to the page
 dTree.prototype.toString = function() {
-	var str = '<div class="dtree">\n';	
+	var str = '<div class="dtree">\n';
+	
 	if (document.getElementById) {
 		if (this.config.useCookies) this.selectedNode = this.getSelected();
 		str += this.addNode(this.root);
-	}	else str += 'Browser not supported.';	
+	}
+	else str += 'Browser not supported.';
+	
 	str += '</div>';
 	if (!this.selectedFound) this.selectedNode = null;
-	this.completed = true;	
+	this.completed = true;
+	
 	return str;
 };
 
 dTree.prototype.addNode = function(pNode) {
 	var str = '';
-	var n=0;	
+	var n=0;
+	
 	if (this.config.inOrder) n = pNode._ai;
 	for (n; n<this.aNodes.length; n++) {
 		if (this.aNodes[n].pid == pNode.id) {
@@ -150,7 +157,8 @@ dTree.prototype.node = function(node, nodeId) {
 	
 	if (node._hc) {
 		str += '<div id="d' + this.obj + nodeId + '" class="clip" style="display:' + ((this.root.id == node.pid || node._io) ? 'block' : 'none') + ';">';
-		str += this.addNode(node);		str += '</div>';
+		str += this.addNode(node);
+		str += '</div>';
 	}	this.aIndent.pop();
 	
 	return str;
@@ -158,7 +166,8 @@ dTree.prototype.node = function(node, nodeId) {
 
 // Adds the empty and line icons
 dTree.prototype.indent = function(node, nodeId) {
-	var str = '';	
+	var str = '';
+	
 	if (this.root.id == node.pid) {
 		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';
 			
@@ -168,12 +177,15 @@ dTree.prototype.indent = function(node, nodeId) {
 	//if (this.root.id != node.pid) {
 		for (var n=0; n<this.aIndent.length; n++)
 			str += '<img src="' + ( (this.aIndent[n] == 1 && this.config.useLines) ? this.icon.line : this.icon.empty ) + '" alt="" />';
-		(node._ls) ? this.aIndent.push(0) : this.aIndent.push(1);		
+		(node._ls) ? this.aIndent.push(0) : this.aIndent.push(1);
+		
 		if (node._hc) {
-			str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';			
+			str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');"><img id="j' + this.obj + nodeId + '" src="';
+			
 			if (!this.config.useLines) str += (node._io) ? this.icon.nlMinus : this.icon.nlPlus;
 			else str += ( (node._io) ? ((node._ls && this.config.useLines) ? this.icon.minusBottom : this.icon.minus) : ((node._ls && this.config.useLines) ? this.icon.plusBottom : this.icon.plus ) );			str += '" alt="" /></a>';
-		}		else {
+		}
+		else {
 			str += '<img src="' + ( (this.config.useLines) ? ((node._ls) ? this.icon.joinBottom : this.icon.join ) : this.icon.empty) + '" alt="" />';
 		}
 	}
@@ -229,11 +241,12 @@ dTree.prototype.o = function(id) {
 	if (this.config.useCookies) this.updateCookie();
 };
 
+// 여기가 클릭했을 때 실행되는 부분인 것 같다.
 dTree.prototype.ot = function(id) {
 	var nodeId = this.aNodes[id].id;
 	var mapzoom = init_zoom + (nodeId >= 1 ? 1 : 0) + (nodeId >= 10 ? 3 : 0);
 	
-	//set map Center for Tree's locatoin
+	// 주소를 집어넣어 준다.
 	address = this.aNodes[id].name;
 	
 	var k = addname.indexOf(address);
@@ -265,7 +278,8 @@ dTree.prototype.oAll = function(status) {
 			this.nodeStatus(status, n, this.aNodes[n]._ls)
 			this.aNodes[n]._io = status;
 		}
-	}	
+	}
+	
 	if (this.config.useCookies) this.updateCookie();
 };
 
@@ -276,8 +290,13 @@ dTree.prototype.openTo = function(nId, bSelect, bFirst) {
 			if (this.aNodes[n].id == nId) {
 				nId=n;
 				break;
-			}		}	}	var cn=this.aNodes[nId];
-	if (cn.id==this.root.id || !cn._p) return;	cn._io = true;	cn._is = bSelect;
+			}
+		}
+	}	var cn=this.aNodes[nId];
+	if (cn.id==this.root.id || !cn._p) return;
+
+	cn._io = true;
+	cn._is = bSelect;
 
 	if (this.completed && cn._hc) this.nodeStatus(true, cn._ai, cn._ls);
 	
@@ -294,7 +313,8 @@ dTree.prototype.closeLevel = function(node) {
 			this.nodeStatus(false, n, this.aNodes[n]._ls);
 			this.aNodes[n]._io = false;
 			this.closeAllChildren(this.aNodes[n]);
-		}	}
+		}
+	}
 }
 
 // Closes all children of a node
@@ -330,7 +350,8 @@ dTree.prototype.clearCookie = function() {
 	this.setCookie('cs'+this.obj, 'cookieValue', yesterday);
 };
 
-// [Cookie] Sets value in a cookiedTree.prototype.setCookie = function(cookieName, cookieValue, expires, path, domain, secure) {
+// [Cookie] Sets value in a cookie
+dTree.prototype.setCookie = function(cookieName, cookieValue, expires, path, domain, secure) {
 	document.cookie =
 		escape(cookieName) + '=' + escape(cookieValue)
 		+ (expires ? '; expires=' + expires.toGMTString() : '')
@@ -353,29 +374,35 @@ dTree.prototype.getCookie = function(cookieName) {
 };
 
 // [Cookie] Returns ids of open nodes as a string
-dTree.prototype.updateCookie = function() {	var str = '';	
+dTree.prototype.updateCookie = function() {
+	var str = '';
+	
 	for (var n=0; n<this.aNodes.length; n++) {
 		if (this.aNodes[n]._io && this.aNodes[n].id != this.root.id) {
 			if (str) str += '.';
 			str += this.aNodes[n].id;
 		}
-	}	
+	}
+	
 	this.setCookie('co' + this.obj, str);
 };
 
 // [Cookie] Checks if a node id is in a cookie
 dTree.prototype.isOpen = function(id) {
-	var aOpen = this.getCookie('co' + this.obj).split('.');	
+	var aOpen = this.getCookie('co' + this.obj).split('.');
+	
 	for (var n=0; n<aOpen.length; n++)
 		if (aOpen[n] == id) return true;
 
 	return false;
 };
 
-// If Push and pop is not implemented by the browserif (!Array.prototype.push) {
+// If Push and pop is not implemented by the browser
+if (!Array.prototype.push) {
 	Array.prototype.push = function array_push() {
 		for(var i=0;i<arguments.length;i++)
-			this[this.length]=arguments[i];		
+			this[this.length]=arguments[i];
+		
 		return this.length;
 	}
 };

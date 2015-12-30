@@ -1,4 +1,4 @@
-﻿var StreetViewPanorama = new function(){}
+var StreetViewPanorama = new function(){}
 var globalGeocoder;
 var globalMap;
 var address;
@@ -9,7 +9,8 @@ var infowin = new Array();
 var visable = new Array();
 google.maps.InfoWindow.prototype.opened = false;
 
-function initialize(x, y) { // 맵 초기화
+// 맵 초기화
+function initialize(x, y) {
 	//Incheon
 	if(x==0){ x=37.4562557; }
 	if(y==0){ y=126.70520620000002; }
