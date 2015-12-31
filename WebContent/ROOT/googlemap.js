@@ -53,6 +53,39 @@ function initialize(x, y) {
 	geocodeAddress(globalGeocoder, globalMap);
 }
 
+function setData(cons, pred, name) {
+	    var data = google.visualization.arrayToDataTable([
+	                                                      ['Element', 'value', { role: "style" }],
+	                                                      ['사용량', cons, '#b87333'],            // RGB value
+	                                                      ['예측량', pred, 'silver']           // English color name
+	                                                   ]);
+	       
+	    var view = new google.visualization.DataView(data);    
+	    view.setColumns([0, 1,
+	                     { calc: "stringify",
+	                       sourceColumn: 1,
+	                       type: "string",
+	                       role: "annotation" },
+	                     2]);
+
+	    var options = {
+	      title: name,
+	      width: 120,
+	      height: 80,
+	      fontSize: 10,
+	      bar: {groupWidth: "95%"},
+	      legend: { position: "none" },
+	    };
+	    
+	    var node        = document.createElement('div'),
+	    infoWindow  = new google.maps.InfoWindow(),
+	    chart       = new google.visualization.ColumnChart(node);
+
+	    chart.draw(view, options);
+	    return node;
+}
+
+
 function getMksInfo(map) {
 	for (var i = 0; i < markers.length; i++) {
 		if(markers[i].title < 0 || markers[i].title >= markers.length) {
@@ -63,9 +96,11 @@ function getMksInfo(map) {
 		
 		if(infowin.length < markers.length) {
 			var iwin = new google.maps.InfoWindow({
-				content: contentString,
-				maxWidth: 200
+				//content: contentString
+				content: setData(i,i, contentString)
 			});
+			
+			//console.log(setData(1,5, contentString));
 			
 			iwin.opened = true;
 			infowin.push(iwin);
