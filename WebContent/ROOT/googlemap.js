@@ -105,15 +105,21 @@ function setMapOnAll(map) {
 
 function geocodeAddress(geocoder, resultsMap) {	
 	var loc;
-	
+	var requestName = document.getElementById("input_text").value.toString(); 
+	if (requestName != "") {
+		loc = requestName;
+		console.log("geocodeAddress" , loc);
+	} 
+
 	for (var a in addname) {
 		loc = addname[a];
 		if(loc != "인천광역시") loc = "인천광역시 " + loc;
 		
-		geocoder.geocode(
-			{'address': loc},
-			function(results, status) {
-				if (status === google.maps.GeocoderStatus.OK) {					
+		geocoder.geocode( {'address': loc}, function(results, status) {
+				if (status === google.maps.GeocoderStatus.OK) {	
+					
+					globalMap.setCenter(results[0].geometry.location);
+					
 					var marker = new google.maps.Marker(
 						{
 							title: "-1",
@@ -132,4 +138,36 @@ function geocodeAddress(geocoder, resultsMap) {
 			}
 		);
 	}
+}
+
+function searchButtonClicked() {
+	
+	var requestAddress = document.getElementById("input_text").value.toString();
+	
+	globalGeocoder.geocode( { 'address': requestAddress}  , function (results , status ) {
+		
+		if (status === google.maps.GeocoderStatus.OK) {	
+			
+			globalMap.setCenter(results[0].geometry.location);
+			
+			var marker = new google.maps.Marker(
+				{
+					title: "-1",
+					position: results[0].geometry.location,
+					draggable: false
+				}
+			);
+			
+			markers.push(marker);
+			visable.push(true);
+			if(addname.length == markers.length){
+				getMksInfo(resultsMap);
+				setMapOnAll(resultsMap);
+			}
+		}
+		else a--;
+		
+		}
+	
+	);
 }

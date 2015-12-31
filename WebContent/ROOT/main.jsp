@@ -60,9 +60,9 @@
 					<form class="">
 						<fieldset>
 							<legend>검색</legend>
-							<span class="search_window"> <input type="text" class="input_text">
+							<span class="search_window"> <input type="text" id="input_text" class="input_text">
 							</span>
-							<button id="serch_btn" type="submit" class="btn searchd_submit" onclick="">serch</button>
+							<button id="serch_btn" type="button" class="btn searchd_submit" onclick="searchButtonClicked()">serch</button>
 						</fieldset>
 					</form>
 				</div>
