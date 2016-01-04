@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&region=KR"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/place/autocomplete/output?parameters"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <script type="text/javascript" src="dtree.js"></script>
 <style>
@@ -17,9 +18,6 @@ html, body {
 	padding: 0;
 }
 
-#map {
-	height: 100%;
-}
 
 .controls {
 	margin-top: 10px;
