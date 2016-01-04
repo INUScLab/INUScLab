@@ -70,7 +70,7 @@ html, body {
 }
 </style>
 </head>
-<body onload="initialize(0, 0)">
+<body>
 	<!--전체 태그-->
 	<div id="main_page">
 		<!--헤더 태그-->
@@ -119,7 +119,6 @@ html, body {
 			</div>
 			<!--본문 Right bottom (map)-->
 			<div class="map_section_box">
-			<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 				<jsp:include page="googlemap.jsp" flush="false" />
 				<!--<jsp:include page="control.jsp" flush="false">
 						<jsp:param name="action" value="list" />
