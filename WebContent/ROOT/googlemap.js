@@ -66,7 +66,7 @@ function initialize(x, y) {
 	//SearchBox
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);
-	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 	
 	
 	/*
@@ -229,18 +229,18 @@ function geocodeAddress(geocoder, resultsMap) {
 		if (loc != "인천광역시")
 			loc = "인천광역시 " + loc;
 
-		pinColorInt += addValue;
-		pinColorHex = pinColorInt.toString(16);
-		console.log(pinColorHex);
 		
 		geocoder.geocode({
 			'address' : loc
 		}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
+				pinColorInt += addValue;
+				pinColorHex = pinColorInt.toString(16);
+				console.log(pinColorHex);
+				console.log(status);
 
 				globalMap.setCenter(results[0].geometry.location);
 
-				console.log(pinColorHex);
 				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorHex,
 				    new google.maps.Size(21, 34),
 				    new google.maps.Point(0,0),
