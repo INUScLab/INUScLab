@@ -215,12 +215,30 @@ function setMapOnAll(map) {
 
 function geocodeAddress(geocoder, resultsMap) {
 	var loc;
+	
+	var initColorValue = parseInt("0000FF", 16);
+	var endColorValue = parseInt("FF0000" , 16);
+	var addValue = ( ( endColorValue - initColorValue )  / addname.length );
 
+	console.log(addname.length);
+	console.log(addValue);
+
+	var pinColorHex = "0000FF";
+	var pinColorInt = parseInt(pinColorHex , 16);
+
+	var i = 0;
 	for ( var a in addname) {
+		i++;
+		console.log(i);
 		loc = addname[a];
 		if (loc != "인천광역시")
 			loc = "인천광역시 " + loc;
 
+		pinColorInt += addValue;
+		console.log(pinColorInt);
+		pinColorHex = pinColorInt.toString(16);
+		console.log(pinColorHex);
+		
 		geocoder.geocode({
 			'address' : loc
 		}, function(results, status) {
@@ -228,8 +246,7 @@ function geocodeAddress(geocoder, resultsMap) {
 
 				globalMap.setCenter(results[0].geometry.location);
 
-				var pinColor = "0B3527";
-				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorHex,
 				    new google.maps.Size(21, 34),
 				    new google.maps.Point(0,0),
 				    new google.maps.Point(10, 34));
