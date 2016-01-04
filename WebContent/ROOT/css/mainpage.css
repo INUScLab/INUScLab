@@ -242,56 +242,9 @@ img, fieldset, iframe {	border: 0 none;}
 	color: white;
 }
 
-/*  search  */
-#search {
-   position: absolute;
-   left:5px;
-   top: 10px;
-   width: 250px;
-   margin: 0 auto;
-}
-
-#search form {
-   margin-bottom: 5px;
-}
-#search .search_window {
-   display: inline-block;
-   width: 170px;
-   height: 34px;
-   margin-right: 3px;
-   border:3px solid #2c6965;
-}
-
-#search .input_text {
-   width: 159px;
-   height: 21px;
-   margin: 6px 0 0 9px;
-   border: 0;
-   line-height: 21px;
-   font-size: 16px;
-   color: #000;
-   outline: none;
-}
-
-#search .search_submit {
-   width: 62px;
-   height: 50px;
-   border:0;
-}
 
 
-
-
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-#map {
-	height: 100%;
-}
-
+/* Search Box */
 .controls {
 	margin-top: 10px;
 	border: 1px solid transparent;
@@ -311,7 +264,7 @@ html, body {
 	margin-left: 12px;
 	padding: 0 11px 0 13px;
 	text-overflow: ellipsis;
-	width: 300px;
+	width: 200px;
 }
 
 #pac-input:focus {

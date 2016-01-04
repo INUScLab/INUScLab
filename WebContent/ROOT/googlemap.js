@@ -12,6 +12,7 @@ google.maps.InfoWindow.prototype.opened = false;
 
 // 맵 초기화
 function initialize(x, y) {
+	
 	// Incheon
 	if (x == 0) {
 		x = 37.4562557;
@@ -61,9 +62,12 @@ function initialize(x, y) {
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	geocodeAddress(globalGeocoder, globalMap);
 
+	
+	//SearchBox
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);
 	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	
 	
 	/*
 	var autocomplete = new google.maps.places.Autocomplete(input);
@@ -224,9 +228,7 @@ function geocodeAddress(geocoder, resultsMap) {
 
 				globalMap.setCenter(results[0].geometry.location);
 
-				
-				
-				var pinColor = "14D997";
+				var pinColor = "0B3527";
 				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
 				    new google.maps.Size(21, 34),
 				    new google.maps.Point(0,0),
@@ -243,13 +245,6 @@ function geocodeAddress(geocoder, resultsMap) {
 					shadow: pinShadow
 				});
 				
-
-				
-//				var symbol = new google.maps.Symbol ( {
-//					fillColor : "#354FAE"
-//				});
-//				
-//				marker.setIcon(symbol);
 
 				markers.push(marker);
 				if (addname.length == markers.length) {
