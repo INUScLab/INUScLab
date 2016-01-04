@@ -58,12 +58,12 @@
 			</div>
 			<!--본문 Left (tree)-->
 			<div class="left_section_box">
-				<div class="graph_section_box">
-				</div>
 				<div class="tree_section_box">
 					<div class="tree">
 						<jsp:include page="treemenu.jsp" flush="false" />
 					</div>
+				</div>
+				<div class="graph_section_box">
 				</div>
 			</div>
 		</div>

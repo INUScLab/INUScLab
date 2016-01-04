@@ -244,14 +244,16 @@ dTree.prototype.o = function(id) {
 // 여기가 클릭했을 때 실행되는 부분인 것 같다.
 dTree.prototype.ot = function(id) {
 	var nodeId = this.aNodes[id].id;
-	var mapzoom = init_zoom + (nodeId >= 1 ? 1 : 0) + (nodeId >= 10 ? 3 : 0);
+	var mapzoom = init_zoom + (nodeId >= 1 ? 1 : 0) + (nodeId >= 10 ? 1 : 0) + (nodeId >= 100 ? 1 : 0);
 	
 	// 주소를 집어넣어 준다.
 	address = this.aNodes[id].name;
 	
-	var k = addname.indexOf(address);
+	for (var i in visable) {
+		visable[i] = false;
+		infowin[i].opened = false;
+	}
 	
-	for (var i in visable) visable[i] = false;
 	for (var i=id; i<this.aNodes.length; i++) {
 		var tmpId = this.aNodes[i].id;
 		
@@ -261,14 +263,22 @@ dTree.prototype.ot = function(id) {
 		}
 		
 		var idx = addname.indexOf(this.aNodes[i].name);
-		if( nodeId == 0 || i == id || (tmpId >= nodeId*10 && tmpId < (nodeId+1)*10) )
+		if( (nodeId == 0 && tmpId < 10) || (tmpId >= nodeId*10 && tmpId < (nodeId+1)*10) ) {
 			visable[idx] = true;
+			infowin[idx].opened = false;
+		}
+		
+		if( i == id ) {
+			visable[idx] = true;
+			infowin[idx].opened = true;
+		}
 	}
 	
-	//alert(k + ": " + addname[k] + ", " + markers[k].position);
-	setMapOnAll(globalMap);	
-	globalMap.setOptions({'zoom':mapzoom});
+	var k = addname.indexOf(address);
+	//alert(address + "(" + nodeId + ", " + k + "): " + addname[k] + ", " + visable[k] + ", " + infowin[k].opened + ", " + markers[k].get("id") + ", " + markers[k].position);
 	globalMap.setCenter(markers[k].position);
+	globalMap.setOptions({'zoom':mapzoom});
+	setMapOnAll(globalMap);
 };
 
 // Open or close all nodes
