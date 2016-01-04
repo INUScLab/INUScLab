@@ -204,7 +204,8 @@ function setMapOnAll(map) {
 		if (visable[i]) {
 			markers[i].setMap(map);
 			infowin[i].open(map, markers[i]);
-			infowin[i].opened = true;
+			infowin[i].opened = false;
+			console.log(markers[i]);
 		} else {
 			markers[i].setMap(null);
 			infowin[i].close();
@@ -220,22 +221,15 @@ function geocodeAddress(geocoder, resultsMap) {
 	var endColorValue = parseInt("FF0000" , 16);
 	var addValue = ( ( endColorValue - initColorValue )  / addname.length );
 
-	console.log(addname.length);
-	console.log(addValue);
-
 	var pinColorHex = "0000FF";
 	var pinColorInt = parseInt(pinColorHex , 16);
 
-	var i = 0;
 	for ( var a in addname) {
-		i++;
-		console.log(i);
 		loc = addname[a];
 		if (loc != "인천광역시")
 			loc = "인천광역시 " + loc;
 
 		pinColorInt += addValue;
-		console.log(pinColorInt);
 		pinColorHex = pinColorInt.toString(16);
 		console.log(pinColorHex);
 		
@@ -246,6 +240,7 @@ function geocodeAddress(geocoder, resultsMap) {
 
 				globalMap.setCenter(results[0].geometry.location);
 
+				console.log(pinColorHex);
 				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorHex,
 				    new google.maps.Size(21, 34),
 				    new google.maps.Point(0,0),
@@ -262,8 +257,10 @@ function geocodeAddress(geocoder, resultsMap) {
 					shadow: pinShadow
 				});
 				
+				console.log(marker);
 
 				markers.push(marker);
+				
 				if (addname.length == markers.length) {
 					getMksInfo(resultsMap);
 					setMapOnAll(resultsMap);
