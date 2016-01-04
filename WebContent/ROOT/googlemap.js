@@ -12,6 +12,7 @@ google.maps.InfoWindow.prototype.opened = false;
 
 // 맵 초기화
 function initialize(x, y) {
+	
 	// Incheon
 	if (x == 0) {
 		x = 37.4562557;
@@ -62,21 +63,17 @@ function initialize(x, y) {
 	geocodeAddress(globalGeocoder, globalMap);
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	//SearchBox
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);
-	console.log("searchBox" , searchBox);
 	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+	
+	
+	/*
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	autocomplete.bindTo('bounds', globalMap);
+
+	console.log("autocomplete" , autocomplete);
 
 	var infowindow = new google.maps.InfoWindow();
 	var marker = new google.maps.Marker({
@@ -100,7 +97,7 @@ function initialize(x, y) {
 			globalMap.setCenter(place.geometry.location);
 			globalMap.setZoom(17); // Why 17? Because it looks good.
 		}
-		marker.setIcon(/** @type {google.maps.Icon} */
+		marker.setIcon(
 		({
 			url : place.icon,
 			size : new google.maps.Size(71, 71),
@@ -126,7 +123,9 @@ function initialize(x, y) {
 		infowindow.setContent('<div><strong>' + place.name + '</strong><br>'
 				+ address);
 		infowindow.open(globalMap, marker);
+		
 	});
+	 */
 
 }
 
@@ -229,11 +228,23 @@ function geocodeAddress(geocoder, resultsMap) {
 
 				globalMap.setCenter(results[0].geometry.location);
 
+				var pinColor = "0B3527";
+				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+				    new google.maps.Size(21, 34),
+				    new google.maps.Point(0,0),
+				    new google.maps.Point(10, 34));
+				var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+				    new google.maps.Size(40, 37),
+				    new google.maps.Point(0, 0),
+				    new google.maps.Point(12, 35));
 				var marker = new google.maps.Marker({
 					title : "-1",
 					position : results[0].geometry.location,
-					draggable : false
+					draggable : false,
+					icon: pinImage,
+					shadow: pinShadow
 				});
+				
 
 				markers.push(marker);
 				if (addname.length == markers.length) {
