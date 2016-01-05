@@ -1,4 +1,4 @@
-/*--------------------------------------------------|
+﻿/*--------------------------------------------------|
 | dTree 2.05 | www.destroydrop.com/javascript/tree/ |
 |---------------------------------------------------|
 | Copyright (c) 2002-2003 Geir Landr?              |
@@ -255,15 +255,10 @@ dTree.prototype.ot = function(id) {
 	}
 	
 	for (var i=id; i<this.aNodes.length; i++) {
-		var tmpId = this.aNodes[i].id;
-		
-		if( nodeId > 0 && i != id) {
-			if( tmpId < nodeId*10 ) continue;
-			else if( tmpId >= (nodeId+1)*10 ) break;
-		}
-		
+		var tmpId = this.aNodes[i].pid;		
 		var idx = addname.indexOf(this.aNodes[i].name);
-		if( (nodeId == 0 && tmpId < 10) || (tmpId >= nodeId*10 && tmpId < (nodeId+1)*10) ) {
+		
+		if( (nodeId == 0 && tmpId > 0) || (nodeId > 0 && tmpId == nodeId) ) {
 			visable[idx] = true;
 			infowin[idx].opened = false;
 		}

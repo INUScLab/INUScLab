@@ -1,12 +1,12 @@
-var StreetViewPanorama = new function() {
-}
 var globalGeocoder;
 var globalMap;
-var globalBounds;
+//var globalBounds;
+
 var address;
 var geoIter = 0;
-var delay = 100.0;
-var init_zoom = 11;
+var delay = 100;
+var init_zoom = 13;
+var load_info;
 var addname = new Array();
 var markers = new Array();
 var infowin = new Array();
@@ -14,21 +14,16 @@ var visable = new Array();
 google.maps.InfoWindow.prototype.opened;
 
 // 맵 초기화
-function initialize(x, y) {
-	
+function initialize(x, y) {	
 	// Incheon
-	if (x == 0) {
-		x = 37.4562557;
-	}
-	if (y == 0) {
-		y = 126.70520620000002;
-	}
+	if (x == 0) x = 37.4562557;
+	if (y == 0)	y = 126.70520620000002;
 
-	/*addname.push("신흥동");
+	addname.push("신흥동");
 	addname.push("연안동");
 	addname.push("무의동");
 	addname.push("을왕동");
-	addname.push("남북동");*/
+	addname.push("남북동");
 	addname.push("덕교동");
 	addname.push("운복동");
 	addname.push("중산동");
@@ -47,7 +42,7 @@ function initialize(x, y) {
 	}
 			
 	globalGeocoder = new google.maps.Geocoder();
-	globalBounds = new google.maps.LatLngBounds();
+	//globalBounds = new google.maps.LatLngBounds();
 	var latlng = new google.maps.LatLng(x, y);
 
 	var myOptions = {
@@ -71,72 +66,26 @@ function initialize(x, y) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	// HYBRID, ROADMAP, SATELLITE, TERRAIN
 	};
-	
+				
 	//SearchBox
 	var input = document.getElementById('pac-input');
 	var searchBox = new google.maps.places.SearchBox(input);
 	
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-	geocodeAddress();	
 	
-	/*
-	var autocomplete = new google.maps.places.Autocomplete(input);
-	autocomplete.bindTo('bounds', globalMap);
-
-	console.log("autocomplete" , autocomplete);
-
-	var infowindow = new google.maps.InfoWindow();
-	var marker = new google.maps.Marker({
-		map : globalMap,
-		anchorPoint : new google.maps.Point(0, -29)
-	});
-
-	autocomplete.addListener('place_changed', function() {
-		infowindow.close();
-		marker.setVisible(false);
-		var place = autocomplete.getPlace();
-		if (!place.geometry) {
-			window.alert("Autocomplete's returned place contains no geometry");
-			return;
-		}
-
-		// If the place has a geometry, then present it on a map.
-		if (place.geometry.viewport) {
-			globalMap.fitBounds(place.geometry.viewport);
-		} else {
-			globalMap.setCenter(place.geometry.location);
-			globalMap.setZoom(17); // Why 17? Because it looks good.
-		}
-		marker.setIcon(
-		({
-			url : place.icon,
-			size : new google.maps.Size(71, 71),
-			origin : new google.maps.Point(0, 0),
-			anchor : new google.maps.Point(17, 34),
-			scaledSize : new google.maps.Size(35, 35)
-		}));
-		marker.setPosition(place.geometry.location);
-		marker.setVisible(true);
-
-		var address = '';
-		if (place.address_components) {
-			address = [
-					(place.address_components[0]
-							&& place.address_components[0].short_name || ''),
-					(place.address_components[1]
-							&& place.address_components[1].short_name || ''),
-					(place.address_components[2]
-							&& place.address_components[2].short_name || '') ]
-					.join(' ');
-		}
-
-		infowindow.setContent('<div><strong>' + place.name + '</strong><br>'
-				+ address);
-		infowindow.open(globalMap, marker);
-		
-	});
-	 */
+	load_info = new google.maps.InfoWindow();
+	load_info.open(
+		globalMap,
+		new google.maps.Marker( {
+			map : globalMap,
+			position : latlng,
+			draggable : false,
+			icon : "null" }
+		)
+	);
+	
+	geocodeAddress();	
 }
 
 function setData(cons, pred, name) {
@@ -156,8 +105,9 @@ function setData(cons, pred, name) {
 
 	var options = {
 		title : name,
-		height : 80,
-		fontSize : 10,
+		width : 135,
+		height : 85,
+		fontSize : 10,		
 		bar : {
 			groupWidth : "95%"
 		},
@@ -166,12 +116,12 @@ function setData(cons, pred, name) {
 		},
 	};
 
-	var p_node = document.createElement('div');
+	var p_node = document.createElement('div');	
+	p_node.style.width = "135px";
+	p_node.style.height = "90px";
+	p_node.style.align = "horizon: middle; vertical: middle;";
 	
-	c_node = document.body.appendChild(p_node);
-	c_node.style.width = "135px";
-	c_node.style.height = "90px";
-	c_node.style.align = "horizon: middle; vertical: middle;";
+	var c_node = p_node.appendChild(document.createElement('div'));	
 	
 	chart = new google.visualization.ColumnChart(c_node);
 	chart.draw(view, options);
@@ -220,15 +170,14 @@ function setMapOnAll() {
 		}
 	}
 }
-function geocodeExcute() {	
+function geocodeExcute(loc, next) {	
 	var initColorValue = parseInt("0000FF", 16);
 	var endColorValue = parseInt("FF0000" , 16);
 	var addValue = parseInt( parseFloat( endColorValue - initColorValue )  / addname.length );
 
 	var pinColorHex = "0000FF";
-	var pinColorInt = parseInt(pinColorHex , 16) + (geoIter+1) * addValue;
+	var pinColorInt = parseInt(pinColorHex , 16) + geoIter * addValue;
 	
-	var loc = addname[geoIter];
 	if (loc != "인천광역시")
 		loc = "인천광역시 " + loc;
 	
@@ -259,32 +208,40 @@ function geocodeExcute() {
 				
 				marker.set("type", "point");
 				marker.set("id", markers.length.toString());
-				globalBounds.extend(marker.position);
+				//globalBounds.extend(marker.position);
 									
 				console.log(marker);
 				markers.push(marker);
 				
-				if (addname.length == markers.length){
-					getMksInfo();
-					d.ot(0);
+				delay = 100;
+				if (addname.length != markers.length){
+					load_info.setContent(
+						"<Strong>Now Loading</Strong><br>"
+						+ 100 * parseFloat(markers.length) / parseFloat(addname.length) + "%"
+					);
 				}
 			}
 			else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
 				geoIter--;
 				if(geoIter < 0) geoIter = 0;
-				delay += 50000;
+				
+				delay++;
 			}
-			geocodeAddress();
+			next();
 		}
 	);
 }
 function geocodeAddress() {
 	if(geoIter < addname.length) {
-		setTimeout( geocodeExcute(), parseInt(delay) );
+		setTimeout( 'geocodeExcute("'+ addname[geoIter] +'", geocodeAddress)', delay );
 		geoIter++;
 	}
 	else {
-		globalMap.fitBounds(globalBounds);
+		//globalMap.fitBounds(globalBounds);
 		globalMap.setCenter(markers[markers.length-1].position);
+		
+		load_info.close();
+		getMksInfo();
+		d.ot(0);
 	}
 }

@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="stylesheet" type="text/css" href="css/headerCSS.css">
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&region=KR"></script>
@@ -58,12 +59,14 @@
 			</div>
 			<!--본문 Left (tree)-->
 			<div class="left_section_box">
+				<div class="graph_section_box">
+					<div class="graph">
+					</div>
+				</div>
 				<div class="tree_section_box">
 					<div class="tree">
 						<jsp:include page="treemenu.jsp" flush="false" />
 					</div>
-				</div>
-				<div class="graph_section_box">
 				</div>
 			</div>
 		</div>
