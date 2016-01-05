@@ -173,10 +173,10 @@ function setMapOnAll() {
 function geocodeExcute(loc, next) {	
 	var initColorValue = parseInt("0000FF", 16);
 	var endColorValue = parseInt("FF0000" , 16);
-	var addValue = parseInt( parseFloat( endColorValue - initColorValue )  / addname.length );
+	var addValue = parseFloat( endColorValue - initColorValue ) / (addname.length+1) ;
 
 	var pinColorHex = "0000FF";
-	var pinColorInt = parseInt(pinColorHex , 16) + geoIter * addValue;
+	var pinColorInt = parseInt(pinColorHex , 16) + parseInt((geoIter+1) * addValue);
 	
 	if (loc != "인천광역시")
 		loc = "인천광역시 " + loc;
