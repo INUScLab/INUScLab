@@ -4,7 +4,6 @@
 <% request.setCharacterEncoding("utf-8"); %>
 
 <jsp:useBean id="User" class="sclab.db.User"/>
-<jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl"/> 
 
 <div id="map_canvas" style="width: 100%; height: 100%;" >
 	<script type="text/javascript"> /*initialize(0, 0); */ </script>
