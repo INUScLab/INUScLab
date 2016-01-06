@@ -29,8 +29,9 @@
 .left_section_box .tree_section_box {
 	position: absolute;
 	top: 0; left: 0;
+	overflow-y: auto;
 	width: 100%;
-	height: 70%;	
+	height: 70%;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 25px;
 	color: #666;
@@ -41,7 +42,6 @@
 .tree_section_box .tree{
 	position: absolute;
 	top: 0; left: 0;
-	overflow-y: auto;
 	padding: 10px 10px 10px 10px;
 }
 .tree_section_box img {
@@ -133,4 +133,13 @@ html, body {
 	font-family: Roboto;
 	font-size: 13px;
 	font-weight: 300;
+}
+
+.map_section_box .color-interpolation {
+	margin-left: 140px;
+	margin-bottom: 20px;
+    width: 200px;
+    height: 30px;
+    background: -webkit-linear-gradient(left, lime , red  );
+    border: solid 2px #000;
 }

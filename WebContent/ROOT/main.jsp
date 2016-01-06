@@ -56,6 +56,7 @@
 				</jsp:include>
 				-->
 				<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+				<div id="color-interpolation" class="color-interpolation"></div>
 			</div>
 			<!--본문 Left (tree)-->
 			<div class="left_section_box">

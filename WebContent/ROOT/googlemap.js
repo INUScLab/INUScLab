@@ -19,22 +19,11 @@ function initialize(x, y) {
 	if (x == 0) x = 37.4562557;
 	if (y == 0)	y = 126.70520620000002;
 
-	addname.push("신흥동");
-	addname.push("연안동");
-	addname.push("무의동");
-	addname.push("을왕동");
-	addname.push("남북동");
-	addname.push("덕교동");
-	addname.push("운복동");
-	addname.push("중산동");
-	addname.push("운남동");
-	addname.push("운서동");
-	addname.push("중구");
-	addname.push("서구");
-	addname.push("동구");
-	addname.push("부평구");
-	addname.push("연수구");
-	addname.push("인천광역시");
+	if(addname.length != d.aNodes.length){
+		delete addname;
+		for(var i = d.aNodes.length-1; i >= 0; i--)
+			addname.push(d.aNodes[i].name);
+	}
 
 	for(var i in addname) {
 		visable.push(true);
@@ -66,13 +55,22 @@ function initialize(x, y) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	// HYBRID, ROADMAP, SATELLITE, TERRAIN
 	};
-				
-	//SearchBox
-	var input = document.getElementById('pac-input');
-	var searchBox = new google.maps.places.SearchBox(input);
-	
+
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	
+	//Search Box
+	var input = document.getElementById('pac-input');
+
+	//Color-interpolation Box
+	var colorBox = document.getElementById('color-interpolation');
+	
+	//Hide boxes
+	input.hidden = true;
+	colorBox.hidden = true;
+	
+	//Appending boxes
 	globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 	
 	load_info = new google.maps.InfoWindow();
 	load_info.open(
@@ -85,7 +83,7 @@ function initialize(x, y) {
 		)
 	);
 	
-	geocodeAddress();	
+	geocodeAddress();
 }
 
 function setData(cons, pred, name) {
@@ -239,6 +237,10 @@ function geocodeAddress() {
 	else {
 		//globalMap.fitBounds(globalBounds);
 		globalMap.setCenter(markers[markers.length-1].position);
+		
+		//Show boxes
+		document.getElementById('pac-input').hidden = false;
+		document.getElementById('color-interpolation').hidden = false;
 		
 		load_info.close();
 		getMksInfo();
