@@ -11,7 +11,6 @@ var addname = new Array();
 var markers = new Array();
 var infowin = new Array();
 var visable = new Array();
-google.maps.InfoWindow.prototype.opened;
 
 // 맵 초기화
 function initialize(x, y) {	
@@ -103,8 +102,8 @@ function setData(cons, pred, name) {
 
 	var options = {
 		title : name,
-		width : 135,
-		height : 85,
+		width : 200,
+		height : 160,
 		fontSize : 10,		
 		bar : {
 			groupWidth : "95%"
@@ -121,33 +120,25 @@ function setData(cons, pred, name) {
 	
 	var c_node = p_node.appendChild(document.createElement('div'));	
 	
-	chart = new google.visualization.ColumnChart(c_node);
+	//chart = new google.visualization.ColumnChart(c_node);
+	chart = new google.visualization.ColumnChart(document.getElementById("info_graph"));
 	chart.draw(view, options);
-	
-	return p_node;
+
+	//google.visualization.ColumnChart(document.getElementById("info_graph"));
 }
 
 function getMksInfo() {
-	for (var i = 0; i < markers.length; i++) {		
-		var contentString = addname[i];	
-		infowin[i].setContent(setData(i+1, i+1, contentString));
-
+	for (var i = 0; i < markers.length; i++) {	
 		markers[i].addListener(
 			'click',
 			function() {
 				var idx = this.get("id");
-				if (infowin[idx].opened) {
-					infowin[idx].close();
-					infowin[idx].opened = false;
-				} else {
-					infowin[idx].open(globalMap, this);
-					infowin[idx].opened = true;
-				}
+				console.log(idx);
+				setData(parseFloat(idx) +0.5, parseFloat(idx) +0.7, addname[idx]);
 			}
 		);
 	}
 	
-	infowin[infowin.length-1].opened = true;
 }
 
 // Sets the map on all markers in the array.
@@ -155,16 +146,10 @@ function setMapOnAll() {
 	for (var i = 0; i < markers.length; i++) {
 		if (visable[i]) {
 			markers[i].setMap(globalMap);
-			
-			if (!infowin[i].opened) infowin[i].close();
-			else infowin[i].open(globalMap, markers[i]);
-			
 			console.log(markers[i]);
 		}
 		else {
 			markers[i].setMap(null);
-			infowin[i].close();
-			infowin[i].opened = false;
 		}
 	}
 }
@@ -211,7 +196,9 @@ function geocodeExcute(loc, next) {
 				console.log(marker);
 				markers.push(marker);
 				
-				delay = 100;
+				delay/=2;
+				if(delay < 100) delay = 100;
+				
 				if (addname.length != markers.length){
 					load_info.setContent(
 						"<Strong>Now Loading</Strong><br>"

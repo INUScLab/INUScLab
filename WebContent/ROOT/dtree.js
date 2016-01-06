@@ -243,6 +243,8 @@ dTree.prototype.o = function(id) {
 
 // 여기가 클릭했을 때 실행되는 부분인 것 같다.
 dTree.prototype.ot = function(id) {
+	if(markers.length < this.aNodes.length) return;
+	
 	var nodeId = this.aNodes[id].id;
 	var mapzoom = init_zoom + (nodeId >= 1 ? 1 : 0) + (nodeId >= 10 ? 1 : 0) + (nodeId >= 100 ? 1 : 0);
 	

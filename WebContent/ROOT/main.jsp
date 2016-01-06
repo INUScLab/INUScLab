@@ -61,7 +61,8 @@
 			<!--본문 Left (tree)-->
 			<div class="left_section_box">
 				<div class="graph_section_box">
-					<div class="graph">
+					<hr>
+					<div id="info_graph" class="graph">
 					</div>
 				</div>
 				<div class="tree_section_box">
