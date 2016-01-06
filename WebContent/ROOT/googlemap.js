@@ -146,7 +146,6 @@ function setMapOnAll() {
 	for (var i = 0; i < markers.length; i++) {
 		if (visable[i]) {
 			markers[i].setMap(globalMap);
-			console.log(markers[i]);
 		}
 		else {
 			markers[i].setMap(null);
@@ -169,8 +168,6 @@ function geocodeExcute(loc, next) {
 		function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				pinColorHex = pinColorInt.toString(16);
-				console.log(pinColorHex);
-				console.log(status);
 
 				var sName = results[0].address_components[0].short_name.toString();
 				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorHex,
@@ -188,12 +185,12 @@ function geocodeExcute(loc, next) {
 					icon: pinImage,
 					shadow: pinShadow,
 				});
-				
+				console.log("lat", loc , results[0].geometry.location.lat());				
+				console.log("lng", loc , results[0].geometry.location.lng());				
 				marker.set("type", "point");
 				marker.set("id", markers.length.toString());
 				//globalBounds.extend(marker.position);
 									
-				console.log(marker);
 				markers.push(marker);
 				
 				delay/=2;
