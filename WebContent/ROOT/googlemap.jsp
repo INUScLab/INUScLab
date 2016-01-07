@@ -43,6 +43,7 @@ System.out.println(overUsedDongList.indexOf("용현3동"));
 		var markers = new Array();
 		var infowin = new Array();
 		var visable = new Array();
+		var button;
 
 		// 맵 초기화
 		function initialize(x, y) {
@@ -117,6 +118,11 @@ System.out.println(overUsedDongList.indexOf("용현3동"));
 			}));
 
 			geocodeAddress();
+
+			// 상세보기 버튼
+			button = document.getElementById("btn_detail");
+			//그래프 그려지기 전까지 disable
+			button.style.visibility = 'hidden';
 		}
 
 		function setData(cons, pred, name) {
@@ -158,13 +164,27 @@ System.out.println(overUsedDongList.indexOf("용현3동"));
 			//chart = new google.visualization.ColumnChart(c_node);
 			chart = new google.visualization.ColumnChart(document
 					.getElementById("info_graph"));
+			
+			
+			// 상세보기 버튼 이벤트
+			google.visualization.events.addListener(chart, 'ready',
+			          function() {
+			            button.style.visibility = 'visible';
+			            button.value = 'test';
+			          });
+			
+			button.onclick = function() {
+			    }
+			
 			chart.draw(view, options);
-
-			//google.visualization.ColumnChart(document.getElementById("info_graph"));
 		}
 
 		function getMksInfo() {
-			for (var i = 0; i < markers.length; i++) {
+			for (var i = 0; i < markers.length; i++) {	
+				if(addname[i] == '인천광역시') {
+					setData(parseFloat(i) + 0.5, parseFloat(i) + 0.7, addname[i]);
+				}
+				
 				markers[i].addListener('click', function() {
 					var idx = this.get("id");
 					console.log(idx);
@@ -172,7 +192,6 @@ System.out.println(overUsedDongList.indexOf("용현3동"));
 							addname[idx]);
 				});
 			}
-
 		}
 
 		// Sets the map on all markers in the array.
