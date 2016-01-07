@@ -62,6 +62,7 @@
 					<hr>
 					<div id="info_graph" class="graph">
 					</div>
+					<button id="btn_detail">상세 보기</button>
 				</div>
 				<div class="tree_section_box">
 					<div class="tree">
