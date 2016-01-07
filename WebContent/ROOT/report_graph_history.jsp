@@ -30,18 +30,18 @@ google.setOnLoadCallback(drawChart);
 
 
         var options = {
-          title: 'Rate the Day on a Scale of 1 to 10',
-          //width: 900,
-          //height: 500,
-          hAxis: {
-            format: 'M/d/yy'
-            //gridlines: {count: 15}
-          },
-          vAxis: {
-            gridlines: {color: 'none'},
-            minValue: 0
-          }
-        };
+                //width: 900,
+                //height: 500,
+                hAxis: {
+                  format: 'yyyy-MM-dd'
+                  //gridlines: {count: 15}
+                },
+                vAxis: {
+                  gridlines: {color: 'none'},
+                  minValue: 900,
+                  maxValue:1100
+                }
+              };
 
         var chart = new google.visualization.LineChart(document.getElementById('history'));
 

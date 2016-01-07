@@ -15,7 +15,7 @@
 <body>
 <div align="center">
 <form>
-	<table border="1">
+	<table class="table_info">
 		<tr>
 		<td>구역</td><td>월 사용량</td><td>주 사용량</td>
 		<td>오늘</td><td>1일 전</td><td>2일 전</td><td>3일 전</td><td>4일 전</td><td>5일 전</td><td>6일 전</td>
