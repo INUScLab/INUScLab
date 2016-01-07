@@ -9,10 +9,12 @@
 <jsp:useBean id="User" class="sclab.db.User" />
 <jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
 <%
+String test = "용현3동";
 ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
 ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
+System.out.println(overUsedDongList.indexOf("용현3동"));
 //System.out.println(overUsedDongList);
-//System.out.println(normalUsedDongList);
+//System.out.println(normalUsedDongList.size());
 %>
 
 <div id="map_canvas" style="width: 100%; height: 100%;">
@@ -20,7 +22,18 @@ ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
 		var globalGeocoder;
 		var globalMap;
 		//var globalBounds;
-
+		
+		var overUsedDongList = new Array();
+		var normalUsedDongList = new Array();
+		
+		<% for (int i=0; i<overUsedDongList.size(); i++) { %>
+		overUsedDongList[<%= i %>] = "<%= overUsedDongList.get(i) %>"; 
+		<% } %>
+		
+		<% for (int i=0; i<normalUsedDongList.size(); i++) { %>
+		normalUsedDongList[<%= i %>] = "<%= normalUsedDongList.get(i) %>"; 
+		<% } %>
+		
 		var address;
 		var geoIter = 0;
 		var delay = 100;
@@ -173,15 +186,21 @@ ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
 			}
 		}
 		function geocodeExcute(loc, next) {
-			var initColorValue = parseInt("0000FF", 16);
-			var endColorValue = parseInt("FF0000", 16);
-			var addValue = parseFloat(endColorValue - initColorValue)
-					/ (addname.length + 1);
+			var redColor = "FF0000";
+			var greenColor = "2EFE64";
+			//var addValue = parseFloat(endColorValue - initColorValue) / (addname.length + 1);
 
-			var pinColorHex = "0000FF";
-			var pinColorInt = parseInt(pinColorHex, 16)
-					+ parseInt((geoIter + 1) * addValue);
-
+			
+			var color = "";
+			//var pinColorInt = parseInt(pinColorHex, 16) + parseInt((geoIter + 1) * addValue);
+			
+			if( normalUsedDongList.indexOf(loc) != -1) {
+				color = greenColor;
+			}
+			else {
+				color = redColor;
+			}				
+			
 			if (loc != "인천광역시")
 				loc = "인천광역시 " + loc;
 
@@ -192,13 +211,13 @@ ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
 							},
 							function(results, status) {
 								if (status === google.maps.GeocoderStatus.OK) {
-									pinColorHex = pinColorInt.toString(16);
+									//pinColorHex = pinColorInt.toString(16);
 
 									var sName = results[0].address_components[0].short_name
 											.toString();
 									var pinImage = new google.maps.MarkerImage(
 											"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-													+ pinColorHex,
+													+ color,
 											new google.maps.Size(21, 34),
 											new google.maps.Point(0, 0),
 											new google.maps.Point(10, 34));
