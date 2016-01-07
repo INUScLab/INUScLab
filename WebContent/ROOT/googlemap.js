@@ -66,8 +66,8 @@ function initialize(x, y) {
 	colorBox.hidden = true;
 	
 	//Appending boxes
-	globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
+	//globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+	//globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 	
 	load_info = new google.maps.InfoWindow();
 	load_info.open(

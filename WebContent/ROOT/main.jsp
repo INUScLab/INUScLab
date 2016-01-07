@@ -21,10 +21,8 @@
 <jsp:useBean id="User" class="sclab.db.User" />
 <jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
 <%
-	String test = "용현3동";
 	ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
 	ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
-	System.out.println(overUsedDongList.indexOf("용현3동"));
 	//System.out.println(overUsedDongList);
 	//System.out.println(normalUsedDongList.size());
 %>
