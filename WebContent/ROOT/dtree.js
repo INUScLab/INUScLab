@@ -42,12 +42,12 @@ function dTree(objName) {
 	}
 	
 	this.icon = {
-		none			: '',
-		root			: '',
-		rootOpen		: '',
-		folder			: '',
-		folderOpen		: '',
-		node			: '',
+		none			: 'img/null.gif',
+		root			: 'img/null.gif',
+		rootOpen		: 'img/null.gif',
+		folder			: 'img/null.gif',
+		folderOpen		: 'img/null.gif',
+		node			: 'img/null.gif',
 		empty			: 'img/empty.gif',
 		line			: 'img/line.gif',
 		join			: 'img/join.gif',
@@ -253,7 +253,6 @@ dTree.prototype.ot = function(id) {
 	
 	for (var i in visable) {
 		visable[i] = false;
-		infowin[i].opened = false;
 	}
 	
 	for (var i=id; i<this.aNodes.length; i++) {
@@ -262,17 +261,15 @@ dTree.prototype.ot = function(id) {
 		
 		if( (nodeId == 0 && tmpId > 0) || (nodeId > 0 && tmpId == nodeId) ) {
 			visable[idx] = true;
-			infowin[idx].opened = false;
 		}
 		
 		if( i == id ) {
 			visable[idx] = true;
-			infowin[idx].opened = true;
 		}
 	}
 	
 	var k = addname.indexOf(address);
-	//alert(address + "(" + nodeId + ", " + k + "): " + addname[k] + ", " + visable[k] + ", " + infowin[k].opened + ", " + markers[k].get("id") + ", " + markers[k].position);
+	//alert(address + "(" + nodeId + ", " + k + "): " + addname[k] + ", " + visable[k] + ", " + markers[k].get("id") + ", " + markers[k].position);
 	globalMap.setCenter(markers[k].position);
 	globalMap.setOptions({'zoom':mapzoom});
 	setMapOnAll(globalMap);

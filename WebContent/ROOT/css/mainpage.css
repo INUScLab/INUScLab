@@ -144,6 +144,6 @@ html, body {
 	margin-bottom: 20px;
     width: 200px;
     height: 30px;
-    background: -webkit-linear-gradient(left, lime , red  );
+    background: -webkit-linear-gradient(left, lime , red);
     border: solid 2px #000;
 }

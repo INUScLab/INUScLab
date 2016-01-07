@@ -1,8 +1,7 @@
 #report_content {
 	top: 170px; left: 0;
 	position: relative;
-	width: 100%;
-	height: 800px;
+	height: 100%;
 	background-color: white;
 }
 

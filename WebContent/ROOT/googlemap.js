@@ -9,7 +9,6 @@ var init_zoom = 13;
 var load_info;
 var addname = new Array();
 var markers = new Array();
-var infowin = new Array();
 var visable = new Array();
 
 // 맵 초기화
@@ -26,7 +25,6 @@ function initialize(x, y) {
 
 	for(var i in addname) {
 		visable.push(true);
-		infowin.push(new google.maps.InfoWindow());
 	}
 			
 	globalGeocoder = new google.maps.Geocoder();
@@ -83,17 +81,23 @@ function initialize(x, y) {
 	);
 	
 	geocodeAddress();
+
+	// 상세보기 버튼
+	btn = document.getElementById("btn_detail");
+	//그래프 그려지기 전까지 disable
+	btn.style.visibility = 'hidden';
 }
 
 function setData(cons, pred, name) {
-	var data = google.visualization.arrayToDataTable( [
-		[ 'Element', 'value', {role : "style"} ], 
-		[ '사용량', cons, '#b87333' ], // RGB value
-		[ '예측량', pred, 'silver' ] // English color name
+	var data = google.visualization.arrayToDataTable([
+			[ 'Element', 'value', {	role : "style"} ],
+			[ '사용량', cons, '#b87333' ], // RGB value
+			[ '예측량', pred, 'silver' ] // English color name
 	]);
 
 	var view = new google.visualization.DataView(data);
-	view.setColumns([ 0, 1, {
+	view.setColumns(
+	[ 0, 1, {
 		calc : "stringify",
 		sourceColumn : 1,
 		type : "string",
@@ -104,7 +108,7 @@ function setData(cons, pred, name) {
 		title : name,
 		width : 200,
 		height : 160,
-		fontSize : 10,		
+		fontSize : 10,
 		bar : {
 			groupWidth : "95%"
 		},
@@ -113,18 +117,19 @@ function setData(cons, pred, name) {
 		},
 	};
 
-	var p_node = document.createElement('div');	
-	p_node.style.width = "135px";
-	p_node.style.height = "90px";
-	p_node.style.align = "horizon: middle; vertical: middle;";
+	chart = new google.visualization.ColumnChart(document.getElementById("info_graph"));			
 	
-	var c_node = p_node.appendChild(document.createElement('div'));	
+	// 상세보기 버튼 이벤트
+	google.visualization.events.addListener(chart, 'ready',
+			  function() {
+				btn.style.visibility = 'visible';
+				btn.value = 'test';
+			  });
 	
-	//chart = new google.visualization.ColumnChart(c_node);
-	chart = new google.visualization.ColumnChart(document.getElementById("info_graph"));
+	btn.onclick = function() {
+		}
+	
 	chart.draw(view, options);
-
-	//google.visualization.ColumnChart(document.getElementById("info_graph"));
 }
 
 function getMksInfo() {
@@ -152,13 +157,20 @@ function setMapOnAll() {
 		}
 	}
 }
-function geocodeExcute(loc, next) {	
-	var initColorValue = parseInt("0000FF", 16);
-	var endColorValue = parseInt("FF0000" , 16);
-	var addValue = parseFloat( endColorValue - initColorValue ) / (addname.length+1) ;
+
+function geocodeExcute(loc, next) {	var initColorValue = parseInt("0000FF", 16);
+	/*var endColorValue = parseInt("FF0000", 16);
+	var addValue = parseFloat(endColorValue - initColorValue) / (addname.length + 1);
 
 	var pinColorHex = "0000FF";
-	var pinColorInt = parseInt(pinColorHex , 16) + parseInt((geoIter+1) * addValue);
+	var pinColorInt = parseInt(pinColorHex, 16) + parseInt((geoIter + 1) * addValue);*/
+	var redColor = "FF0000";
+	var greenColor = "2EFE64";	
+	var color = "";
+	
+	if( normalUsedDongList.indexOf(loc) != -1)
+		color = greenColor;
+	else color = redColor;
 	
 	if (loc != "인천광역시")
 		loc = "인천광역시 " + loc;
@@ -167,10 +179,10 @@ function geocodeExcute(loc, next) {
 		{ 'address' : loc },
 		function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
-				pinColorHex = pinColorInt.toString(16);
+				//pinColorHex = pinColorInt.toString(16);
 
 				var sName = results[0].address_components[0].short_name.toString();
-				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColorHex,
+				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + color,//pinColorHex,
 					new google.maps.Size(21, 34),
 					new google.maps.Point(0,0),
 					new google.maps.Point(10, 34));
