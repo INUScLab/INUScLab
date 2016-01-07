@@ -15,24 +15,22 @@ public class ConsumptionCtrl {
 		dbconnector.disconnect();
 	}
 	
-	// 오늘부터 7일간의 데이터를 각각 반환
-	public ArrayList<String[]> get7dayUsage(int code) {
+	// 일사용량(7일)
+	public ArrayList<ArrayList<String>> get7dayUsage(String umdong) {
+
+		ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
 		
-		ArrayList<String[]> datas = new ArrayList<String[]>();
+		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = ANY(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28' group by DATE order by DATE DESC;";
 		
-		String sql = "select CONSUMED, PREDICTED from CONSUMPTION where CODE = " + code + " and DATE between '2015-02-01' and '2015-02-07' order by DATE desc;";
-		
-		System.out.println(sql);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				String[] usage = new String[2];
+				ArrayList<String> usage = new ArrayList<String>();
 				
-				usage[0] = rs.getString("consumed");
-				usage[1] = rs.getString("predicted");
-				System.out.println(usage[0]+ "," + usage[1]);
+				usage.add(rs.getString("sum(CONSUMED)"));
+				usage.add(rs.getString("sum(PREDICTED)"));
 				datas.add(usage);
 			}
 			rs.close();
@@ -42,25 +40,20 @@ public class ConsumptionCtrl {
 		return datas;
 	}
 	
-	// 오늘부터 일주일간의 데이터를 더하여 반환
-	public ArrayList<String[]> getWeekUsage(int code) {
+	// 주 사용량
+	public String[] getWeekUsage(String umdong) {
 		
-		ArrayList<String[]> datas = new ArrayList<String[]>();
+		String[] datas = new String[2];
 		
-		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = " + code + " and DATE between '2015-02-01' and '2015-02-07';";
+		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = ANY(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28';";
 		
-		System.out.println(sql);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				String[] usage = new String[2];
-				
-				usage[0] = rs.getString("sum(CONSUMED)");
-				usage[1] = rs.getString("sum(PREDICTED)");
-				System.out.println(usage[0]+ "," + usage[1]);
-				datas.add(usage);
+				datas[0] = rs.getString("sum(CONSUMED)");
+				datas[1] = rs.getString("sum(PREDICTED)");
 			}
 			rs.close();
 			
@@ -70,67 +63,26 @@ public class ConsumptionCtrl {
 		return datas;
 	}
 	
-	// 오늘부터 한달간의 데이터를 더하여 반환
-	public ArrayList<String[]> getMonthUsage(int code) {
+	// 월 사용량
+	public String[] getMonthUsage(String umdong) {
 		
-		ArrayList<String[]> datas = new ArrayList<String[]>();
+		String[] datas = new String[2];
 		
-		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = " + code + " and DATE between '2015-02-01' and '2015-02-28' order by DATE desc;";
+		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = ANY(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28';";
 		
-		System.out.println(sql);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				String[] usage = new String[2];
-				
-				usage[0] = rs.getString("sum(CONSUMED)");
-				usage[1] = rs.getString("sum(PREDICTED)");
-				System.out.println(usage[0]+ "," + usage[1]);
-				datas.add(usage);
+				datas[0] = rs.getString("sum(CONSUMED)");
+				datas[1] = rs.getString("sum(PREDICTED)");
 			}
 			rs.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return datas;
-	}
-	
-	// 오늘부터 7일간의 데이터를 같은 동에 해당하는 사람들의 값을 모두 더하여 반환
-	public ArrayList<String[]> getAll7dayUsage(ArrayList<Integer> codes) {
-		
-		ArrayList<String[]> datas = new ArrayList<String[]>();
-		
-		Iterator it = codes.iterator();
-		ArrayList<String[]> day7usage = new ArrayList<String[]>();
-		
-		while (it.hasNext()) {
-			String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = " + it.next() + " and DATE between '2015-02-01' and '2015-02-28' order by DATE desc;";
-			
-			System.out.println(sql);
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();
-				
-				while(rs.next()){
-					String[] usage = new String[2];
-					
-					usage[0] = rs.getString("consumed");
-					usage[1] = rs.getString("predicted");
-					
-					System.out.println(usage[0]+ "," + usage[1]);
-					datas.add(usage);
-				}
-				rs.close();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
 		return datas;
 	}
 }

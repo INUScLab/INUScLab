@@ -9,7 +9,10 @@
 <jsp:useBean id="User" class="sclab.db.User" />
 <jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
 <%
-
+ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
+ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
+//System.out.println(overUsedDongList);
+//System.out.println(normalUsedDongList);
 %>
 
 <div id="map_canvas" style="width: 100%; height: 100%;">

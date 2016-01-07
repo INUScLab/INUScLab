@@ -13,7 +13,7 @@
 </head>
 <body onload="initialize(0, 0)">
 	<!--전체 태그-->
-	<div id="main_page">
+	<div class="wrapper">
 		<!--헤더 태그-->
 		<div id="main_header">
 			<nav class="info_r">
@@ -32,7 +32,7 @@
 					<ul class="nav main_menu_list">
 						<li role="presentation" class="active"><a href="#"><span>MAP</span></a> </li>
 						<li role="presentation"><a href="#"><span>ALERT</span></a> </li>
-						<li role="presentation"><a href="#"><span>REPORT</span></a> </li>
+						<li role="presentation"><a href="reportpage.jsp"><span>REPORT</span></a> </li>
 						<li role="presentation"><a href="#"><span>SERVICE</span></a> </li>
 					</ul>
 					<ul class="main_logo_list">
