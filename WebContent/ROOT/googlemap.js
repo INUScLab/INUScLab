@@ -363,6 +363,7 @@ function initialize(x, y) {
 	globalMap.addListener('zoom_changed', function() {
 //	    console.log('Zoom: ' + globalMap.getZoom() );
 	    console.log('Zoom: ' + globalMap.getCenter() );
+	    //줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력. 
 	  });
 }
 
@@ -427,7 +428,7 @@ function getMksInfo() {
 function getDetailAreaInformation( marker ) {
 	
 	//맵의 줌이 확대됨.
-	var zoom = init_zoom + 3;
+	var zoom = init_zoom + 3; //구글에서 동을 검색했을때 확대되는 줌 값.
 	globalMap.setCenter( marker.position);
 	globalMap.setOptions( { 'zoom' : zoom } ) ;	
 
