@@ -14,6 +14,8 @@ var visable = new Array();
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
 	var ret = [ 
+	           
+    /*
 	new google.maps.LatLng(37.4706225, 126.62348259999999), // 해안동4가
 	new google.maps.LatLng(37.4713196, 126.6222775), // 해안동3가
 	new google.maps.LatLng(37.4721283, 126.62117690000002), // 해안동2가
@@ -191,6 +193,9 @@ function retAddress(num) {
 	new google.maps.LatLng(37.46607059999999, 126.71452569999997), // 간석3동
 	new google.maps.LatLng(37.4616541, 126.70894339999995), // 간석2동
 	new google.maps.LatLng(37.4585714, 126.70530480000002), // 간석1동
+	*/
+	
+	/************** 남구 *******************/
 	new google.maps.LatLng(37.4464052, 126.66750290000004), // 학익2동
 	new google.maps.LatLng(37.4399059, 126.66392040000005), // 학익1동
 	new google.maps.LatLng(37.4495722, 126.68933470000002), // 주안8동
@@ -212,6 +217,10 @@ function retAddress(num) {
 	new google.maps.LatLng(37.4674306, 126.6647256), // 도화2.3동
 	new google.maps.LatLng(37.4608476, 126.67380789999993), // 도화1동
 	new google.maps.LatLng(37.444267, 126.69686109999998), // 관교동
+	/**********************************/
+	
+	
+	/*
 	new google.maps.LatLng(37.5250633, 126.71002450000003), // 효성2동
 	new google.maps.LatLng(37.5324505, 126.71210710000003), // 효성1동
 	new google.maps.LatLng(37.5807815, 126.78688569999997), // 하야동
@@ -268,6 +277,7 @@ function retAddress(num) {
 	new google.maps.LatLng(37.53695039999999, 126.73774349999997), // 계양구
 	new google.maps.LatLng(37.7467263, 126.4878731), // 강화군
 	new google.maps.LatLng(37.4562557, 126.70520620000002), // 인천광역시
+	*/
 	];
 
 	return ret[parseInt(num)];
@@ -348,6 +358,12 @@ function initialize(x, y) {
 	btn = document.getElementById("btn_detail");
 	// 그래프 그려지기 전까지 disable
 	btn.style.visibility = 'hidden';
+	
+	
+	globalMap.addListener('zoom_changed', function() {
+//	    console.log('Zoom: ' + globalMap.getZoom() );
+	    console.log('Zoom: ' + globalMap.getCenter() );
+	  });
 }
 
 function setData(cons, pred, name) {
@@ -393,17 +409,32 @@ function setData(cons, pred, name) {
 	chart.draw(view, options);
 }
 
+
 function getMksInfo() {
 	for (var i = 0; i < markers.length; i++) {
 		markers[i].addListener('click',
 				function() {
 					var idx = this.get("id");
-					console.log(idx);
+					console.log(this);
 					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
 							addname[idx]);
+					getDetailAreaInformation(this);
 				});
 	}
 
+}
+
+function getDetailAreaInformation( marker ) {
+	
+	//맵의 줌이 확대됨.
+	var zoom = init_zoom + 3;
+	globalMap.setCenter( marker.position);
+	globalMap.setOptions( { 'zoom' : zoom } ) ;	
+
+	//동에 해당하는 상세 주소 리스트를 받아옴.
+	
+	//상세 주소 리스트의 개수만큼 마커를 생성하고 띄움.
+	
 }
 
 // Sets the map on all markers in the array.
