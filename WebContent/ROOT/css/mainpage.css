@@ -15,6 +15,7 @@
 	width: 200px;
 	height: 99%;
 	background-color: #ffffff;
+	z-index:1;
 }
 
 .left_section_box .graph_section_box {
@@ -28,6 +29,46 @@
 	text-align: center;
 	vertical-align : middle;
 }
+
+/*temp*/
+#main_content .left_section_box2 {
+	position: absolute;
+	top: 0.5%; left: 0;
+	width: 300px;
+	height: 99%;
+	background-color: #ffffff;
+	z-index:2;
+}
+
+.left_section_box2 .info_date {
+	width: 100%;
+	height: 40px;
+	border: thin solid black;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_graph {
+	width: 100%;
+	height: 30%;
+	border: thin solid black;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_history {
+	width: 100%;
+	height: 30%;
+	border: thin solid black;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_service {
+	width: 100%;
+	height: 30%;
+	border: thin solid black;
+	margin-bottom: 5px;
+}
+
+/*temp*/
 
 /*tree part*/
 .left_section_box .tree_section_box {
