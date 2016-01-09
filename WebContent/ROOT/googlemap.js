@@ -10,7 +10,8 @@ var load_info;
 var addname = new Array();
 var markers = new Array();
 var visable = new Array();
-var geocoder= new google.maps.Geocoder();
+var geocoder = new google.maps.Geocoder();
+var searchMarkers = [];
 
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
@@ -417,19 +418,22 @@ function getMksInfo() {
 					console.log(this);
 					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
 							addname[idx]);
+					// 동을 클릭했을때
 					getDetailAreaInformation(this);
 				});
 	}
 
 }
 
+// 동을 클릭했을때
 function getDetailAreaInformation(marker) {
 
-	// 맵의 줌이 확대됨.
-	var zoom = init_zoom + 3; // 구글에서 동을 검색했을때 확대되는 줌 값.
 	globalMap.setCenter(marker.position);
+
+	// 맵의 줌이 확대됨.
+	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	globalMap.setOptions({
-		'zoom' : zoom
+		'zoom' : globalMap.getZoom() + 3
 	});
 
 	// 동에 해당하는 상세 주소 리스트를 받아옴.
@@ -546,13 +550,13 @@ function geocodeAddress() {
 	}
 }
 
-function codeAddress() {
+var searchMarker = new google.maps.Marker();
 
+function codeAddress() {
 
 	// Get Address from HTML
 	var address = document.getElementById("pac-input").value;
 	var color = "0000FF";
-
 
 	var pinImage = new google.maps.MarkerImage(
 			"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
@@ -562,25 +566,40 @@ function codeAddress() {
 			"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
 			new google.maps.Size(40, 37), new google.maps.Point(0, 0),
 			new google.maps.Point(12, 35));
-	
+
 	console.log("codeAddress");
 	geocoder.geocode({
 		'address' : address
 	}, function(results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
-			console.log(address);
+
+			searchMarker.setMap(null);
 
 			// Locate to map
 			globalMap.setCenter(results[0].geometry.location);
 
-			// Create Marker
-			var marker = new google.maps.Marker({
-				map : globalMap,
-				position : results[0].geometry.location,
-				icon : pinImage,
-				shadow : pinShadow
-			});
+			// if address is dong or block or specific area , zoom level + 3
+			if (address == "부개동") {
+				globalMap.setOptions({
+					'zoom' : globalMap.getZoom() + 3
+				});
+				
+			// if address is not a dong or specific area , restore zoom level to 13	
+			} else {
+				
+				globalMap.setOptions({
+					'zoom' : 13
+				});
 
+				// Create Marker
+				searchMarker = new google.maps.Marker({
+					map : globalMap,
+					position : results[0].geometry.location,
+					icon : pinImage,
+					shadow : pinShadow
+				});
+				searchMarkers.push(marker);
+			}
 
 		} else {
 			alert('Geocode was not successful for the following reason: '
