@@ -7,7 +7,6 @@
 <link rel="stylesheet" type="text/css" href="css/headerCSS.css">
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <link rel="stylesheet" type="text/css" href="css/reportpage.css">
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&region=KR"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script type="text/javascript" src='https://www.google.com/jsapi?autoload={
 	"modules":[{

@@ -365,7 +365,12 @@ function initialize(x, y) {
 		console.log('Zoom: ' + globalMap.getCenter());
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 	});
+	
+	//autoComplete Event
+	var autocomplete = new google.maps.places.Autocomplete(input);
+	google.maps.event.addDomListener(window, 'load', initialize);
 }
+
 
 function setData(cons, pred, name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
@@ -583,10 +588,11 @@ function codeAddress() {
 				globalMap.setOptions({
 					'zoom' : globalMap.getZoom() + 3
 				});
-				
-			// if address is not a dong or specific area , restore zoom level to 13	
+
+				// if address is not a dong or specific area , restore zoom
+				// level to 13
 			} else {
-				
+
 				globalMap.setOptions({
 					'zoom' : 13
 				});
