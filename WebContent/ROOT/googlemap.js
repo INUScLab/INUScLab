@@ -455,7 +455,7 @@ function getMksInfo() {
 					
 					drawHistory();
 
-					globalMap.setCenter(marker.position);
+					globalMap.setCenter(this.position);
 					
 					// 동을 클릭했을때
 					getDetailAreaInformation();
@@ -467,7 +467,7 @@ function getMksInfo() {
 // 동을 클릭했을때
 function getDetailAreaInformation() {
 
-
+	console.log(globalMap.getZoom());
 	// 맵의 줌이 확대됨.
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if(globalMap.getZoom() != 16 ) {
