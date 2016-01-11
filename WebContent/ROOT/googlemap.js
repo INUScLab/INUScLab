@@ -364,6 +364,8 @@ function initialize(x, y) {
 	//autoComplete Event
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
 }
 
 
@@ -453,7 +455,8 @@ function getMksInfo() {
 					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
 							addname[idx]);
 					
-					drawHistory();
+					drawHistory();	// history 그래프 그리기
+					service.style.visibility="visible";	// 부가서비스 테이블 보여주기
 
 					globalMap.setCenter(this.position);
 					
