@@ -390,7 +390,7 @@ function setData(cons, pred, name) {
 		title : name,
 	//	width : 300,
 	//	height : 260,
-		fontSize : 10,
+		fontSize : 12,
 		bar : {
 			groupWidth : "95%"
 		},
