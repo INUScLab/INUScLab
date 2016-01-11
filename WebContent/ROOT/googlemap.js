@@ -454,23 +454,27 @@ function getMksInfo() {
 							addname[idx]);
 					
 					drawHistory();
+
+					globalMap.setCenter(marker.position);
+					
 					// 동을 클릭했을때
-					getDetailAreaInformation(this);
+					getDetailAreaInformation();
 				});
 	}
 
 }
 
 // 동을 클릭했을때
-function getDetailAreaInformation(marker) {
+function getDetailAreaInformation() {
 
-	globalMap.setCenter(marker.position);
 
 	// 맵의 줌이 확대됨.
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
-	globalMap.setOptions({
-		'zoom' : globalMap.getZoom() + 3
-	});
+	if(globalMap.getZoom() != 16 ) {
+		globalMap.setOptions({
+			'zoom' : globalMap.getZoom() + 3
+		});
+	}
 
 	// 동에 해당하는 상세 주소 리스트를 받아옴.
 
@@ -616,9 +620,7 @@ function codeAddress() {
 
 			// if address is dong or block or specific area , zoom level + 3
 			if (address == "부개동") {
-				globalMap.setOptions({
-					'zoom' : globalMap.getZoom() + 3
-				});
+				getDetailAreaInformation();
 
 				// if address is not a dong or specific area , restore zoom
 				// level to 13
