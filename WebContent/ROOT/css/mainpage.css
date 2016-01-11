@@ -117,7 +117,7 @@
 	border: thin solid black;
 	position: absolute;
 	top: 0.5%; right: 0.1%;
-	width: 99.6%;
+	width: 990px;
 	height: 99%;
 	background-color: #ffffff;
 }
@@ -181,10 +181,15 @@ html, body {
 }
 
 .map_section_box .color-interpolation {
-	margin-left: 140px;
-	margin-bottom: 20px;
-    width: 200px;
-    height: 30px;
+	margin-bottom: 10px;
+    width: 150px;
+    height: 20px;
     background: -webkit-linear-gradient(left, lime , red);
     border: solid 2px #000;
+}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
 }
