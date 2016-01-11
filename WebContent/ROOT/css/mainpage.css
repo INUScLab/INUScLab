@@ -113,11 +113,15 @@
 }
 
 /* map part*/
+#include_contents{
+	width:100%;
+
+}
 #main_content .map_section_box {
 	border: thin solid black;
 	position: absolute;
-	top: 0.5%; right: 0.1%;
-	width: 990px;
+	top: 0.5%; right: 0.1%; left:303px;
+	width: 76.5%;
 	height: 99%;
 	background-color: #ffffff;
 }
