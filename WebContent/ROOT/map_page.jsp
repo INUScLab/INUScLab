@@ -12,17 +12,13 @@
 			<jsp:include page="treemenu.jsp" flush="false" />
 		</div>
 	</div>
-	<div class="graph_section_box">
-		<hr>
-		<div id="info_graph" class="graph"></div>
-		<button id="btn_detail">상세 보기</button>
-	</div>
 
 </div>
 
 <div class="left_section_box2">
-	<div class="info_date">날짜</div>
-	<div class="info_graph">그래프</div>
-	<div class="info_history">1주일 history</div>
-	<div class="info_service">부가서비스</div>
+	<div class="info_date"></div>
+	<div class="info_graph" id="info_graph"></div>
+	<div class="info_history" id="info_history"></div>
+	<div class="info_service" id="info_service">
+	</div>
 </div>

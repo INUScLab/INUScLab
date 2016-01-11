@@ -355,11 +355,6 @@ function initialize(x, y) {
 
 	geocodeAddress();
 
-	// 상세보기 버튼
-	btn = document.getElementById("btn_detail");
-	// 그래프 그려지기 전까지 disable
-	btn.style.visibility = 'hidden';
-
 	globalMap.addListener('zoom_changed', function() {
 		// console.log('Zoom: ' + globalMap.getZoom() );
 		console.log('Zoom: ' + globalMap.getCenter());
@@ -376,7 +371,9 @@ function setData(cons, pred, name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
 	} ], [ '사용량', cons, '#b87333' ], // RGB value
-	[ '예측량', pred, 'silver' ] // English color name
+	[ '예측량', pred, 'silver' ], // English color name
+	[ '일주일 평균', cons, '#b87333' ],
+	[ '지역 평균', cons, '#b87333' ]
 	]);
 
 	var view = new google.visualization.DataView(data);
@@ -389,8 +386,8 @@ function setData(cons, pred, name) {
 
 	var options = {
 		title : name,
-		width : 200,
-		height : 160,
+	//	width : 300,
+	//	height : 260,
 		fontSize : 10,
 		bar : {
 			groupWidth : "95%"
@@ -403,17 +400,49 @@ function setData(cons, pred, name) {
 	chart = new google.visualization.ColumnChart(document
 			.getElementById("info_graph"));
 
-	// 상세보기 버튼 이벤트
-	google.visualization.events.addListener(chart, 'ready', function() {
-		btn.style.visibility = 'visible';
-		btn.value = 'test';
-	});
-
-	btn.onclick = function() {
-	}
-
 	chart.draw(view, options);
 }
+
+function drawHistory() {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Time of Day');
+    data.addColumn('number', 'Rating');
+
+    /* 
+    data.addRows([
+      [new Date(2015, 1, 22), <%=days7Usage.get(6).get(0)%>],  [new Date(2015, 1, 23), <%=days7Usage.get(5).get(0)%>],  [new Date(2015, 1, 24), <%=days7Usage.get(4).get(0)%>],  [new Date(2015, 1, 25), <%=days7Usage.get(3).get(0)%>],
+      [new Date(2015, 1, 26), <%=days7Usage.get(2).get(0)%>],  [new Date(2015, 1, 27), <%=days7Usage.get(1).get(0)%>],  [new Date(2015, 1, 28), <%=days7Usage.get(0).get(0)%>],
+    ]);
+     */
+
+    data.addRows([
+                  [new Date(2015, 1, 22), 100],  [new Date(2015, 1, 23), 300],  [new Date(2015, 1, 24), 200],  [new Date(2015, 1, 25), 400],
+                  [new Date(2015, 1, 26), 300],  [new Date(2015, 1, 27), 300],  [new Date(2015, 1, 28), 600],
+                ]);
+
+
+    var options = {
+            //width: 900,
+            //height: 500,
+            hAxis: {
+              format: 'yy-MM-dd'
+              //gridlines: {count: 15}
+            },
+            vAxis: {
+              gridlines: {color: 'none'},
+              minValue: 900,
+              maxValue:1100
+            },
+            legend : {
+    			position : "none"
+    		}
+          };
+
+    var chart = new google.visualization.LineChart(document.getElementById('info_history'));
+
+    chart.draw(data, options);
+  }
 
 function getMksInfo() {
 	for (var i = 0; i < markers.length; i++) {
@@ -423,6 +452,8 @@ function getMksInfo() {
 					console.log(this);
 					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
 							addname[idx]);
+					
+					drawHistory();
 					// 동을 클릭했을때
 					getDetailAreaInformation(this);
 				});
