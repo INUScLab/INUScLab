@@ -388,9 +388,13 @@ function setData(cons, pred, name) {
 
 	var options = {
 		title : name,
+		titleTextStyle: {
+			color: "black",
+			fontSize : 17
+		},
 	//	width : 300,
 	//	height : 260,
-		fontSize : 10,
+		fontSize : 11,
 		bar : {
 			groupWidth : "95%"
 		},
@@ -419,14 +423,20 @@ function drawHistory() {
      */
 
     data.addRows([
-                  [new Date(2015, 1, 22), 100],  [new Date(2015, 1, 23), 300],  [new Date(2015, 1, 24), 200],  [new Date(2015, 1, 25), 400],
-                  [new Date(2015, 1, 26), 300],  [new Date(2015, 1, 27), 300],  [new Date(2015, 1, 28), 600],
+                  [new Date(2015, 1, 22), 200],  [new Date(2015, 1, 23), 500],  [new Date(2015, 1, 24), 300],  [new Date(2015, 1, 25), 700],
+                  [new Date(2015, 1, 26), 500],  [new Date(2015, 1, 27), 400],  [new Date(2015, 1, 28), 600],
                 ]);
 
 
     var options = {
             //width: 900,
             //height: 500,
+    		title : "일주일 간 history",
+    		
+    		titleTextStyle: {
+    			color: "black",
+    			fontSize : 17
+    		},
             hAxis: {
               format: 'yy-MM-dd'
               //gridlines: {count: 15}

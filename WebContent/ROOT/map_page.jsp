@@ -16,7 +16,7 @@
 </div>
 
 <div class="left_section_box2">
-	<div class="info_date"></div>
+	<div class="info_date" id="info_date"></div>
 	<div class="info_graph" id="info_graph"></div>
 	<div class="info_history" id="info_history"></div>
 	<div class="info_service" id="info_service">
