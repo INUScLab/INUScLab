@@ -637,7 +637,6 @@ function codeAddress() {
 					icon : pinImage,
 					shadow : pinShadow
 				});
-				searchMarkers.push(marker);
 			}
 
 		} else {
@@ -647,4 +646,4 @@ function codeAddress() {
 	});
 
 }
-//내껄로 되돌아감.
+//내껄로 되돌아감. 되돌아
