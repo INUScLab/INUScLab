@@ -356,9 +356,16 @@ function initialize(x, y) {
 	geocodeAddress();
 
 	globalMap.addListener('zoom_changed', function() {
-		// console.log('Zoom: ' + globalMap.getZoom() );
-		console.log('Zoom: ' + globalMap.getCenter());
+
+		if( globalMap.getZoom() < 16) {
+			//모든 동의 마커 출력.
+		}
+		
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
+		else if ( globalMap.getZoom() == 16 ) {
+//		console.log('Zoom: ' + globalMap.getCenter());
+			
+		}
 	});
 	
 	//autoComplete Event
@@ -470,24 +477,25 @@ function getMksInfo() {
 
 					globalMap.setCenter(this.position);
 					
-					// 동을 클릭했을때
+					// 동 혹은 상세주소 마커를 클릭했을때
 					getDetailAreaInformation();
 				});
 	}
 
 }
 
-// 동을 클릭했을때
 function getDetailAreaInformation() {
 
 	console.log(globalMap.getZoom());
 	// 맵의 줌이 확대됨.
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
-	if(globalMap.getZoom() != 16 ) {
+	if(globalMap.getZoom() < 16 ) {
 		globalMap.setOptions({
 			'zoom' : 16
 		});
 	}
+
+
 
 	// 동에 해당하는 상세 주소 리스트를 받아옴.
 
