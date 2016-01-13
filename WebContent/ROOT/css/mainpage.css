@@ -152,10 +152,10 @@ html, body {
 	font-family: Roboto;
 	font-size: 15px;
 	font-weight: 300;
-	margin-right: 15px;
+	margin-left: 15px;
 	padding: 0 11px 0 13px;
 	text-overflow: ellipsis;
-	width: 200px;
+	width: 300px;
 }
 
 .controls {

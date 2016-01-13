@@ -26,7 +26,7 @@ public class UserConsumptionCtrl {
 		int absence;
 		int overused;
 		
-		String sql = "SELECT UMDONG.U , DETAIL.U , LAT.U , LNG.U , CONSUMED.C , PREDICTED.C , LEAK.C , ABSENCE.C , OVERUSED.C FROM USER AS U , CONSUMPTION AS C WHERE USER.CODE == CONSUMPTION.CODE AND CONSUMPTION.DATE = '2015-02-28'  ";
+		String sql = "SELECT UMDONG.U , DETAIL.U , LAT.U , LNG.U , CONSUMED.C , PREDICTED.C , LEAK.C , ABSENCE.C , OVERUSED.C FROM USER AS U , CONSUMPTION AS C WHERE USER.CODE = CONSUMPTION.CODE AND CONSUMPTION.DATE = '2015-02-28'  ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
@@ -42,7 +42,7 @@ public class UserConsumptionCtrl {
 				overused= rs.getInt("OVERUSED");
 				
 				UserConsumption userConsumption = new UserConsumption(umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
-				userConsumptionList.add(userConsumption);
+//				userConsumptionList.add(userConsumption);
 			}
 			rs.close();
 		} catch (SQLException e) {

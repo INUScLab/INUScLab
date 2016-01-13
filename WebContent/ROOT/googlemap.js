@@ -342,7 +342,7 @@ function initialize(x, y) {
 	colorBox.hidden = true;
 
 	// Appending boxes
-	globalMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
 	load_info = new google.maps.InfoWindow();
@@ -485,7 +485,7 @@ function getDetailAreaInformation() {
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if(globalMap.getZoom() != 16 ) {
 		globalMap.setOptions({
-			'zoom' : globalMap.getZoom() + 3
+			'zoom' : 16
 		});
 	}
 
@@ -534,6 +534,7 @@ function geocodeExcute(loc, next) {
 	});
 	marker.set("type", "point");
 	marker.set("id", markers.length.toString());
+	
 	// globalBounds.extend(marker.position);
 
 	markers.push(marker);
@@ -630,6 +631,8 @@ function codeAddress() {
 
 			// Locate to map
 			globalMap.setCenter(results[0].geometry.location);
+			console.log("lat",address , results[0].geometry.location.lat() );
+			console.log("lng",address , results[0].geometry.location.lng() );
 
 			// if address is dong or block or specific area , zoom level + 3
 			if (address == "부개동") {
