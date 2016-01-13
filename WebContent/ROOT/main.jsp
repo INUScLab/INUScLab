@@ -20,9 +20,13 @@
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="User" class="sclab.db.User" />
 <jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
+<jsp:useBean id="UserConsumption" class="sclab.db.UserConsumption" />
+<jsp:useBean id="UserConsumptionCtrl" class="sclab.db.UserConsumptionCtrl" />
 <%
 	ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
 	ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
+	
+	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
 	//System.out.println(overUsedDongList);
 	//System.out.println(normalUsedDongList.size());
 %>
@@ -30,6 +34,34 @@
 <script type="text/javascript">	
 	var overUsedDongList = new Array();
 	var normalUsedDongList = new Array();
+	/*
+	var userConsumption = {
+			umDong:"" ,
+			detail:"",
+			lat:"",
+			lng:"",
+			consumed:"",
+			predicted:"",
+			leak:"",
+			absence:"",
+			overused:""
+	};
+	
+	UserConsumpyion = function(umDong, detial, lat , lng , consumed , predicted , leak , absence , overused ){
+	    this.umdong = umDong;
+	    this.detial = detial;
+	    this.lat = lat;
+	    this.lng = lng;
+	    this.consumed = consumed;
+	    this.predicted = predicted;
+	    this.leak = leak;
+	    this.absence = absence;
+	    this.overused = overused;
+	    
+	    this.compareToById = function(other){ return this.id - other.id; }
+	    this.compareToByGrade = function(other){ return this.grade - other.grade; }
+	}
+	*/
 	
 	<% for (int i=0; i<overUsedDongList.size(); i++) { %>
 	overUsedDongList[<%= i %>] = "<%= overUsedDongList.get(i) %>"; 
@@ -37,6 +69,21 @@
 	
 	<% for (int i=0; i<normalUsedDongList.size(); i++) { %>
 	normalUsedDongList[<%= i %>] = "<%= normalUsedDongList.get(i) %>"; 
+	<% } %>
+	
+	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
+	userConsumptionList[<%= i %>] = "<%= userConsumptionList.get(i) %>"; 
+	userConsumptionList.push( {
+		umDong:"<%= userConsumptionList.get(i).getUmDong() %>",
+		detail:"<%= userConsumptionList.get(i).getDetail() %>",
+		lat:"<%= userConsumptionList.get(i).getLat() %>",
+		lng:"<%= userConsumptionList.get(i).getLng() %>",
+		consumed:"<%= userConsumptionList.get(i).getConsumed() %>",
+		predicted:"<%= userConsumptionList.get(i).getPredicted() %>",
+		leak:"<%= userConsumptionList.get(i).getLeak() %>",
+		absence:"<%= userConsumptionList.get(i).getAbsence() %>",
+		overused:"<%= userConsumptionList.get(i).getOverused() %>",
+	});
 	<% } %>
 </script>
 </head>

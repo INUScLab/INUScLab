@@ -24,19 +24,19 @@ public class UserConsumption {
 		this.overused  = overused;
 	}
 
-	public String getumDong() {
+	public String getUmDong() {
 		return umDong;
 	}
 
-	public void setumDong(String umDong) {
+	public void setUmDong(String umDong) {
 		this.umDong = umDong;
 	}
 
-	public String getBlock() {
+	public String getDetail() {
 		return detail;
 	}
 
-	public void setBlock(String detail) {
+	public void setDetail(String detail) {
 		this.detail = detail;
 	}
 
@@ -95,5 +95,6 @@ public class UserConsumption {
 	public void setOverused(int overused) {
 		this.overused = overused;
 	}
+
 	
 }
