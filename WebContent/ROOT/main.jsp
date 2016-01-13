@@ -25,15 +25,13 @@
 <%
 	ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
 	ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
-	
 	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
-	//System.out.println(overUsedDongList);
-	//System.out.println(normalUsedDongList.size());
 %>
 
 <script type="text/javascript">	
 	var overUsedDongList = new Array();
 	var normalUsedDongList = new Array();
+	var userConsumptionList = new Array();
 	/*
 	var userConsumption = {
 			umDong:"" ,

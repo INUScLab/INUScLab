@@ -31,15 +31,15 @@ public class UserConsumptionCtrl {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				umDong = rs.getString("U.UMDONG");
-				detail = rs.getString("U.DETAIL");
-				lat = rs.getDouble("U.LAT");
-				lng = rs.getDouble("U.LNG");
-				consumed = rs.getDouble("C.CONSUMED");
-				predicted = rs.getDouble("C.PREDICTED");
-				leak = rs.getInt("C.LEAK");
-				absence = rs.getInt("C.ABSENCE");
-				overused= rs.getInt("C.OVERUSED");
+				umDong = rs.getString("UMDONG");
+				detail = rs.getString("DETAIL");
+				lat = rs.getDouble("LAT");
+				lng = rs.getDouble("LNG");
+				consumed = rs.getDouble("CONSUMED");
+				predicted = rs.getDouble("PREDICTED");
+				leak = rs.getInt("LEAK");
+				absence = rs.getInt("ABSENCE");
+				overused= rs.getInt("OVERUSED");
 				
 				UserConsumption userConsumption = new UserConsumption(umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
 				userConsumptionList.add(userConsumption);

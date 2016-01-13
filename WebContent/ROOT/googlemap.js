@@ -496,6 +496,7 @@ function getDetailAreaInformation() {
 	}
 
 
+	console.log(userConsumptionList);
 
 	// 동에 해당하는 상세 주소 리스트를 받아옴.
 
