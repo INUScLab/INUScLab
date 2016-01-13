@@ -12,9 +12,9 @@ public class UserConsumptionCtrl {
 	Connection conn = dbconnector.getConn();
 	PreparedStatement pstmt = dbconnector.getPstmt();
 
-	public ArrayList<ArrayList<UserConsumption>> getUSerConsumption ( ) {
+	public ArrayList<UserConsumption> getUSerConsumption ( ) {
 
-		ArrayList<ArrayList<UserConsumption>> userConsumptionList = new ArrayList<ArrayList<UserConsumption>> () ;
+		ArrayList<UserConsumption> userConsumptionList = new ArrayList<UserConsumption> () ;
 		
 		String umDong;
 		String detail;
@@ -26,7 +26,7 @@ public class UserConsumptionCtrl {
 		int absence;
 		int overused;
 		
-		String sql = "SELECT UMDONG.U , DETAIL.U , LAT.U , LNG.U , CONSUMED.C , PREDICTED.C , LEAK.C , ABSENCE.C , OVERUSED.C FROM USER AS U , CONSUMPTION AS C WHERE USER.CODE = CONSUMPTION.CODE AND CONSUMPTION.DATE = '2015-02-28'  ";
+		String sql = "SELECT U.UMDONG , U.DETAIL , U.LAT , U.LNG , C.CONSUMED , C.PREDICTED , C.LEAK , C.ABSENCE , C.OVERUSED FROM USER U INNER JOIN CONSUMPTION C ON U.CODE = C.CODE AND C.DATE = '2015-02-28'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
@@ -42,7 +42,7 @@ public class UserConsumptionCtrl {
 				overused= rs.getInt("OVERUSED");
 				
 				UserConsumption userConsumption = new UserConsumption(umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
-//				userConsumptionList.add(userConsumption);
+				userConsumptionList.add(userConsumption);
 			}
 			rs.close();
 		} catch (SQLException e) {
