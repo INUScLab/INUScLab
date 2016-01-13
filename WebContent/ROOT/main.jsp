@@ -22,44 +22,21 @@
 <jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
 <jsp:useBean id="UserConsumption" class="sclab.db.UserConsumption" />
 <jsp:useBean id="UserConsumptionCtrl" class="sclab.db.UserConsumptionCtrl" />
+<jsp:useBean id="GuDongLatLng" class="sclab.db.GuDongLatLng" />
+<jsp:useBean id="GuDongLatLngCtrl" class="sclab.db.GuDongLatLngCtrl" />
+
 <%
 	ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
 	ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
 	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
+	ArrayList<GuDongLatLng> guDongLatLngList = GuDongLatLngCtrl.getGuDongLatLngList();
 %>
 
 <script type="text/javascript">	
 	var overUsedDongList = new Array();
 	var normalUsedDongList = new Array();
 	var userConsumptionList = new Array();
-	/*
-	var userConsumption = {
-			umDong:"" ,
-			detail:"",
-			lat:"",
-			lng:"",
-			consumed:"",
-			predicted:"",
-			leak:"",
-			absence:"",
-			overused:""
-	};
-	
-	UserConsumpyion = function(umDong, detial, lat , lng , consumed , predicted , leak , absence , overused ){
-	    this.umdong = umDong;
-	    this.detial = detial;
-	    this.lat = lat;
-	    this.lng = lng;
-	    this.consumed = consumed;
-	    this.predicted = predicted;
-	    this.leak = leak;
-	    this.absence = absence;
-	    this.overused = overused;
-	    
-	    this.compareToById = function(other){ return this.id - other.id; }
-	    this.compareToByGrade = function(other){ return this.grade - other.grade; }
-	}
-	*/
+	var guDongLatLngList = new Array();
 	
 	<% for (int i=0; i<overUsedDongList.size(); i++) { %>
 	overUsedDongList[<%= i %>] = "<%= overUsedDongList.get(i) %>"; 
@@ -70,7 +47,6 @@
 	<% } %>
 	
 	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
-	userConsumptionList[<%= i %>] = "<%= userConsumptionList.get(i) %>"; 
 	userConsumptionList.push( {
 		umDong:"<%= userConsumptionList.get(i).getUmDong() %>",
 		detail:"<%= userConsumptionList.get(i).getDetail() %>",
@@ -81,6 +57,15 @@
 		leak:"<%= userConsumptionList.get(i).getLeak() %>",
 		absence:"<%= userConsumptionList.get(i).getAbsence() %>",
 		overused:"<%= userConsumptionList.get(i).getOverused() %>",
+	});
+	<% } %>
+	
+	<% for (int i=0; i<guDongLatLngList.size(); i++) { %>
+	guDongLatLngList.push( {
+		guGun:"<%= guDongLatLngList.get(i).getGuGun() %>",
+		umDong:"<%= guDongLatLngList.get(i).getUmDong() %>",
+		lat:"<%= guDongLatLngList.get(i).getLat() %>",
+		lng:"<%= guDongLatLngList.get(i).getLng() %>",
 	});
 	<% } %>
 </script>
