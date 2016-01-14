@@ -11,7 +11,8 @@ var addname = new Array();
 var markers = new Array();
 var visable = new Array();
 var geocoder = new google.maps.Geocoder();
-var searchMarkers = [];
+var searchMarkers = [ ];
+var dongMarkers =  [ ];
 
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
@@ -353,8 +354,10 @@ function initialize(x, y) {
 		icon : "null"
 	}));
 
-	geocodeAddress();
+//	geocodeAddress();
+	printDongMarker();
 
+	//Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
 
 		if( globalMap.getZoom() < 16) {
@@ -375,6 +378,46 @@ function initialize(x, y) {
 	service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
 }
 
+function printDongMarker( ) {
+	
+	var redColor = "FF0000";
+	var greenColor = "2EFE64";
+	var color = "";
+	var incheon = "인천광역시";
+
+	for ( var i = 0 ; i < guDongLatLngList.length ; i++ ) {
+		
+		//Check Dong's overUsedFlag
+		if (normalUsedDongList.indexOf(guDongLatLngList[i].umDong ) != -1)
+			color = greenColor;
+		else
+			color = redColor;
+		
+		var pinImage = new google.maps.MarkerImage(
+				"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+				+ color, new google.maps.Size(21, 34),
+				new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+		var pinShadow = new google.maps.MarkerImage(
+				"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+				new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+				new google.maps.Point(12, 35));
+		var position = new google.maps.LatLng(37.4706225, 126.62348259999999);
+	
+		//Craete marker
+		var marker = new google.maps.Marker({
+			title : incheon + " " + guDongLatLngList[i].guGun + " " + guDongLatLngList[i].umDong ,
+			position : new google.maps.LatLng(guDongLatLngList[i].lat , guDongLatLngList[i].lng ),
+			draggable : false,
+			icon : pinImage,
+			shadow : pinShadow,
+		});
+		
+		marker.setMap(globalMap);
+		markers.push(marker);
+		
+	}
+	getMksInfo();
+}
 
 function setData(cons, pred, name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
@@ -468,7 +511,6 @@ function getMksInfo() {
 		markers[i].addListener('click',
 				function() {
 					var idx = this.get("id");
-					console.log(this);
 					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
 							addname[idx]);
 					
@@ -476,30 +518,60 @@ function getMksInfo() {
 					service.style.visibility="visible";	// 부가서비스 테이블 보여주기
 
 					globalMap.setCenter(this.position);
+					var address = this.title;
+					var addressArray = address.split(' ');
+					console.log(addressArray);
 					
 					// 동 혹은 상세주소 마커를 클릭했을때
-					getDetailAreaInformation();
+					getDetailAreaInformation(addressArray);
 				});
 	}
 
 }
 
-function getDetailAreaInformation() {
+function getDetailAreaInformation( addressArray ) {
 
-	console.log(globalMap.getZoom());
-	// 맵의 줌이 확대됨.
+	var redColor = "FF0000";
+	var greenColor = "2EFE64";
+	var color = "";
+
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if(globalMap.getZoom() < 16 ) {
-		globalMap.setOptions({
-			'zoom' : 16
-		});
+		globalMap.setOptions({ 'zoom' : 16 });
 	}
-
-
-	console.log(userConsumptionList);
-
+	
 	// 동에 해당하는 상세 주소 리스트를 받아옴.
+	for (var i = 0 ; i < userConsumptionList.length ; i ++ ) {
+		if ( userConsumptionList[i].umDong == addressArray[2] ) {
 
+			//Create Marker
+			if ( userConsumptionList[i].overused == 0 )
+				color = greenColor;
+			else
+				color = redColor;
+			
+			var pinImage = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+					+ color, new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+			var pinShadow = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+					new google.maps.Point(12, 35));
+		
+			var marker = new google.maps.Marker({
+				title : addressArray[0] + " " + addressArray[1] + " " + addressArray[2] + " " + userConsumptionList[i].detail ,
+				position : new google.maps.LatLng(userConsumptionList[i].lat , userConsumptionList[i].lng ),
+				draggable : false,
+				icon : pinImage,
+				shadow : pinShadow,
+			});
+			
+			marker.setMap(globalMap);
+			
+			
+		}
+	}
 	// 상세 주소 리스트의 개수만큼 마커를 생성하고 띄움.
 
 }

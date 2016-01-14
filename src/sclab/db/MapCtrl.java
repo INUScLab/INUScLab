@@ -16,7 +16,7 @@ public class MapCtrl {
 
 		ArrayList<String> overUsedDongList = new ArrayList<String>();
 
-		String sql = "SELECT DISTINCT UMDONG FROM USER where sigoon='남구' and code in (SELECT DISTINCT code FROM CONSUMPTION WHERE overused=1 and DATE='2015-02-28')";
+		String sql = "SELECT DISTINCT UMDONG FROM USER where code in (SELECT DISTINCT code FROM CONSUMPTION WHERE overused=1 and DATE='2015-02-28')";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class MapCtrl {
 
 		ArrayList<String> normalDongList = new ArrayList<String>();
 
-		String sql = "SELECT DISTINCT UMDONG FROM USER where SIGOON = '남구' and UMDONG not in (SELECT DISTINCT UMDONG FROM USER where sigoon='남구' and code in (SELECT DISTINCT code FROM CONSUMPTION WHERE overused=1 and DATE='2015-02-28') )";
+		String sql = "SELECT DISTINCT UMDONG FROM USER where UMDONG not in (SELECT DISTINCT UMDONG FROM USER where code in (SELECT DISTINCT code FROM CONSUMPTION WHERE overused=1 and DATE='2015-02-28') )";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
