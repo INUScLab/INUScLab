@@ -340,13 +340,16 @@ function initialize(x, y) {
 	var colorBox = document.getElementById('color-interpolation');
 
 	// Hide boxes
+	/*
 	input.hidden = true;
 	colorBox.hidden = true;
-
+	*/
+	
 	// Appending boxes
 	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
+	/*
 	load_info = new google.maps.InfoWindow();
 	load_info.open(globalMap, new google.maps.Marker({
 		map : globalMap,
@@ -354,6 +357,7 @@ function initialize(x, y) {
 		draggable : false,
 		icon : "null"
 	}));
+	*/
 
 //	geocodeAddress();
 	createDongMarker();
@@ -528,7 +532,7 @@ function getMksInfo() {
 				var address = this.title;
 				var addressArray = address.split(' ');
 				
-				// 동 혹은 상세주소 마커를 클릭했을때
+				// 동 마커를 클릭했을때
 				getDetailAreaInformation(addressArray);
 			});
 	}
@@ -613,6 +617,7 @@ function getDetailAreaInformation( addressArray ) {
 	console.log(detailMarkers);
 	showDetailMarkers();
 
+	//상세주소를 클릭했을때 이벤트 
 	/*
 	for (var i = 0; i < detailMarkers.length; i++) {
 		detailMarkers[i].addListener('click',
@@ -759,15 +764,16 @@ function codeAddress() {
 
 			// Locate to map
 			globalMap.setCenter(results[0].geometry.location);
-			console.log("lat",address , results[0].geometry.location.lat() );
-			console.log("lng",address , results[0].geometry.location.lng() );
 
+			var dongList = normalUsedDongList.concat(overUsedDongList);
+			var addressArray = address.split(' ');
+			addressArray = addressArray[1] + " " + addressArray[2] + " " + addressArray[3];
+			addressArray = addressArray.split(" ");
+		
 			// if address is dong or block or specific area , zoom level + 3
-			if (address == "부개동") {
-				getDetailAreaInformation();
-
-				// if address is not a dong or specific area , restore zoom
-				// level to 13
+			if ( dongList.indexOf(addressArray[2]) != -1 ) {
+				getDetailAreaInformation(addressArray);
+				// if address is not a dong or specific area , restore zoom level to 13
 			} else {
 
 				globalMap.setOptions({
