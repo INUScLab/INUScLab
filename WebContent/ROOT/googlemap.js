@@ -13,6 +13,7 @@ var visable = new Array();
 var geocoder = new google.maps.Geocoder();
 var searchMarkers = [ ];
 var dongMarkers =  [ ];
+var detailMarkers = [ ];
 
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
@@ -355,18 +356,22 @@ function initialize(x, y) {
 	}));
 
 //	geocodeAddress();
-	printDongMarker();
+	createDongMarker();
 
 	//Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
-
+		console.log(globalMap.getZoom());
 		if( globalMap.getZoom() < 16) {
+			//상세 주소 마커 지우기.
+			hideDetailMarkers();
+			
 			//모든 동의 마커 출력.
+			showDongMarkers();
 		}
-		
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if ( globalMap.getZoom() == 16 ) {
-//		console.log('Zoom: ' + globalMap.getCenter());
+			
+//			console.log('Zoom: ' + globalMap.getCenter());
 			
 		}
 	});
@@ -378,7 +383,7 @@ function initialize(x, y) {
 	service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
 }
 
-function printDongMarker( ) {
+function createDongMarker( ) {
 	
 	var redColor = "FF0000";
 	var greenColor = "2EFE64";
@@ -412,10 +417,10 @@ function printDongMarker( ) {
 			shadow : pinShadow,
 		});
 		
-		marker.setMap(globalMap);
-		markers.push(marker);
+		dongMarkers.push(marker);
 		
 	}
+	showDongMarkers();
 	getMksInfo();
 }
 
@@ -507,40 +512,76 @@ function drawHistory() {
   }
 
 function getMksInfo() {
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].addListener('click',
-				function() {
-					var idx = this.get("id");
-					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
-							addname[idx]);
-					
-					drawHistory();	// history 그래프 그리기
-					service.style.visibility="visible";	// 부가서비스 테이블 보여주기
-
-					globalMap.setCenter(this.position);
-					var address = this.title;
-					var addressArray = address.split(' ');
-					console.log(addressArray);
-					
-					// 동 혹은 상세주소 마커를 클릭했을때
-					getDetailAreaInformation(addressArray);
-				});
+	
+	//동을 클릭했을때 이벤트 
+	for (var i = 0; i < dongMarkers.length; i++) {
+		dongMarkers[i].addListener('click',
+			function() {
+				var idx = this.get("id");
+				setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
+						addname[idx]);
+				
+				drawHistory();	// history 그래프 그리기
+				service.style.visibility="visible";	// 부가서비스 테이블 보여주기
+	
+				globalMap.setCenter(this.position);
+				var address = this.title;
+				var addressArray = address.split(' ');
+				
+				// 동 혹은 상세주소 마커를 클릭했을때
+				getDetailAreaInformation(addressArray);
+			});
 	}
-
+	
 }
+
+
+function showDongMarkers ( ) {
+	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+		dongMarkers[i].setMap(globalMap);
+	}
+}
+
+function hideDongMarkers ( ) {
+	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+		dongMarkers[i].setMap(null);
+	}
+}
+
+function showDetailMarkers ( ) {
+	for ( var i = 0 ; i < detailMarkers.length ; i ++ ) {
+		detailMarkers[i].setMap(globalMap);
+	}
+}
+
+function hideDetailMarkers ( ) {
+	var i = 0;
+	while ( i < detailMarkers.length ) {
+		detailMarkers[i].setMap(null);
+		i++;
+	}
+	detailMarkers = [ ];
+}
+
 
 function getDetailAreaInformation( addressArray ) {
 
 	var redColor = "FF0000";
 	var greenColor = "2EFE64";
 	var color = "";
-
+	
+	//모든 마커를 지움.
+	hideDongMarkers();
+	hideDetailMarkers();
+	
+	//이벤트 등록.
+	
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if(globalMap.getZoom() < 16 ) {
 		globalMap.setOptions({ 'zoom' : 16 });
 	}
 	
-	// 동에 해당하는 상세 주소 리스트를 받아옴.
+	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
 	for (var i = 0 ; i < userConsumptionList.length ; i ++ ) {
 		if ( userConsumptionList[i].umDong == addressArray[2] ) {
 
@@ -566,14 +607,20 @@ function getDetailAreaInformation( addressArray ) {
 				icon : pinImage,
 				shadow : pinShadow,
 			});
-			
-			marker.setMap(globalMap);
-			
-			
+			detailMarkers.push(marker);
 		}
 	}
-	// 상세 주소 리스트의 개수만큼 마커를 생성하고 띄움.
+	console.log(detailMarkers);
+	showDetailMarkers();
 
+	/*
+	for (var i = 0; i < detailMarkers.length; i++) {
+		detailMarkers[i].addListener('click',
+				function() {
+			globalMap.setCenter(this.position);
+		});
+	}
+	*/
 }
 
 // Sets the map on all markers in the array.
