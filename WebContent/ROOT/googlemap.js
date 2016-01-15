@@ -769,9 +769,10 @@ function codeAddress() {
 			var addressArray = address.split(' ');
 			addressArray = addressArray[1] + " " + addressArray[2] + " " + addressArray[3];
 			addressArray = addressArray.split(" ");
-		
+			
+			console.log(address);
 			// if address is dong or block or specific area , zoom level + 3
-			if ( dongList.indexOf(addressArray[2]) != -1 ) {
+			if ( dongList.indexOf(addressArray[2]) != -1 || dongList.indexOf(address) != -1 ) {
 				getDetailAreaInformation(addressArray);
 				// if address is not a dong or specific area , restore zoom level to 13
 			} else {
