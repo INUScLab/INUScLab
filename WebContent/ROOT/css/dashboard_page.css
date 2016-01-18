@@ -1,8 +1,64 @@
 #dashboard_page {
-	width: 100%;
+	width: 90%;
 	height: 100%;
+	margin: 0 auto;
+	min-width: 1200px;
 }
 
+/* search*/
+#dashboard_page #dashboard_search {
+	
+}
+
+
+#dashboard_search{
+	width: 100%;
+	/*height: 40px;*/
+	overflow: hidden;
+}
+
+.table_main{
+	border-collapse: collapse;
+    /*width: 100%;*/
+}
+
+.table_main td{
+	border-width: 1px;
+	padding: 0px;
+	border-style: soild;
+	border-color:#999;
+	border-collapse: collapse;
+}
+
+.table_date{
+	border-collapse: collapse;
+    /*width: 100%;*/
+}
+
+.table_date td{
+	border-width: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: soild;
+	border-color:#999;
+	border-collapse: collapse;
+}
+
+.Date_wrap{
+	position: relative;
+    left: 0;
+    top: 0;
+}
+
+.startDate{
+	height: 21px;
+}
+
+.Date_wrap img{	float:right;}
+.Date_wrap img:
+
+
+/* summary */
 #dashboard_page #dashboard_summary{
 	/*width: 31%;*/
 	
@@ -11,13 +67,14 @@
 
 #dashboard_summary {
 	background: #eee;
-	border: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	pading: 10px;
 	overflow: hidden;
+	margin-bottom: 10px;
 }
 
 .summary {
-	width: 30%;
 	/*background: #333;
 	color: #fff;
 	font-size: 18px;
@@ -26,9 +83,52 @@
     margin-right: auto;
 	text-align: center;
 	padding: 15px;
-	/*float: left;*/
+	border: 1px solid;	
 }
 
-.diff_summary {	float: left;}
-.leakage_summary{}
-.frozen_summary{ float: right;}
+.summary_wrap{ width: 39.25%;}
+
+.summary_wrap_left{	float:left;	overflow:hidden;}
+.diff_summary {	width: 41.61%; float: left;}
+.leak_summary{ width: 41.61%; float: right; }
+
+.absence_summary {width: 16.33%;}
+
+.summary_wrap_right{ float: right; overflow: hidden;}
+.overused_summary { width: 41.61%; float: left;}
+.freezed_summary{ width: 41.61%; float: right;}
+
+
+/* info */
+#dashboard_info {
+	border: 1px solid #ddd;
+}
+
+.diff{
+	width: 100%;
+	height: 250px;
+	margin-bottom: 10px;
+}
+.leak{
+	width: 100%;
+	height: 250px;
+	margin-bottom: 10px;
+}
+
+.absence{
+	width: 100%;
+	height: 250px;
+}
+
+.overused{
+	width: 100%;
+	height: 250px;
+}
+
+.freezed{
+	width: 100%;
+	height: 250px;
+}
+
+
+
