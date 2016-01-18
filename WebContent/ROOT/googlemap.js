@@ -338,6 +338,7 @@ function initialize(x, y) {
 
 	// Color-interpolation Box
 	var colorBox = document.getElementById('color-interpolation');
+	
 
 	// Hide boxes
 	/*
@@ -788,10 +789,6 @@ function codeAddress() {
 				// if address is not a dong or specific area , restore zoom level to 13
 			} 
 			
-			else if ( dongList.indexOf(address) != -1 ) {
-				
-				getDetailAreaInformation(address);
-			}
 			else {
 
 				globalMap.setOptions({

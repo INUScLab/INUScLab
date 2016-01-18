@@ -1,8 +1,9 @@
 ﻿<!--본문 Right (map)-->
 <div class="map_section_box">
-	<div id="map_canvas" style="width: 100%; height: 100%;"></div>
-	<input id="pac-input" class="controls" type="text"
-		placeholder="Search Box" onkeypress="if(event.keyCode==13) {codeAddress();}">
+	<div id="map_controll_box" class="map_controll_box">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box" onkeypress="if(event.keyCode==13) {codeAddress();}">
+	</div>
+	<div id="map_canvas" style="width: 100%; height: 94%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->

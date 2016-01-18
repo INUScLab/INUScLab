@@ -155,7 +155,7 @@ html, body {
 	margin-left: 15px;
 	padding: 0 11px 0 13px;
 	text-overflow: ellipsis;
-	width: 300px;
+	width: 230px;
 }
 
 .controls {
@@ -188,7 +188,11 @@ html, body {
 	font-size: 13px;
 	font-weight: 300;
 }
-
+.map_controll_box{
+	height:6%;
+	width:100px;
+	background-color:#;
+}
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;
     width: 150px;
