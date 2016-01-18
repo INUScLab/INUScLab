@@ -11,7 +11,10 @@ var addname = new Array();
 var markers = new Array();
 var visable = new Array();
 var geocoder = new google.maps.Geocoder();
-var searchMarkers = [];
+var searchMarkers = [ ];
+var dongMarkers =  [ ];
+var detailMarkers = [ ];
+
 
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
@@ -338,13 +341,16 @@ function initialize(x, y) {
 	var colorBox = document.getElementById('color-interpolation');
 
 	// Hide boxes
+	/*
 	input.hidden = true;
 	colorBox.hidden = true;
-
+	*/
+	
 	// Appending boxes
 	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
+	/*
 	load_info = new google.maps.InfoWindow();
 	load_info.open(globalMap, new google.maps.Marker({
 		map : globalMap,
@@ -352,18 +358,25 @@ function initialize(x, y) {
 		draggable : false,
 		icon : "null"
 	}));
+	*/
 
-	geocodeAddress();
+//	geocodeAddress();
+	createDongMarker();
 
+	//Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
-
+		console.log(globalMap.getZoom());
 		if( globalMap.getZoom() < 16) {
+			//상세 주소 마커 지우기.
+			hideDetailMarkers();
+			
 			//모든 동의 마커 출력.
+			showDongMarkers();
 		}
-		
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if ( globalMap.getZoom() == 16 ) {
-//		console.log('Zoom: ' + globalMap.getCenter());
+			
+//			console.log('Zoom: ' + globalMap.getCenter());
 			
 		}
 	});
@@ -375,14 +388,54 @@ function initialize(x, y) {
 	service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
 }
 
+function createDongMarker( ) {
+	
+	var redColor = "FF0000";
+	var greenColor = "00FFBC";
+	var color = "";
+	var incheon = "인천광역시";
 
-function setData(cons, pred, name) {
+	for ( var i = 0 ; i < guDongLatLngList.length ; i++ ) {
+		
+		//Check Dong's overUsedFlag
+		if (normalUsedDongList.indexOf(guDongLatLngList[i].umDong ) != -1)
+			color = greenColor;
+		else
+			color = redColor;
+		
+		var pinImage = new google.maps.MarkerImage(
+				"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+				+ color, new google.maps.Size(21, 34),
+				new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+		var pinShadow = new google.maps.MarkerImage(
+				"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+				new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+				new google.maps.Point(12, 35));
+		var position = new google.maps.LatLng(37.4706225, 126.62348259999999);
+	
+		//Craete marker
+		var marker = new google.maps.Marker({
+			title : incheon + " " + guDongLatLngList[i].guGun + " " + guDongLatLngList[i].umDong ,
+			position : new google.maps.LatLng(guDongLatLngList[i].lat , guDongLatLngList[i].lng ),
+			draggable : false,
+			icon : pinImage,
+			shadow : pinShadow,
+		});
+		
+		dongMarkers.push(marker);
+		
+	}
+	showDongMarkers();
+	getMksInfo();
+}
+
+function drawColumn(cons, pred, week, region) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
 	} ], [ '사용량', cons, '#b87333' ], // RGB value
 	[ '예측량', pred, 'silver' ], // English color name
-	[ '일주일 평균', cons, '#b87333' ],
-	[ '지역 평균', cons, '#b87333' ]
+	[ '일주일 평균', week, '#b87333' ],
+	[ '지역 평균', region, '#b87333' ]
 	]);
 
 	var view = new google.visualization.DataView(data);
@@ -394,7 +447,6 @@ function setData(cons, pred, name) {
 	}, 2 ]);
 
 	var options = {
-		title : name,
 		titleTextStyle: {
 			color: "black",
 			fontSize : 17
@@ -403,7 +455,7 @@ function setData(cons, pred, name) {
 	//	height : 260,
 		fontSize : 11,
 		bar : {
-			groupWidth : "95%"
+			groupWidth : "80%"
 		},
 		legend : {
 			position : "none"
@@ -463,45 +515,173 @@ function drawHistory() {
     chart.draw(data, options);
   }
 
+
+/*
+function drawChart() {
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'date', id: 'Date' });
+    dataTable.addColumn({ type: 'number', id: 'Won/Loss' });
+    dataTable.addRows([
+       [ new Date(2012, 3, 13), 37032 ],
+       [ new Date(2012, 3, 14), 38024 ],
+       [ new Date(2012, 3, 15), 38024 ],
+       [ new Date(2012, 3, 16), 38108 ],
+       [ new Date(2012, 3, 17), 38229 ],
+       // Many rows omitted for brevity.
+       [ new Date(2013, 9, 4), 38177 ],
+       [ new Date(2013, 9, 5), 38705 ],
+       [ new Date(2013, 9, 12), 38210 ],
+       [ new Date(2013, 9, 13), 38029 ],
+       [ new Date(2013, 9, 19), 38823 ],
+       [ new Date(2013, 9, 23), 38345 ],
+       [ new Date(2013, 9, 24), 38436 ],
+       [ new Date(2013, 9, 30), 38447 ]
+     ]);
+
+    var chart = new google.visualization.Calendar(document.getElementById('info_service'));
+
+    var options = {
+      title: "Red Sox Attendance",
+      height: 350,
+    };
+
+    chart.draw(dataTable, options);
+}
+*/
+
 function getMksInfo() {
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].addListener('click',
-				function() {
-					var idx = this.get("id");
-					console.log(this);
-					setData(parseFloat(idx) + 0.5, parseFloat(idx) + 0.7,
-							addname[idx]);
-					
-					drawHistory();	// history 그래프 그리기
-					service.style.visibility="visible";	// 부가서비스 테이블 보여주기
+	
+	//동을 클릭했을때 이벤트 
+	for (var i = 0; i < dongMarkers.length; i++) {
+		dongMarkers[i].addListener('click',
+			function() {
+				var idx = this.get("id");
+				
+				drawHistory();	// history 그래프 그리기
+				service.style.visibility="visible";	// 부가서비스 테이블 보여주기
+			//	drawChart();
+				
+				var umdong = userConsumptionList[i].umDong;
+				var consumption = userConsumptionList[i].consumed;
 
-					globalMap.setCenter(this.position);
-					
-					// 동 혹은 상세주소 마커를 클릭했을때
-					getDetailAreaInformation();
-				});
+				globalMap.setCenter(this.position);
+				var address = this.title;
+				var addressArray = address.split(' ');
+
+				var len = addressArray.length;
+				var cons_sum = 0;
+				var pred_sum = 0;
+				
+				// 동  사용량 예측량
+				for(var j = 0; userConsumptionList[j] != null; j++)	{
+						if(addressArray[len -1] == userConsumptionList[j].umDong) {
+							cons_sum += Number(userConsumptionList[j].consumed);
+							pred_sum += Number(userConsumptionList[j].predicted);
+							
+							// 누수인 사람 
+							if( userConsumptionList[j].leak == '1') {
+								console.log(this.title +' '+ userConsumptionList[j].detail);
+							}
+						}
+					}
+				drawColumn(cons_sum, pred_sum, 0, 0);	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
+				
+				document.getElementById('info_date').innerHTML = address;
+				
+				// 동 마커를 클릭했을때
+				getDetailAreaInformation(addressArray);
+			});
 	}
-
+	
 }
 
-function getDetailAreaInformation() {
 
-	console.log(globalMap.getZoom());
-	// 맵의 줌이 확대됨.
+function showDongMarkers ( ) {
+	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+		dongMarkers[i].setMap(globalMap);
+	}
+}
+
+function hideDongMarkers ( ) {
+	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+		dongMarkers[i].setMap(null);
+	}
+}
+
+function showDetailMarkers ( ) {
+	for ( var i = 0 ; i < detailMarkers.length ; i ++ ) {
+		detailMarkers[i].setMap(globalMap);
+	}
+}
+
+function hideDetailMarkers ( ) {
+	var i = 0;
+	while ( i < detailMarkers.length ) {
+		detailMarkers[i].setMap(null);
+		i++;
+	}
+	detailMarkers = [ ];
+}
+
+
+function getDetailAreaInformation( addressArray ) {
+
+	var redColor = "FF0000";
+	var greenColor = "00FFBC";
+	var color = "";
+	
+	//모든 마커를 지움.
+	hideDongMarkers();
+	hideDetailMarkers();
+	
+	//이벤트 등록.
+	
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if(globalMap.getZoom() < 16 ) {
-		globalMap.setOptions({
-			'zoom' : 16
+		globalMap.setOptions({ 'zoom' : 16 });
+	}
+	
+	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
+	for (var i = 0 ; i < userConsumptionList.length ; i ++ ) {
+		if ( userConsumptionList[i].umDong == addressArray[2] ) {
+
+			//Create Marker
+			if ( userConsumptionList[i].overused == 0 )
+				color = greenColor;
+			else
+				color = redColor;
+			
+			var pinImage = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+					+ color, new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+			var pinShadow = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+					new google.maps.Point(12, 35));
+		
+			var marker = new google.maps.Marker({
+				title : addressArray[0] + " " + addressArray[1] + " " + addressArray[2] + " " + userConsumptionList[i].detail ,
+				position : new google.maps.LatLng(userConsumptionList[i].lat , userConsumptionList[i].lng ),
+				draggable : false,
+				icon : pinImage,
+				shadow : pinShadow,
+			});
+			detailMarkers.push(marker);
+		}
+	}
+	console.log(detailMarkers);
+	showDetailMarkers();
+
+	//상세주소를 클릭했을때 이벤트 
+	/*
+	for (var i = 0; i < detailMarkers.length; i++) {
+		detailMarkers[i].addListener('click',
+				function() {
+			globalMap.setCenter(this.position);
 		});
 	}
-
-
-	console.log(userConsumptionList);
-
-	// 동에 해당하는 상세 주소 리스트를 받아옴.
-
-	// 상세 주소 리스트의 개수만큼 마커를 생성하고 띄움.
-
+	*/
 }
 
 // Sets the map on all markers in the array.
@@ -518,7 +698,7 @@ function setMapOnAll() {
 function geocodeExcute(loc, next) {
 
 	var redColor = "FF0000";
-	var greenColor = "2EFE64";
+	var greenColor = "00FFBC";
 	var color = "";
 
 	if (normalUsedDongList.indexOf(loc) != -1)
@@ -640,16 +820,35 @@ function codeAddress() {
 
 			// Locate to map
 			globalMap.setCenter(results[0].geometry.location);
-			console.log("lat",address , results[0].geometry.location.lat() );
-			console.log("lng",address , results[0].geometry.location.lng() );
 
+			var dongList = normalUsedDongList.concat(overUsedDongList);
+			var addressArray = address.split(' ');
+			addressArray = addressArray[1] + " " + addressArray[2] + " " + addressArray[3];
+			addressArray = addressArray.split(" ");
+			
+			console.log(address);
+			
+			var i = 0 ;
+			while (  i < guDongLatLngList.length ) {
+				if( guDongLatLngList[i].umDong == address ) {
+					addressArray[1] = guDongLatLngList[i].guGun;
+					addressArray[2] = guDongLatLngList[i].umDong;
+				}
+				i++;
+			}
+			
 			// if address is dong or block or specific area , zoom level + 3
-			if (address == "부개동") {
-				getDetailAreaInformation();
-
-				// if address is not a dong or specific area , restore zoom
-				// level to 13
-			} else {
+			if ( dongList.indexOf(addressArray[2]) != -1 || dongList.indexOf(address) != -1 ) {
+				
+				getDetailAreaInformation(addressArray);
+				// if address is not a dong or specific area , restore zoom level to 13
+			} 
+			
+			else if ( dongList.indexOf(address) != -1 ) {
+				
+				getDetailAreaInformation(address);
+			}
+			else {
 
 				globalMap.setOptions({
 					'zoom' : 13

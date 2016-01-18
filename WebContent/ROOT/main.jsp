@@ -113,7 +113,7 @@
 		</div>
 		<!--본문-->
 		<div id="main_content">
-			<div id="included_contents">
+			<div id="included_contents"> 
 				<%
 					int num = 0;
 					
