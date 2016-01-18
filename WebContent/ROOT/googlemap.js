@@ -390,7 +390,7 @@ function initialize(x, y) {
 function createDongMarker( ) {
 	
 	var redColor = "FF0000";
-	var greenColor = "2EFE64";
+	var greenColor = "00FFBC";
 	var color = "";
 	var incheon = "인천광역시";
 
@@ -571,7 +571,7 @@ function hideDetailMarkers ( ) {
 function getDetailAreaInformation( addressArray ) {
 
 	var redColor = "FF0000";
-	var greenColor = "2EFE64";
+	var greenColor = "00FFBC";
 	var color = "";
 	
 	//모든 마커를 지움.
@@ -642,7 +642,7 @@ function setMapOnAll() {
 function geocodeExcute(loc, next) {
 
 	var redColor = "FF0000";
-	var greenColor = "2EFE64";
+	var greenColor = "00FFBC";
 	var color = "";
 
 	if (normalUsedDongList.indexOf(loc) != -1)
@@ -771,11 +771,28 @@ function codeAddress() {
 			addressArray = addressArray.split(" ");
 			
 			console.log(address);
+			
+			var i = 0 ;
+			while (  i < guDongLatLngList.length ) {
+				if( guDongLatLngList[i].umDong == address ) {
+					addressArray[1] = guDongLatLngList[i].guGun;
+					addressArray[2] = guDongLatLngList[i].umDong;
+				}
+				i++;
+			}
+			
 			// if address is dong or block or specific area , zoom level + 3
 			if ( dongList.indexOf(addressArray[2]) != -1 || dongList.indexOf(address) != -1 ) {
+				
 				getDetailAreaInformation(addressArray);
 				// if address is not a dong or specific area , restore zoom level to 13
-			} else {
+			} 
+			
+			else if ( dongList.indexOf(address) != -1 ) {
+				
+				getDetailAreaInformation(address);
+			}
+			else {
 
 				globalMap.setOptions({
 					'zoom' : 13
