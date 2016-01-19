@@ -196,9 +196,15 @@ html, body {
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;
     width: 150px;
-    height: 20px;
-    background: -webkit-linear-gradient(left, lime , red);
+    height: 20px;	
     border: solid 2px #000;
+	
+	background: lime;
+    background: -webkit-linear-gradient(left, lime, red);
+    background: -moz-linear-gradient(left, lime, red);
+    background: -ms-linear-gradient(left, lime, red);
+    background: -o-linear-gradient(left, lime, red);
+    background: linear-gradient(left, lime, red);
 }
 a[href^="http://maps.google.com/maps"]{display:none !important}
 a[href^="https://maps.google.com/maps"]{display:none !important}
