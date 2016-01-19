@@ -3,13 +3,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="css/headerCSS.css">
-<link rel="stylesheet" type="text/css" href="css/dashboard_page.css">
-<title>Big Data Analysis</title>
+
 <script type="text/javascript">
 
 function sendIt(){
@@ -20,9 +14,6 @@ function sendIt(){
 }
 </script>
 
-
-</head>
-<body>
 
 	<div id="dashboard_page">
 		<div id="dashboard_search">
@@ -72,51 +63,59 @@ function sendIt(){
 				</table>
 			</form>
 		</div>
-
+		
 		<div id="dashboard_summary">
+		<div class="dashboard_summary_wrap">
 			<div class="summary_wrap summary_wrap_left">
-				<div class="summary diff_summary"><!-- #1 -->
-					사용량 예측량 차이
-					<div>
+				<div class="summary diff_summary"><!-- #1 -->사용량 예측량 차이
+					<div class="summary_sub">
 						
 					</div>				
 				</div>
-				<div class="summary leak_summary"><!-- #2 -->
-					누수
-					<div>
+				<div class="summary leak_summary"><!-- #2 -->누수
+					<div class="summary_sub">
 					
 					</div>
 				</div>
 			</div>
 			<div class="summary_wrap summary_wrap_right">
-				<div class="summary overused_summary"><!-- #4 -->
-					과용
-					<div>
+				<div class="summary overused_summary"><!-- #4 -->과용
+					<div class="summary_sub">
 					
 					</div>
 				</div>
-				<div class="summary freezed_summary"><!-- #5 -->
-					동파
-					<div>
+				<div class="summary freezed_summary"><!-- #5 -->동파
+					<div class="summary_sub">
 					
 					</div>
 				</div>
 			</div>
-			<div class="summary absence_summary"><!-- #3 -->
-				부재
-				<div>
+			<div class="summary absence_summary"><!-- #3 -->부재
+				<div class="summary_sub">
 				
 				</div>
 			</div>
-			
+		</div>
 		</div>
 		
 		<div id="dashboard_info">
-			<div class="diff"></div>
-			<div class="leak"></div>
-			<div class="absence"></div>
-			<div class="overused"></div>
-			<div class="freezed"></div>
+			<div class="info diff_info">
+				
+			</div>
+			<div class="info_row">
+			<div class="info leak_info">
+			
+			</div>
+			<div class="info absence_info">
+			
+			</div>
+			</div>
+			<div class="info overused_info">
+			
+			</div>
+			<div class="info freezed_info">
+			
+			</div>
 		</div>
 	</div>
 

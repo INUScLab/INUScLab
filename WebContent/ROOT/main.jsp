@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="css/headerCSS.css">
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <link rel="stylesheet" type="text/css" href="css/reportpage.css">
+<link rel="stylesheet" type="text/css" href="css/dashboard_page.css">
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script type="text/javascript" src='https://www.google.com/jsapi?autoload={
 	"modules":[{
@@ -102,6 +103,9 @@
 						<li role="presentation">
 							<a href="main.jsp?MENU_NUM=3"><span>SERVICE</span></a>
 						</li>
+						<li role="presentation">
+							<a href="main.jsp?MENU_NUM=4"><span>ANALYSIS</span></a>
+						</li>
 					</ul>
 					<ul class="main_logo_list">
 						<img src="http://placehold.it/50x40" class="logo_istec">
@@ -126,6 +130,9 @@
 					{
 						case 1:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
+							break;
+						case 4:
+							pageContext.setAttribute("MAIN_CONTENTS_PATH", "dashboard.jsp");
 							break;
 						default:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "map_page.jsp");
