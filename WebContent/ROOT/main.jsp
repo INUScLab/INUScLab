@@ -113,7 +113,7 @@
 						<img src="img/inu.jpg" class="logo_inu">
 					</ul>
 				</nav>
-			</div>
+			</div>	
 		</div>
 		<!--본문-->
 		<div id="main_content">
