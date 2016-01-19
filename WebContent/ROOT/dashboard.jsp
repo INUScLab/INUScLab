@@ -4,6 +4,9 @@
 	String cp = request.getContextPath();
 %>
 
+
+
+
 <script type="text/javascript">
 
 function sendIt(){
@@ -99,22 +102,26 @@ function sendIt(){
 		</div>
 		
 		<div id="dashboard_info">
-			<div class="info diff_info">
-				
+			<div class="info_row">
+				<div class="info info1 diff_info">
+					
+				</div>
 			</div>
 			<div class="info_row">
-			<div class="info leak_info">
+				<div class="info info2 leak_info">
 			
-			</div>
-			<div class="info absence_info">
+				</div>
+				<div class="info info2 absence_info">
 			
+				</div>
 			</div>
-			</div>
-			<div class="info overused_info">
-			
-			</div>
-			<div class="info freezed_info">
-			
+			<div class="info_row">
+				<div class="info info2 overused_info">
+				
+				</div>
+				<div class="info info2 freezed_info">
+				
+				</div>
 			</div>
 		</div>
 	</div>
