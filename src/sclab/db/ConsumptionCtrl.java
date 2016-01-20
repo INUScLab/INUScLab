@@ -20,7 +20,7 @@ public class ConsumptionCtrl {
 
 		ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
 		
-		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = ANY(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28' group by DATE order by DATE DESC;";
+		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE in(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28' group by DATE order by DATE DESC;";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class ConsumptionCtrl {
 		
 		String[] datas = new String[2];
 		
-		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE = ANY(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28';";
+		String sql = "select sum(CONSUMED), sum(PREDICTED) from CONSUMPTION where CODE in(select CODE from USER where UMDONG = \'" + umdong + "\') and DATE between '2015-02-22' and '2015-02-28';";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
