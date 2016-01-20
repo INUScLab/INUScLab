@@ -2,6 +2,7 @@ package sclab.db;
 
 public class UserConsumption {
 
+	private String siGoon;
 	private String umDong;
 	private String detail;
 	private double lat;
@@ -15,6 +16,7 @@ public class UserConsumption {
 	
 	
 	public UserConsumption() {
+		this.siGoon="";
 		this.umDong="";
 		this.detail="";
 		this.lat=0;
@@ -28,10 +30,10 @@ public class UserConsumption {
 
 
 
-	public UserConsumption(String umDong, String detail, double lat,
+	public UserConsumption( String siGoon ,String umDong, String detail, double lat,
 			double lng, double consumed, double predicted, int leak,
 			int absence, int overused) {
-		super();
+		this.siGoon = siGoon;
 		this.umDong = umDong;
 		this.detail = detail;
 		this.lat = lat;
@@ -41,6 +43,18 @@ public class UserConsumption {
 		this.leak = leak;
 		this.absence = absence;
 		this.overused = overused;
+	}
+
+
+
+	public String getSiGoon() {
+		return siGoon;
+	}
+
+
+
+	public void setSiGoon(String siGoon) {
+		this.siGoon = siGoon;
 	}
 
 

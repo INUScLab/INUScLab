@@ -54,6 +54,7 @@
 	
 	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
 	userConsumptionList.push( {
+		siGoon:"<%= userConsumptionList.get(i).getSiGoon() %>",
 		umDong:"<%= userConsumptionList.get(i).getUmDong() %>",
 		detail:"<%= userConsumptionList.get(i).getDetail() %>",
 		lat:"<%= userConsumptionList.get(i).getLat() %>",

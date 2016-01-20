@@ -16,6 +16,7 @@ public class UserConsumptionCtrl {
 
 		ArrayList<UserConsumption> userConsumptionList = new ArrayList<UserConsumption> () ;
 		
+		String siGoon;
 		String umDong;
 		String detail;
 		double lat;
@@ -26,11 +27,12 @@ public class UserConsumptionCtrl {
 		int absence;
 		int overused;
 		
-		String sql = "SELECT U.UMDONG , U.DETAIL , U.LAT , U.LNG , C.CONSUMED , C.PREDICTED , C.LEAK , C.ABSENCE , C.OVERUSED FROM USER U INNER JOIN CONSUMPTION C ON U.CODE = C.CODE AND C.DATE = '2015-02-28'";
+		String sql = "SELECT U.SIGOON , U.UMDONG , U.DETAIL , U.LAT , U.LNG , C.CONSUMED , C.PREDICTED , C.LEAK , C.ABSENCE , C.OVERUSED FROM USER U INNER JOIN CONSUMPTION C ON U.CODE = C.CODE AND C.DATE = '2015-02-28'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
+				siGoon = rs.getString("SIGOON");
 				umDong = rs.getString("UMDONG");
 				detail = rs.getString("DETAIL");
 				lat = rs.getDouble("LAT");
@@ -41,7 +43,7 @@ public class UserConsumptionCtrl {
 				absence = rs.getInt("ABSENCE");
 				overused= rs.getInt("OVERUSED");
 				
-				UserConsumption userConsumption = new UserConsumption(umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
+				UserConsumption userConsumption = new UserConsumption(siGoon , umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
 				userConsumptionList.add(userConsumption);
 			}
 			rs.close();
