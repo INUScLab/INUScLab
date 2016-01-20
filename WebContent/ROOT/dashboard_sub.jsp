@@ -32,7 +32,7 @@
         var data = google.visualization.arrayToDataTable([
 			['동', '차이량'],
 			<%
-				for(ArrayList<String>  ab : pd.getLank_difference()) {
+				for(ArrayList<String>  ab : pd.getrank_difference() ) {
 			%>
          		['work',<%=ab.get(1)%>],
          	<%
@@ -58,7 +58,7 @@
 <div align="left">
 		<table border="1">
 			<%
-				for(ArrayList<String>  ab : pd.getLank_difference()) {
+				for(ArrayList<String>  ab : pd.getrank_difference() ) {
 			%>
 			  <tr>
 				<td><%=ab.get(0)%></td><td><%=ab.get(1)%></td>

@@ -6,40 +6,40 @@ import java.util.ArrayList;
 
 public class ProcessedData {
 	
-	public ArrayList<ArrayList<String>> lank_difference;
-	public ArrayList<ArrayList<String>> lank_leak;
-	public ArrayList<ArrayList<String>> lank_absence;
-	public ArrayList<ArrayList<String>> lank_overused;
-	public ArrayList<ArrayList<String>> lank_freezed;
+	public ArrayList<ArrayList<String>> rank_difference;
+	public ArrayList<ArrayList<String>> rank_leak;
+	public ArrayList<ArrayList<String>> rank_absence;
+	public ArrayList<ArrayList<String>> rank_overused;
+	public ArrayList<ArrayList<String>> rank_freezed;
 	
-	public ArrayList<ArrayList<String>> getLank_difference() {
-		return lank_difference;
+	public ArrayList<ArrayList<String>> getrank_difference() {
+		return rank_difference;
 	}
-	public void setLank_difference(ArrayList<ArrayList<String>> lank_difference) {
-		this.lank_difference = lank_difference;
+	public void setrank_difference(ArrayList<ArrayList<String>> rank_difference) {
+		this.rank_difference = rank_difference;
 	}
-	public ArrayList<ArrayList<String>> getLank_leak() {
-		return lank_leak;
+	public ArrayList<ArrayList<String>> getrank_leak() {
+		return rank_leak;
 	}
-	public void setLank_leak(ArrayList<ArrayList<String>> lank_leak) {
-		this.lank_leak = lank_leak;
+	public void setrank_leak(ArrayList<ArrayList<String>> rank_leak) {
+		this.rank_leak = rank_leak;
 	}
-	public ArrayList<ArrayList<String>> getLank_absence() {
-		return lank_absence;
+	public ArrayList<ArrayList<String>> getrank_absence() {
+		return rank_absence;
 	}
-	public void setLank_absence(ArrayList<ArrayList<String>> lank_absence) {
-		this.lank_absence = lank_absence;
+	public void setrank_absence(ArrayList<ArrayList<String>> rank_absence) {
+		this.rank_absence = rank_absence;
 	}
-	public ArrayList<ArrayList<String>> getLank_overused() {
-		return lank_overused;
+	public ArrayList<ArrayList<String>> getrank_overused() {
+		return rank_overused;
 	}
-	public void setLank_overused(ArrayList<ArrayList<String>> lank_overused) {
-		this.lank_overused = lank_overused;
+	public void setrank_overused(ArrayList<ArrayList<String>> rank_overused) {
+		this.rank_overused = rank_overused;
 	}
-	public ArrayList<ArrayList<String>> getLank_freezed() {
-		return lank_freezed;
+	public ArrayList<ArrayList<String>> getrank_freezed() {
+		return rank_freezed;
 	}
-	public void setLank_freezed(ArrayList<ArrayList<String>> lank_freezed) {
-		this.lank_freezed = lank_freezed;
+	public void setrank_freezed(ArrayList<ArrayList<String>> rank_freezed) {
+		this.rank_freezed = rank_freezed;
 	}
 }

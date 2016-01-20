@@ -31,11 +31,26 @@ public class ProcessedDataCtrl {
 	}
 	
 	// 매개변수 column의 동별 랭킹 반환
-	ArrayList<ArrayList<String>> getLank(String column) {
+	ArrayList<ArrayList<String>> getRank(String column) {
 
 		ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
 		
-		String sql = "select umdong," + column + "from (select code, umdong from USER where umdong in (select name from UMDONG where sigoon_no = (select no from SIGOON where name = '" + pd_sigoon + "'))) u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday + "' group by umdong order by " + column + "desc;";
+		String sql;
+		String names;
+		
+		if(pd_sigoon.equals("전체")){
+			names = "sigoon";
+			sql = "select sigoon," + column + "from (select code, sigoon from USER where sido='" + pd_sido +"') u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday + "' group by sigoon order by " + column + "desc;";
+		}
+		
+		else if (pd_umdong.equals("전체")){
+			names = "umdong";
+			sql = "select umdong," + column + "from (select code, umdong from USER where sido='" + pd_sido + "' and sigoon='" + pd_sigoon + "') u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday + "' group by umdong order by " + column + "desc;";
+		}
+		else{
+			names="detail";
+			sql = "select detail," + column + "from (select code, detail from USER where sido='" + pd_sido + "' and sigoon='" + pd_sigoon + "' and umdong='" + pd_umdong +"') u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday + "' group by detail order by " + column + "desc;";
+		}
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -44,7 +59,7 @@ public class ProcessedDataCtrl {
 			while(rs.next()){
 				ArrayList<String> temp  = new ArrayList<String>();
 				
-				temp.add(rs.getString("umdong"));
+				temp.add(rs.getString(names));
 				temp.add(rs.getString(column));
 				datas.add(temp);
 			}
@@ -58,15 +73,15 @@ public class ProcessedDataCtrl {
 	// 모든 작업은 여기서 한다. 
 	public ProcessedData returnRanks(String pd_sido, String pd_sigoon, String pd_umdong, String startday, String endday){
 		
-		setParameters(pd_sido, pd_sigoon,pd_umdong,startday,endday);
+		setParameters(pd_sido, pd_sigoon, pd_umdong, startday, endday);
 		
 		ProcessedData pd = new ProcessedData();
 		
-		pd.setLank_difference(getLank("abs(sum(consumed)-sum(predicted))"));
-		pd.setLank_leak(getLank("sum(leak)"));
-		pd.setLank_absence(getLank("sum(absence)"));
-		pd.setLank_overused(getLank("sum(overused)"));
-		pd.setLank_freezed(getLank("sum(freezed)"));
+		pd.setrank_difference(getRank("abs(sum(consumed)-sum(predicted))"));
+		pd.setrank_leak(getRank("sum(leak)"));
+		pd.setrank_absence(getRank("sum(absence)"));
+		pd.setrank_overused(getRank("sum(overused)"));
+		pd.setrank_freezed(getRank("sum(freezed)"));
 		
 		disconnect();
 		
