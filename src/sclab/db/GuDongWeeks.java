@@ -4,6 +4,7 @@ public class GuDongWeeks {
 	
 	private String guGun;
 	private String umDong;
+	private double monthAverage;
 	private double day1;
 	private double day2;
 	private double day3;
@@ -15,6 +16,7 @@ public class GuDongWeeks {
 	public GuDongWeeks( ) {
 		this.guGun = null;
 		this.umDong = null;
+		this.monthAverage = 0;
 		this.day1 = 0;
 		this.day2 = 0;
 		this.day3 = 0;
@@ -24,11 +26,12 @@ public class GuDongWeeks {
 		this.day7 = 0;
 	}
 	
-	public GuDongWeeks(String guGun, String umDong, double day1, double day2,
+	public GuDongWeeks(String guGun, String umDong, double monthAverage, double day1, double day2,
 			double day3, double day4, double day5, double day6, double day7) {
 		super();
 		this.guGun = guGun;
 		this.umDong = umDong;
+		this.monthAverage = monthAverage;
 		this.day1 = day1;
 		this.day2 = day2;
 		this.day3 = day3;
@@ -50,6 +53,15 @@ public class GuDongWeeks {
 	public void setUmDong(String umDong) {
 		this.umDong = umDong;
 	}
+	
+	public double getMonthAverage() {
+		return monthAverage;
+	}
+
+	public void setMonthAverage(double monthAverage) {
+		this.monthAverage = monthAverage;
+	}
+
 	public double getDay1() {
 		return day1;
 	}
