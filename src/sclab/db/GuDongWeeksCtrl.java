@@ -32,8 +32,8 @@ public class GuDongWeeksCtrl {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				guGun = rs.getString("DONG");
-				umDong = rs.getString("GOON");
+				umDong = rs.getString("DONG");
+				guGun = rs.getString("GOON");
 				day1 = rs.getDouble("DAY1");
 				day2 = rs.getDouble("DAY2");
 				day3 = rs.getDouble("DAY3");

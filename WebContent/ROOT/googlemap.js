@@ -545,7 +545,7 @@ function drawAbsence(cons, pred) {
 	chart.draw(view, options);
 }
 
-function drawHistory() {
+function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
 
     var data = new google.visualization.DataTable();
     data.addColumn('date', 'Time of Day');
@@ -559,8 +559,8 @@ function drawHistory() {
      */
 
     data.addRows([
-                  [new Date(2015, 1, 22), 200],  [new Date(2015, 1, 23), 500],  [new Date(2015, 1, 24), 300],  [new Date(2015, 1, 25), 700],
-                  [new Date(2015, 1, 26), 500],  [new Date(2015, 1, 27), 400],  [new Date(2015, 1, 28), 600],
+                  [new Date(2015, 1, 22), day1],  [new Date(2015, 1, 23), day2],  [new Date(2015, 1, 24), day3],  [new Date(2015, 1, 25), day4],
+                  [new Date(2015, 1, 26), day5],  [new Date(2015, 1, 27), day6],  [new Date(2015, 1, 28), day7],
                 ]);
 
 
@@ -606,12 +606,35 @@ function getMksInfo() {
 				var len = addressArray.length;
 				var cons_sum = 0;
 				var pred_sum = 0;
+				var weeks_sum = 0;
 				var cnt_leak = 0;
 				var cnt_absence = 0;
+				var day1 = 0;
+				var day2 = 0;
+				var day3 = 0;
+				var day4 = 0;
+				var day5 = 0;
+				var day6 = 0;
+				var day7 = 0;
+
+				
+				for(var j = 0; guDongWeeksList[j] != null; j++) {
+					// 히스토리
+					if(addressArray[len-1] == guDongWeeksList[j].umDong) {
+						day1 += Number(guDongWeeksList[j].day1);
+						day2 += Number(guDongWeeksList[j].day2);
+						day3 += Number(guDongWeeksList[j].day3);
+						day4 += Number(guDongWeeksList[j].day4);
+						day5 += Number(guDongWeeksList[j].day5);
+						day6 += Number(guDongWeeksList[j].day6);
+						day7 += Number(guDongWeeksList[j].day7);
+						
+					}
+				}
 				
 				// 동  사용량 예측량
 				for(var j = 0; userConsumptionList[j] != null; j++)	{
-						if(addressArray[len -1] == userConsumptionList[j].umDong) {
+						if(addressArray[len-1] == userConsumptionList[j].umDong) {
 							cons_sum += Number(userConsumptionList[j].consumed);
 							pred_sum += Number(userConsumptionList[j].predicted);
 							
@@ -628,11 +651,14 @@ function getMksInfo() {
 							}
 						}
 					}
+				
+				weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 +day7;
+				
 				document.getElementById('info_date').innerHTML = address;	// 주소 출력
 				info_date.style.fontSize = "20px";	// 주소 출력 폰트 사이즈
 				
-				drawColumn(Math.round(cons_sum), Math.round(pred_sum), 0, 0);	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
-				drawHistory();	// history 그래프 그리기
+				drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), 0);	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
+				drawHistory(day7, day6, day5, day4, day3, day2, day1);	// history 그래프 그리기
 				
 				// 부가서비스 누수, 부재
 				drawLeak(cnt_leak, 0);		//동 누수 발생 횟수, 지역 평균 발생 횟수
