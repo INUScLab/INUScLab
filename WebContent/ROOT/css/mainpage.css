@@ -1,4 +1,4 @@
-﻿/*main content*/
+/*main content*/
 #main_content {
 	top: 75px; left: 0;
 	margin-top: 5px;
@@ -145,28 +145,40 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
-
+.map_controll_box{
+	height:5%;
+	width: 100%;
+	/* width:100px; */
+}
 /* Search Box */ 
+.wrapper_search_box{
+	padding:6px;
+	width:20%;
+	overflow:hidden;
+	margin-left: 10px;
+}
+
 #pac-input {
 	background-color: #fff;
 	font-family: Roboto;
 	font-size: 15px;
 	font-weight: 300;
-	margin-left: 15px;
 	padding: 0 11px 0 13px;
 	text-overflow: ellipsis;
-	width: 230px;
+	width: 80%;
+	height:30px;
+	float:left;
 }
 
 .controls {
 	margin-top: 10px;
-	border: 1px solid transparent;
+	border: 0px solid transparent;
 	border-radius: 2px 0 0 2px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	height: 32px;
 	outline: none;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
 }
 
 #pac-input:focus {
@@ -188,11 +200,13 @@ html, body {
 	font-size: 13px;
 	font-weight: 300;
 }
-.map_controll_box{
-	height:6%;
-	width:100px;
-	background-color:#;
+.search_button{
+	float:left;
+	width:20%;
+	height:32px;
 }
+
+
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;
     width: 150px;
