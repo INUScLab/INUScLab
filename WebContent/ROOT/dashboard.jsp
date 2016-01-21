@@ -72,30 +72,30 @@ function sendIt(){
 			<div class="summary_wrap summary_wrap_left">
 				<div class="summary diff_summary"><!-- #1 -->사용량 예측량 차이
 					<div class="summary_sub">
-						
+						${DIFF_SUMMARY}
 					</div>				
 				</div>
 				<div class="summary leak_summary"><!-- #2 -->누수
 					<div class="summary_sub">
-					
+						${LEAK_SUMMARY}
 					</div>
 				</div>
 			</div>
 			<div class="summary_wrap summary_wrap_right">
 				<div class="summary overused_summary"><!-- #4 -->과용
 					<div class="summary_sub">
-					
+						${OVERUSED_SUMMARY}
 					</div>
 				</div>
 				<div class="summary freezed_summary"><!-- #5 -->동파
 					<div class="summary_sub">
-					
+						${FREEZED_SUMMARY}
 					</div>
 				</div>
 			</div>
 			<div class="summary absence_summary"><!-- #3 -->부재
 				<div class="summary_sub">
-				
+					${ABSENCE_SUMMARY}
 				</div>
 			</div>
 		</div>
