@@ -5,6 +5,12 @@
 			<input id="pac-input" class="controls" type="text" placeholder="Search Box" onkeypress="if(event.keyCode==13) {codeAddress();}">
 			<button class="search_button" onclick="codeAddress();">검색</button>
 		</div>
+		<div class="wrapper_address_label">
+			<a href="#" class="address_label">
+				<h1>인천광역시 남구 용현3동</h1>
+				<span class ="extend_button"></span>
+			</a>
+		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>

@@ -148,6 +148,7 @@ html, body {
 .map_controll_box{
 	height:5%;
 	width: 100%;
+	overflow:hidden;
 	/* width:100px; */
 }
 /* Search Box */ 
@@ -206,6 +207,22 @@ html, body {
 	height:32px;
 }
 
+/* Address Label */
+.wrapper_address_box{
+	width:30%;
+	overflow:hidden;
+	float:left;
+}
+
+.address_label{
+	width:80%
+	float:left;
+
+}
+.extend_button{
+	width:20%;
+	float:left;
+}
 
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;
