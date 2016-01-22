@@ -14,6 +14,9 @@ var geocoder = new google.maps.Geocoder();
 var searchMarkers = [ ];
 var dongMarkers =  [ ];
 var detailMarkers = [ ];
+var cons_sum;
+var cnt_leak;
+var cnt_absence;
 
 
 // 로딩 개선 임시 함수 - 주소 반환
@@ -665,7 +668,7 @@ function getMksInfo() {
 				drawAbsence(cnt_absence, 0); //동 부재중 발생 횟수, 지역 평균 발생 횟수
 					
 				// 동 마커를 클릭했을때
-				getDetailAreaInformation(addressArray, cons_sum, cnt_leak, cnt_absence);
+				getDetailAreaInformation(addressArray);
 			});
 
 	}
@@ -702,7 +705,7 @@ function hideDetailMarkers ( ) {
 }
 
 
-function getDetailAreaInformation(addressArray, cons_sum, cnt_leak, cnt_absence ) {
+function getDetailAreaInformation(addressArray) {
 
 	var redColor = "FF0000";
 	var greenColor = "00FFBC";
