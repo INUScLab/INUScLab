@@ -2,17 +2,29 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+	
+	String startDate = request.getParameter("startDate");
+	String endDate = request.getParameter("endDate");
+
 %>
 
-
-
+<jsp:useBean id="pd" class="sclab.db.ProcessedData"/>
+<jsp:useBean id="pdctrl" class="sclab.db.ProcessedDataCtrl"/>
+<% 
+	if(startDate == null || endDate == null || startDate.length() == 0 || endDate.length() == 0){
+	    pd = pdctrl.returnRanks("인천광역시","전체","","20150622","20150629");
+	 }
+	 else{
+	    pd = pdctrl.returnRanks("인천광역시","부평구","부개1동",startDate,endDate);
+	 }
+%>
 
 <script type="text/javascript">
 
 function sendIt(){
 	var f = document.search_form;
 	
-	f.action = "<%=cp%>/ROOT/dashboard_sub.jsp";
+	f.action = "<%=cp%>/ROOT/main.jsp?MENU_NUM=4";
 	f.submit();
 }
 </script>
@@ -72,30 +84,30 @@ function sendIt(){
 			<div class="summary_wrap summary_wrap_left">
 				<div class="summary diff_summary"><!-- #1 -->사용량 예측량 차이
 					<div class="summary_sub">
-						${DIFF_SUMMARY}
+						<%=pd.getrank_difference().get(0).get(0) %>
 					</div>				
 				</div>
 				<div class="summary leak_summary"><!-- #2 -->누수
 					<div class="summary_sub">
-						${LEAK_SUMMARY}
+						<%=pd.getrank_leak().get(0).get(0) %>
 					</div>
 				</div>
 			</div>
 			<div class="summary_wrap summary_wrap_right">
 				<div class="summary overused_summary"><!-- #4 -->과용
 					<div class="summary_sub">
-						${OVERUSED_SUMMARY}
+						<%=pd.getrank_overused().get(0).get(0) %>
 					</div>
 				</div>
 				<div class="summary freezed_summary"><!-- #5 -->동파
 					<div class="summary_sub">
-						${FREEZED_SUMMARY}
+						<%=pd.getrank_freezed().get(0).get(0) %>
 					</div>
 				</div>
 			</div>
 			<div class="summary absence_summary"><!-- #3 -->부재
 				<div class="summary_sub">
-					${ABSENCE_SUMMARY}
+					<%=pd.getrank_absence().get(0).get(0) %>
 				</div>
 			</div>
 		</div>

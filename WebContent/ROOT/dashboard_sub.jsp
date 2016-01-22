@@ -13,12 +13,6 @@
 	String freezed_summary = null;
 	String absence_summary = null;
 	
-	String diff = null;
-	String leak = null;
-	String overused = null;
-	String freezed = null;
-	String absence = null;
-	
 	//response.sendRedirect("dashboard.jsp");
 %>
 
