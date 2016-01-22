@@ -29,7 +29,7 @@ function sendIt(){
 }
 </script>
 
-
+<!-- 수정 -->
 	<div id="dashboard_page">
 		<div id="dashboard_search">
 			<!--form action="" name="search_form" method="post">
