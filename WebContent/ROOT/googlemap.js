@@ -348,7 +348,7 @@ function initialize(x, y) {
 	*/
 	
 	// Appending boxes
-	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
 	/*

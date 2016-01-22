@@ -1,13 +1,18 @@
 ﻿<!--본문 Right (map)-->
 <div class="map_section_box">
 	<div id="map_controll_box" class="map_controll_box">
-		<a href="#"  class="current_address" style>
-			<h1>인천광역시 연수구 송도동 </h1>
-			<span class="spm spm_smore">현재주소 변경 레이어 열기</span>
-		</a>
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box" onkeypress="if(event.keyCode==13) {codeAddress();}">
+		<div class="wrapper_search_box">
+			<input id="pac-input" class="controls" type="text" placeholder="Search Box" onkeypress="if(event.keyCode==13) {codeAddress();}">
+			<button class="search_button" onclick="codeAddress();">검색</button>
+		</div>
+		<div class="wrapper_address_label">
+			<a href="#" class="address_label">
+				<h1>인천광역시 남구 용현3동</h1>
+				<span class ="extend_button"></span>
+			</a>
+		</div>
 	</div>
-	<div id="map_canvas" style="width: 100%; height: 94%;"></div>
+	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->
