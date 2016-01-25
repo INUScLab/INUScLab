@@ -613,8 +613,147 @@ function removeArrayDuplicate(array) {
 	return array;
 } 
 
-function getMksInfo() {
+// 동 요약 리포트
+function dongSummary(addressArray) {
+
+	var len = addressArray.length;
+	var siGoonSum = 0;
+	var siGoonLen = [];
+	var pred_sum = 0;
+	var weeks_sum = 0;
+	var day1 = 0;
+	var day2 = 0;
+	var day3 = 0;
+	var day4 = 0;
+	var day5 = 0;
+	var day6 = 0;
+	var day7 = 0;
+	var leak_date = "";
+	var absence_date ="null";
+	var address = "";
+	cons_sum = 0;
+	cnt_leak = 0;
+	cnt_absence = 0;
+
 	
+	for(var i =0; i < len; i++) {
+		address += addressArray[i]+' '; 
+	}
+
+	for(var j = 0; guDongWeeksList[j]; j++) {
+		// 히스토리	
+		if(addressArray[len-1] == guDongWeeksList[j].umDong) {
+			day1 += Number(guDongWeeksList[j].day1);
+			day2 += Number(guDongWeeksList[j].day2);
+			day3 += Number(guDongWeeksList[j].day3);
+			day4 += Number(guDongWeeksList[j].day4);
+			day5 += Number(guDongWeeksList[j].day5);
+			day6 += Number(guDongWeeksList[j].day6);
+			day7 += Number(guDongWeeksList[j].day7);	
+			leak_date = guDongWeeksList[j].latelyLeak;
+		}
+	}
+
+	// 동  사용량 예측량
+	for(var j = 0; userConsumptionList[j] != null; j++)	{
+		if(addressArray[len-2] == userConsumptionList[j].siGoon){
+			siGoonSum += Number(userConsumptionList[j].consumed);
+			siGoonLen.push(userConsumptionList[j].umDong);
+		}
+			if(addressArray[len-1] == userConsumptionList[j].umDong) {
+				cons_sum += Number(userConsumptionList[j].consumed);
+				pred_sum += Number(userConsumptionList[j].predicted);
+				
+				// 누수인 사람 
+				if( userConsumptionList[j].leak == '1') {
+					cnt_leak++;
+					console.log(this.title +' '+ userConsumptionList[j].detail);
+				}
+				
+				// 부재중 알람
+				if(userConsumptionList[j].absence == '1') {
+					cnt_absence++;
+					console.log(this.title + ' ' + userConsumptionList[j].detail);
+				}
+			}
+		}
+	siGoonLen = removeArrayDuplicate(siGoonLen);
+	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 +day7;
+	
+	// 요약 report 주소칸
+	document.getElementById('info_date').innerHTML = address;	// 주소 출력
+	info_date.style.fontSize = "100%";	// 주소 출력 폰트 사이즈
+	
+	//if(leak_date != "null")
+		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :'+ ' ' + leak_date;
+	
+	//if(absence_date != "null")
+		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :'+ ' ' + absence_date;
+	
+	// 요약 report 사용량,예측량,평균
+	drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), Math.round(siGoonSum/siGoonLen.length));	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
+	// 요약 report history 그래프 그리기
+	drawHistory(day7, day6, day5, day4, day3, day2, day1);	
+	
+	// 요약 report 부가서비스 누수, 부재
+	drawLeak(cnt_leak, 0);		//동 누수 발생 횟수, 지역 평균 발생 횟수
+	drawAbsence(cnt_absence, 0); //동 부재중 발생 횟수, 지역 평균 발생 횟수
+		
+	// 동 마커를 클릭했을때
+	getDetailAreaInformation(addressArray);
+}
+
+// 사용자 요약 리포트
+function userSummary(addressArray) {
+
+	var len = addressArray.length;
+	var cons = 0;
+	var len_detail = detailMarkers.length;
+	var pred = 0;
+	var leak = 0;
+	var absence = 0;
+	var leak_date = "";
+	var address = ""
+
+	for (var i = 0; i < len; i++) {
+		address += addressArray[i] + ' ';
+	}
+
+	// 사용자 사용량 예측량
+	for (var j = 0; userConsumptionList[j] != null; j++) {
+
+		if (addressArray[len - 1] == userConsumptionList[j].detail) {
+			cons = Number(userConsumptionList[j].consumed);
+			pred = Number(userConsumptionList[j].predicted);
+
+			// 누수인 사람
+			if (userConsumptionList[j].leak == '1') {
+				leak++;
+				console.log(this.title + ' ' + userConsumptionList[j].detail);
+			}
+
+			// 부재중 알람
+			if (userConsumptionList[j].absence == '1') {
+				absence++;
+				console.log(this.title + ' ' + userConsumptionList[j].detail);
+			}
+		}
+	}
+	document.getElementById('info_date').innerHTML = address;
+	info_date.style.fontSize = "100%";
+	document.getElementById('leak_text').innerHTML = '누수 날짜 :' + leak_date;
+	document.getElementById('absence_text').innerHTML = '부재중 날짜 :'
+
+	drawColumn(Math.round(cons), Math.round(pred), 0, Math.round(cons_sum
+			/ len_detail)); // column 그래프 (사용량, 예측량, 일주일 평균, 지역평균)
+	drawHistory(); // history 그래프 그리기
+	drawLeak(leak, (cnt_leak / len_detail).toFixed(1)); // 누수횟수, 지역평균 누수횟수
+	drawAbsence(absence, (cnt_absence / len_detail).toFixed(1)); // 부재중 횟수,
+																	// 지역평균 횟수
+}
+
+
+function getMksInfo() {
 	// 동을 클릭했을때 이벤트
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].addListener('click',
@@ -623,88 +762,9 @@ function getMksInfo() {
 				globalMap.setCenter(this.position);
 				var address = this.title;
 				var addressArray = address.split(' ');
-				var len = addressArray.length;
-				var siGoonSum = 0;
-				var siGoonLen = [];
-				var pred_sum = 0;
-				var weeks_sum = 0;
-				var day1 = 0;
-				var day2 = 0;
-				var day3 = 0;
-				var day4 = 0;
-				var day5 = 0;
-				var day6 = 0;
-				var day7 = 0;
-				cons_sum = 0;
-				cnt_leak = 0;
-				cnt_absence = 0;
-
-				
-				for(var j = 0; guDongWeeksList[j] != null; j++) {
-					// 히스토리
-					if(addressArray[len-1] == guDongWeeksList[j].umDong) {
-						day1 += Number(guDongWeeksList[j].day1);
-						day2 += Number(guDongWeeksList[j].day2);
-						day3 += Number(guDongWeeksList[j].day3);
-						day4 += Number(guDongWeeksList[j].day4);
-						day5 += Number(guDongWeeksList[j].day5);
-						day6 += Number(guDongWeeksList[j].day6);
-						day7 += Number(guDongWeeksList[j].day7);
-						console.log(guDongWeeksList[j].monthAverage);
-						
-					}
-				}
-				
-				// 동  사용량 예측량
-				for(var j = 0; userConsumptionList[j] != null; j++)	{
-					if(addressArray[len-2] == userConsumptionList[j].siGoon){
-						siGoonSum += Number(userConsumptionList[j].consumed);
-						siGoonLen.push(userConsumptionList[j].umDong);
-					}
-						if(addressArray[len-1] == userConsumptionList[j].umDong) {
-							cons_sum += Number(userConsumptionList[j].consumed);
-							pred_sum += Number(userConsumptionList[j].predicted);
-							
-							// 누수인 사람 
-							if( userConsumptionList[j].leak == '1') {
-								cnt_leak++;
-								console.log(this.title +' '+ userConsumptionList[j].detail);
-							}
-							
-							// 부재중 알람
-							if(userConsumptionList[j].absence == '1') {
-								cnt_absence++;
-								console.log(this.title + ' ' + userConsumptionList[j].detail);
-							}
-						}
-					}
-				siGoonLen = removeArrayDuplicate(siGoonLen);
-				weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 +day7;
-				
-				// 요약 report 주소칸
-				document.getElementById('info_date').innerHTML = address;	// 주소 출력
-				info_date.style.fontSize = "100%";	// 주소 출력 폰트 사이즈
-				
-				document.getElementById('leak_text').innerHTML = '누수 날짜 :';
-				document.getElementById('absence_text').innerHTML = '부재중 날짜 :'
-				
-				
-				// 요약 report 사용량,예측량,평균
-				drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), Math.round(siGoonSum/siGoonLen.length));	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
-				// 요약 report history 그래프 그리기
-				drawHistory(day7, day6, day5, day4, day3, day2, day1);	
-				
-				// 요약 report 부가서비스 누수, 부재
-				drawLeak(cnt_leak, 0);		//동 누수 발생 횟수, 지역 평균 발생 횟수
-				drawAbsence(cnt_absence, 0); //동 부재중 발생 횟수, 지역 평균 발생 횟수
-					
-				// 동 마커를 클릭했을때
-				getDetailAreaInformation(addressArray);
+				dongSummary(addressArray)	// 요약 리포트
 			});
-
 	}
-	
-	
 }
 
 
@@ -803,45 +863,8 @@ function getDetailAreaInformation(addressArray) {
 				//globalMap.setCenter(this.position);
 				var address = this.title;
 				var addressArray = address.split(' ');
-
-				var len = addressArray.length;
-				var cons = 0;
-				var len_detail = detailMarkers.length;
-				var pred = 0;
-				var leak = 0;
-				var absence = 0;
 				
-				// 사용자 사용량 예측량
-				for (var j = 0; userConsumptionList[j] != null; j++) {
-
-				if (addressArray[len - 1] == userConsumptionList[j].detail) {
-					cons = Number(userConsumptionList[j].consumed);
-					pred = Number(userConsumptionList[j].predicted);
-
-					// 누수인 사람
-					if (userConsumptionList[j].leak == '1') {
-						leak++;
-						console.log(this.title + ' '
-								+ userConsumptionList[j].detail);
-					}
-
-					// 부재중 알람
-					if (userConsumptionList[j].absence == '1') {
-						absence++;
-						console.log(this.title + ' '
-								+ userConsumptionList[j].detail);
-					}
-				}
-			}
-			document.getElementById('info_date').innerHTML = address;
-			info_date.style.fontSize = "100%";
-
-			drawColumn(Math.round(cons), Math.round(pred), 0, Math.round(cons_sum / len_detail)); // column 그래프  (사용량, 예측량, 일주일 평균, 지역평균)
-
-			drawHistory();	// history 그래프 그리기
-
-			drawLeak(leak, (cnt_leak/len_detail).toFixed(1));		// 누수횟수, 지역평균 누수횟수
-			drawAbsence(absence, (cnt_absence/len_detail).toFixed(1)); // 부재중 횟수, 지역평균 횟수
+				userSummary(addressArray);	// 요약리포트
 			});
 	}
 
@@ -1000,6 +1023,8 @@ function codeAddress() {
 				}
 				i++;
 			}
+			
+			dongSummary(addressArray);
 			
 			// if address is dong or block or specific area , zoom level + 3
 			if ( dongList.indexOf(addressArray[2]) != -1 || dongList.indexOf(address) != -1 ) {
