@@ -994,6 +994,7 @@ function codeAddress() {
 			var i = 0 ;
 			while (  i < guDongLatLngList.length ) {
 				if( guDongLatLngList[i].umDong == address ) {
+					addressArray[0] = "인천광역시";
 					addressArray[1] = guDongLatLngList[i].guGun;
 					addressArray[2] = guDongLatLngList[i].umDong;
 				}

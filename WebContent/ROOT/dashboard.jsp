@@ -41,32 +41,32 @@ function sendIt(){
         var diff_data = google.visualization.arrayToDataTable([  
 			['동', '차이량'],  
 			<%for (ArrayList<String> ab : pd.getrank_difference()) {%>  
-         		['work',<%=ab.get(1)%>],  
+         		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
         	<%}%>	  
         ]);  
         
         var leak_data = google.visualization.arrayToDataTable([  
                                               			['동', '누수 횟수'],  
                                               			<%for (ArrayList<String> ab : pd.getrank_leak()) {%>  
-                                                       		['work',<%=ab.get(1)%>],  
+                                                       		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
                                                       	<%}%>	  
                                                       ]);
         var absence_data = google.visualization.arrayToDataTable([  
                                                      			['동', '부재중 횟수'],  
                                                      			<%for (ArrayList<String> ab : pd.getrank_absence()) {%>  
-                                                              		['work',<%=ab.get(1)%>],  
+                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]);
         var overused_data = google.visualization.arrayToDataTable([  
                                                      			['동', '과용 횟수'],  
                                                      			<%for (ArrayList<String> ab : pd.getrank_overused()) {%>  
-                                                              		['work',<%=ab.get(1)%>],  
+                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]);
         var freezed_data = google.visualization.arrayToDataTable([  
                                                      			['동', '동파 횟수'],  
                                                      			<%for (ArrayList<String> ab : pd.getrank_freezed()) {%>  
-                                                              		['work',<%=ab.get(1)%>],  
+                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]);
 	   
