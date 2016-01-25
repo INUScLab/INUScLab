@@ -14,9 +14,9 @@ var geocoder = new google.maps.Geocoder();
 var searchMarkers = [ ];
 var dongMarkers =  [ ];
 var detailMarkers = [ ];
-var cons_sum;
-var cnt_leak;
-var cnt_absence;
+var cons_sum = 0;
+var cnt_leak = 0;
+var cnt_absence = 0;
 
 
 // 로딩 개선 임시 함수 - 주소 반환
@@ -433,6 +433,7 @@ function createDongMarker( ) {
 	getMksInfo();
 }
 
+// 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
 function drawColumn(cons, pred, week, region) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -472,6 +473,7 @@ function drawColumn(cons, pred, week, region) {
 	chart.draw(view, options);
 }
 
+// 부가서비스 누수 column 그래프
 function drawLeak(cons, pred) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -510,6 +512,7 @@ function drawLeak(cons, pred) {
 	chart.draw(view, options);
 }
 
+// 부가서비스 부재중 알람 column 그래프
 function drawAbsence(cons, pred) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -548,6 +551,7 @@ function drawAbsence(cons, pred) {
 	chart.draw(view, options);
 }
 
+// 일주일간 히스토리 꺾은선 그래프 그리는 함수
 function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
 
     var data = new google.visualization.DataTable();
@@ -595,10 +599,23 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
     chart.draw(data, options);
   }
 
+// 배열 내 중복된 값 제거하는 함수
+function removeArrayDuplicate(array) {
+	var a = {};
+
+	for (var i = 0; i < array.length; i++) {
+		if (typeof a[array[i]] == "undefined")
+			a[array[i]] = 1;
+	}
+	array.length = 0;
+	for ( var i in a)
+		array[array.length] = i;
+	return array;
+} 
 
 function getMksInfo() {
 	
-	//동을 클릭했을때 이벤트 
+	// 동을 클릭했을때 이벤트
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].addListener('click',
 			function() {
@@ -607,11 +624,10 @@ function getMksInfo() {
 				var address = this.title;
 				var addressArray = address.split(' ');
 				var len = addressArray.length;
-				var cons_sum = 0;
+				var siGoonSum = 0;
+				var siGoonLen = [];
 				var pred_sum = 0;
 				var weeks_sum = 0;
-				var cnt_leak = 0;
-				var cnt_absence = 0;
 				var day1 = 0;
 				var day2 = 0;
 				var day3 = 0;
@@ -619,6 +635,9 @@ function getMksInfo() {
 				var day5 = 0;
 				var day6 = 0;
 				var day7 = 0;
+				cons_sum = 0;
+				cnt_leak = 0;
+				cnt_absence = 0;
 
 				
 				for(var j = 0; guDongWeeksList[j] != null; j++) {
@@ -631,12 +650,17 @@ function getMksInfo() {
 						day5 += Number(guDongWeeksList[j].day5);
 						day6 += Number(guDongWeeksList[j].day6);
 						day7 += Number(guDongWeeksList[j].day7);
+						console.log(guDongWeeksList[j].monthAverage);
 						
 					}
 				}
 				
 				// 동  사용량 예측량
 				for(var j = 0; userConsumptionList[j] != null; j++)	{
+					if(addressArray[len-2] == userConsumptionList[j].siGoon){
+						siGoonSum += Number(userConsumptionList[j].consumed);
+						siGoonLen.push(userConsumptionList[j].umDong);
+					}
 						if(addressArray[len-1] == userConsumptionList[j].umDong) {
 							cons_sum += Number(userConsumptionList[j].consumed);
 							pred_sum += Number(userConsumptionList[j].predicted);
@@ -654,16 +678,19 @@ function getMksInfo() {
 							}
 						}
 					}
-				
+				siGoonLen = removeArrayDuplicate(siGoonLen);
 				weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 +day7;
 				
+				// 요약 report 주소칸
 				document.getElementById('info_date').innerHTML = address;	// 주소 출력
-				info_date.style.fontSize = "20px";	// 주소 출력 폰트 사이즈
+				info_date.style.fontSize = "100%";	// 주소 출력 폰트 사이즈
 				
-				drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), 0);	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
-				drawHistory(day7, day6, day5, day4, day3, day2, day1);	// history 그래프 그리기
+				// 요약 report 사용량,예측량,평균
+				drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), Math.round(siGoonSum/siGoonLen.length));	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
+				// 요약 report history 그래프 그리기
+				drawHistory(day7, day6, day5, day4, day3, day2, day1);	
 				
-				// 부가서비스 누수, 부재
+				// 요약 report 부가서비스 누수, 부재
 				drawLeak(cnt_leak, 0);		//동 누수 발생 횟수, 지역 평균 발생 횟수
 				drawAbsence(cnt_absence, 0); //동 부재중 발생 횟수, 지역 평균 발생 횟수
 					
@@ -803,7 +830,7 @@ function getDetailAreaInformation(addressArray) {
 				}
 			}
 			document.getElementById('info_date').innerHTML = address;
-			info_date.style.fontSize = "20px";
+			info_date.style.fontSize = "100%";
 
 			drawColumn(Math.round(cons), Math.round(pred), 0, Math.round(cons_sum / len_detail)); // column 그래프  (사용량, 예측량, 일주일 평균, 지역평균)
 
