@@ -507,7 +507,7 @@ function drawLeak(cons, pred) {
 	};
 
 	chart = new google.visualization.ColumnChart(document
-			.getElementById("info_leak"));
+			.getElementById("leak_graph"));
 
 	chart.draw(view, options);
 }
@@ -546,7 +546,7 @@ function drawAbsence(cons, pred) {
 	};
 
 	chart = new google.visualization.ColumnChart(document
-			.getElementById("info_absence"));
+			.getElementById("absence_graph"));
 
 	chart.draw(view, options);
 }
@@ -684,6 +684,10 @@ function getMksInfo() {
 				// 요약 report 주소칸
 				document.getElementById('info_date').innerHTML = address;	// 주소 출력
 				info_date.style.fontSize = "100%";	// 주소 출력 폰트 사이즈
+				
+				document.getElementById('leak_text').innerHTML = '누수 날짜 :';
+				document.getElementById('absence_text').innerHTML = '부재중 날짜 :'
+				
 				
 				// 요약 report 사용량,예측량,평균
 				drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), Math.round(siGoonSum/siGoonLen.length));	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)

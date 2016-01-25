@@ -30,9 +30,13 @@
 	<div class="info_graph" id="info_graph"></div>
 	<div class="info_history" id="info_history"></div>
 	<div class="info_service" id="info_service">
-	<div>
-		<div id="info_leak"> </div>
-		<div id="info_absence" ></div>
-	</div>
+		<div class="info_leak" id="info_leak"> 
+			<div class="leak_text" id="leak_text"></div>
+			<div class="leak_graph" id="leak_graph"></div>
+		</div>
+		<div class="info_absence" id="info_absence" >
+			<div class="absence_text" id="absence_text"></div>
+			<div class="absence_graph" id="absence_graph"></div>
+		</div>
 	</div>
 </div>

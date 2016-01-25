@@ -68,6 +68,40 @@
 	margin-bottom: 5px;
 }
 
+.left_section_box2 .info_service .info_leak {
+	width: 100%;
+	height: 50%;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_service .info_leak .leak_text {
+	width: 100%;
+	height: 20%;
+}
+
+.left_section_box2 .info_service .info_leak .leak_graph {
+	width: 100%;
+	height: 80%;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_service .info_absence {
+	width: 100%;
+	height: 50%;
+	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_service .info_absence .absence_text {
+	width: 100%;
+	height: 20%;
+}
+
+.left_section_box2 .info_service .info_absence .absence_graph {
+	width: 100%;
+	height: 80%;
+	margin-bottom: 5px;
+}
+
 /*temp*/
 
 /*tree part*/
