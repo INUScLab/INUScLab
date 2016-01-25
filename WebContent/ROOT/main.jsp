@@ -81,6 +81,7 @@
 		guGun:"<%= guDongWeeksList.get(i).getGuGun() %>",
 		umDong:"<%= guDongWeeksList.get(i).getUmDong() %>",
 		monthAverage:"<%= guDongWeeksList.get(i).getMonthAverage() %>",
+		latelyLeak:"<%= guDongWeeksList.get(i).getLatelyLeak() %>",
 		day1:"<%= guDongWeeksList.get(i).getDay1() %>",
 		day2:"<%= guDongWeeksList.get(i).getDay2() %>",
 		day3:"<%= guDongWeeksList.get(i).getDay3() %>",

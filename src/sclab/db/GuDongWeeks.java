@@ -5,6 +5,7 @@ public class GuDongWeeks {
 	private String guGun;
 	private String umDong;
 	private double monthAverage;
+	private String latelyLeak;
 	private double day1;
 	private double day2;
 	private double day3;
@@ -13,25 +14,18 @@ public class GuDongWeeks {
 	private double day6;
 	private double day7;
 	
-	public GuDongWeeks( ) {
-		this.guGun = null;
-		this.umDong = null;
-		this.monthAverage = 0;
-		this.day1 = 0;
-		this.day2 = 0;
-		this.day3 = 0;
-		this.day4 = 0;
-		this.day5 = 0;
-		this.day6 = 0;
-		this.day7 = 0;
-	}
 	
-	public GuDongWeeks(String guGun, String umDong, double monthAverage, double day1, double day2,
-			double day3, double day4, double day5, double day6, double day7) {
-		super();
+	
+	
+	public GuDongWeeks() {
+	}
+	public GuDongWeeks(String guGun, String umDong, double monthAverage,
+			String latelyLeak, double day1, double day2, double day3,
+			double day4, double day5, double day6, double day7) {
 		this.guGun = guGun;
 		this.umDong = umDong;
 		this.monthAverage = monthAverage;
+		this.latelyLeak = latelyLeak;
 		this.day1 = day1;
 		this.day2 = day2;
 		this.day3 = day3;
@@ -40,7 +34,6 @@ public class GuDongWeeks {
 		this.day6 = day6;
 		this.day7 = day7;
 	}
-	
 	public String getGuGun() {
 		return guGun;
 	}
@@ -53,15 +46,18 @@ public class GuDongWeeks {
 	public void setUmDong(String umDong) {
 		this.umDong = umDong;
 	}
-	
 	public double getMonthAverage() {
 		return monthAverage;
 	}
-
 	public void setMonthAverage(double monthAverage) {
 		this.monthAverage = monthAverage;
 	}
-
+	public String getLatelyLeak() {
+		return latelyLeak;
+	}
+	public void setLatelyLeak(String latelyLeak) {
+		this.latelyLeak = latelyLeak;
+	}
 	public double getDay1() {
 		return day1;
 	}
@@ -104,7 +100,6 @@ public class GuDongWeeks {
 	public void setDay7(double day7) {
 		this.day7 = day7;
 	}
-	
 	
 	
 
