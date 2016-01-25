@@ -35,6 +35,7 @@ public class GuDongWeeksCtrl {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				guGun = rs.getString("GOON");
+				
 				umDong = rs.getString("DONG");
 				latelyLeak = rs.getString("LATELYLEEK");
 				monthAverage = rs.getDouble("MONTHAVG");
