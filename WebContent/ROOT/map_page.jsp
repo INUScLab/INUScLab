@@ -9,31 +9,35 @@
 		</div>
 
 		<div id="address_label" class="address_label">
-			<ul>
-				<li><a href="#" onclick="swap('si_label');return false;">시</a>
-					<ul id="si_label" style="display: none;">
+			<select name="si" id="si_select">
+				<option value="">시</option>
+				<option value="incheon">인천광역시</option>
+			</select>
+		</div>
+		<div id="address_label" class="address_label">
+			<select name="guGun" id="guGun_select" >
+				<option value="">구/군</option>
+				<option value="ganghwa">강화군</option>
+				<option value="gyeyang">계양구</option>
+				<option value="nam">남구</option>
+				<option value="namdong">남동구</option>
+				<option value="dong">동구</option>
+				<option value="bupyeong">부평구</option>
+				<option value="seo">서구</option>
+				<option value="yeonsu">연수구</option>
+				<option value="ungjin">웅진군</option>
+				<option value="zung">중구</option>
+			</select>
+		</div>
+		<div id="address_label" class="address_label">
+			<select name="umDong" id="umDong_select" >
+				<option value="">읍/면/동</option>
+				<option value="">읍/면/동</option>
+				<option value="">읍/면/동</option>
+				<option value="">읍/면/동</option>
+				<option value="">읍/면/동</option>
 				
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div id="address_label" class="address_label">
-			<ul>
-				<li><a href="#" onclick="swap('gu_label');return false;">구/군</a>
-					<ul id="gu_label" style="display: none;">
-		
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div id="address_label" class="address_label">
-			<ul>
-				<li><a href="#" onclick="swap('dong_label');return false;">읍/면/동</a>
-					<ul id="dong_label" style="display: none;">
-		
-					</ul>
-				</li>
-			</ul>
+			</select>
 		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 100%;"></div>

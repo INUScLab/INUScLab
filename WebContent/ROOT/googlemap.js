@@ -11,13 +11,12 @@ var addname = new Array();
 var markers = new Array();
 var visable = new Array();
 var geocoder = new google.maps.Geocoder();
-var searchMarkers = [ ];
-var dongMarkers =  [ ];
-var detailMarkers = [ ];
+var searchMarkers = [];
+var dongMarkers = [];
+var detailMarkers = [];
 var cons_sum = 0;
 var cnt_leak = 0;
 var cnt_absence = 0;
-
 
 // 로딩 개선 임시 함수 - 주소 반환
 function retAddress(num) {
@@ -342,95 +341,110 @@ function initialize(x, y) {
 
 	// Color-interpolation Box
 	var colorBox = document.getElementById('color-interpolation');
-	
 
 	// Hide boxes
 	/*
-	input.hidden = true;
-	colorBox.hidden = true;
-	*/
-	
+	 * input.hidden = true; colorBox.hidden = true;
+	 */
+
 	// Appending boxes
-//	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
 	/*
-	load_info = new google.maps.InfoWindow();
-	load_info.open(globalMap, new google.maps.Marker({
-		map : globalMap,
-		position : latlng,
-		draggable : false,
-		icon : "null"
-	}));
-	*/
+	 * load_info = new google.maps.InfoWindow(); load_info.open(globalMap, new
+	 * google.maps.Marker({ map : globalMap, position : latlng, draggable :
+	 * false, icon : "null" }));
+	 */
 
-//	geocodeAddress();
+	// geocodeAddress();
 	createDongMarker();
 
-	//Zoom Changed Event
+	// Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
 		console.log(globalMap.getZoom());
-		if( globalMap.getZoom() < 16) {
-			//상세 주소 마커 지우기.
+		if (globalMap.getZoom() < 16) {
+			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
-			
-			//모든 동의 마커 출력.
+
+			// 모든 동의 마커 출력.
 			showDongMarkers();
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
-		else if ( globalMap.getZoom() == 16 ) {
-			
-//			console.log('Zoom: ' + globalMap.getCenter());
-			
+		else if (globalMap.getZoom() == 16) {
+
+			// console.log('Zoom: ' + globalMap.getCenter());
+
 		}
 	});
-	
-	//autoComplete Event
+
+	// autoComplete Event
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addDomListener(window, 'load', initialize);
-	
-	//service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
-	
-	//Add Address Label
-	
+
+	// service.style.visibility="hidden"; // 부가서비스 테이블 숨기기
+
+
+	/* jQuery */
+	$('#guGun_select').change(function(e) {
+		
+		$('#umDong_select').html('');
+		var optionSelected = $("option:selected", this);
+		var textSelected = optionSelected.text();
+		
+		var umDong_select = document.getElementById("umDong_select");
+		for( var i = 0 ; i < guDongWeeksList.length ; i ++ ) {
+			if( guDongWeeksList[i].guGun == textSelected ) { 
+				var option = document.createElement("option");
+				option.text = guDongWeeksList[i].umDong;
+				console.log(option.text);
+				umDong_select.add(option);
+				
+			}
+		
+		}
+		
+	});
 }
 
-function createDongMarker( ) {
-	
+function createDongMarker() {
+
 	var redColor = "FF0000";
 	var greenColor = "00FFBC";
 	var color = "";
 	var incheon = "인천광역시";
 
-	for ( var i = 0 ; i < guDongLatLngList.length ; i++ ) {
-		
-		//Check Dong's overUsedFlag
-		if (normalUsedDongList.indexOf(guDongLatLngList[i].umDong ) != -1)
+	for (var i = 0; i < guDongLatLngList.length; i++) {
+
+		// Check Dong's overUsedFlag
+		if (normalUsedDongList.indexOf(guDongLatLngList[i].umDong) != -1)
 			color = greenColor;
 		else
 			color = redColor;
-		
+
 		var pinImage = new google.maps.MarkerImage(
 				"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-				+ color, new google.maps.Size(21, 34),
+						+ color, new google.maps.Size(21, 34),
 				new google.maps.Point(0, 0), new google.maps.Point(10, 34));
 		var pinShadow = new google.maps.MarkerImage(
 				"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
 				new google.maps.Size(40, 37), new google.maps.Point(0, 0),
 				new google.maps.Point(12, 35));
 		var position = new google.maps.LatLng(37.4706225, 126.62348259999999);
-	
-		//Craete marker
+
+		// Craete marker
 		var marker = new google.maps.Marker({
-			title : incheon + " " + guDongLatLngList[i].guGun + " " + guDongLatLngList[i].umDong ,
-			position : new google.maps.LatLng(guDongLatLngList[i].lat , guDongLatLngList[i].lng ),
+			title : incheon + " " + guDongLatLngList[i].guGun + " "
+					+ guDongLatLngList[i].umDong,
+			position : new google.maps.LatLng(guDongLatLngList[i].lat,
+					guDongLatLngList[i].lng),
 			draggable : false,
 			icon : pinImage,
 			shadow : pinShadow,
 		});
-		
+
 		dongMarkers.push(marker);
-		
+
 	}
 	showDongMarkers();
 	getMksInfo();
@@ -442,9 +456,7 @@ function drawColumn(cons, pred, week, region) {
 		role : "style"
 	} ], [ '사용량', cons, '#b87333' ], // RGB value
 	[ '예측량', pred, 'silver' ], // English color name
-	[ '일주일 평균', week, '#b87333' ],
-	[ '지역 평균', region, '#b87333' ]
-	]);
+	[ '일주일 평균', week, '#b87333' ], [ '지역 평균', region, '#b87333' ] ]);
 
 	var view = new google.visualization.DataView(data);
 	view.setColumns([ 0, 1, {
@@ -455,8 +467,8 @@ function drawColumn(cons, pred, week, region) {
 	}, 2 ]);
 
 	var options = {
-		titleTextStyle: {
-			color: "black",
+		titleTextStyle : {
+			color : "black",
 			fontSize : 17
 		},
 		width : "100%",
@@ -480,8 +492,8 @@ function drawColumn(cons, pred, week, region) {
 function drawLeak(cons, pred, upperName, Name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
-	} ], [Name, cons, '#b87333' ], // RGB value
-	[ upperName+'평균', pred, 'silver' ] // English color name
+	} ], [ Name, cons, '#b87333' ], // RGB value
+	[ upperName + '평균', pred, 'silver' ] // English color name
 	]);
 
 	var view = new google.visualization.DataView(data);
@@ -493,13 +505,13 @@ function drawLeak(cons, pred, upperName, Name) {
 	}, 2 ]);
 
 	var options = {
-			title : "누수횟수",
-		titleTextStyle: {
-			color: "black",
+		title : "누수횟수",
+		titleTextStyle : {
+			color : "black",
 			fontSize : 12
 		},
-	//	width : "50%",
-	//	height : "100%",
+		// width : "50%",
+		// height : "100%",
 		fontSize : 11,
 		bar : {
 			groupWidth : "50%"
@@ -519,8 +531,8 @@ function drawLeak(cons, pred, upperName, Name) {
 function drawAbsence(cons, pred, upperName, Name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
-	} ], [Name, cons, '#b87333' ], // RGB value
-	[ upperName+'평균', pred, 'silver' ] // English color name
+	} ], [ Name, cons, '#b87333' ], // RGB value
+	[ upperName + '평균', pred, 'silver' ] // English color name
 	]);
 
 	var view = new google.visualization.DataView(data);
@@ -532,13 +544,13 @@ function drawAbsence(cons, pred, upperName, Name) {
 	}, 2 ]);
 
 	var options = {
-			title : "부재중 알람 횟수",
-		titleTextStyle: {
-			color: "black",
+		title : "부재중 알람 횟수",
+		titleTextStyle : {
+			color : "black",
 			fontSize : 12
 		},
-	//	width : "50%",
-	//	height : "100%",
+		// width : "50%",
+		// height : "100%",
 		fontSize : 11,
 		bar : {
 			groupWidth : "50%"
@@ -557,50 +569,59 @@ function drawAbsence(cons, pred, upperName, Name) {
 // 일주일간 히스토리 꺾은선 그래프 그리는 함수
 function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
 
-    var data = new google.visualization.DataTable();
-    data.addColumn('date', 'Time of Day');
-    data.addColumn('number', 'Rating');
+	var data = new google.visualization.DataTable();
+	data.addColumn('date', 'Time of Day');
+	data.addColumn('number', 'Rating');
 
-    /* 
-    data.addRows([
-      [new Date(2015, 1, 22), <%=days7Usage.get(6).get(0)%>],  [new Date(2015, 1, 23), <%=days7Usage.get(5).get(0)%>],  [new Date(2015, 1, 24), <%=days7Usage.get(4).get(0)%>],  [new Date(2015, 1, 25), <%=days7Usage.get(3).get(0)%>],
-      [new Date(2015, 1, 26), <%=days7Usage.get(2).get(0)%>],  [new Date(2015, 1, 27), <%=days7Usage.get(1).get(0)%>],  [new Date(2015, 1, 28), <%=days7Usage.get(0).get(0)%>],
-    ]);
-     */
+	/*
+	 * data.addRows([ [new Date(2015, 1, 22), <%=days7Usage.get(6).get(0)%>],
+	 * [new Date(2015, 1, 23), <%=days7Usage.get(5).get(0)%>], [new Date(2015,
+	 * 1, 24), <%=days7Usage.get(4).get(0)%>], [new Date(2015, 1, 25),
+	 * <%=days7Usage.get(3).get(0)%>], [new Date(2015, 1, 26),
+	 * <%=days7Usage.get(2).get(0)%>], [new Date(2015, 1, 27),
+	 * <%=days7Usage.get(1).get(0)%>], [new Date(2015, 1, 28),
+	 * <%=days7Usage.get(0).get(0)%>], ]);
+	 */
 
-    data.addRows([
-                  [new Date(2015, 1, 22), day1],  [new Date(2015, 1, 23), day2],  [new Date(2015, 1, 24), day3],  [new Date(2015, 1, 25), day4],
-                  [new Date(2015, 1, 26), day5],  [new Date(2015, 1, 27), day6],  [new Date(2015, 1, 28), day7],
-                ]);
+	data
+			.addRows([ [ new Date(2015, 1, 22), day1 ],
+					[ new Date(2015, 1, 23), day2 ],
+					[ new Date(2015, 1, 24), day3 ],
+					[ new Date(2015, 1, 25), day4 ],
+					[ new Date(2015, 1, 26), day5 ],
+					[ new Date(2015, 1, 27), day6 ],
+					[ new Date(2015, 1, 28), day7 ], ]);
 
+	var options = {
+		// width: 900,
+		// height: 500,
+		title : "일주일 간 history",
 
-    var options = {
-            //width: 900,
-            //height: 500,
-    		title : "일주일 간 history",
-    		
-    		titleTextStyle: {
-    			color: "black",
-    			fontSize : 17
-    		},
-            hAxis: {
-              format: 'yy-MM-dd'
-              //gridlines: {count: 15}
-            },
-            vAxis: {
-              gridlines: {color: 'none'},
-              minValue: 900,
-              maxValue:1100
-            },
-            legend : {
-    			position : "none"
-    		}
-          };
+		titleTextStyle : {
+			color : "black",
+			fontSize : 17
+		},
+		hAxis : {
+			format : 'yy-MM-dd'
+		// gridlines: {count: 15}
+		},
+		vAxis : {
+			gridlines : {
+				color : 'none'
+			},
+			minValue : 900,
+			maxValue : 1100
+		},
+		legend : {
+			position : "none"
+		}
+	};
 
-    var chart = new google.visualization.LineChart(document.getElementById('info_history'));
+	var chart = new google.visualization.LineChart(document
+			.getElementById('info_history'));
 
-    chart.draw(data, options);
-  }
+	chart.draw(data, options);
+}
 
 // 배열 내 중복된 값 제거하는 함수
 function removeArrayDuplicate(array) {
@@ -614,7 +635,7 @@ function removeArrayDuplicate(array) {
 	for ( var i in a)
 		array[array.length] = i;
 	return array;
-} 
+}
 
 // 동 요약 리포트
 function dongSummary(addressArray) {
@@ -632,7 +653,7 @@ function dongSummary(addressArray) {
 	var day6 = 0;
 	var day7 = 0;
 	var leak_date = "";
-	var absence_date ="null";
+	var absence_date = "null";
 	var address = "";
 	var siGoonLeak = 0;
 	var siGoonAbsence = 0;
@@ -640,79 +661,92 @@ function dongSummary(addressArray) {
 	cnt_leak = 0;
 	cnt_absence = 0;
 
-	
-	for(var i =0; i < len; i++) {
-		address += addressArray[i]+' '; 
+	for (var i = 0; i < len; i++) {
+		address += addressArray[i] + ' ';
 	}
 
-	for(var j = 0; guDongWeeksList[j]; j++) {
-		// 히스토리	
-		if(addressArray[len-1] == guDongWeeksList[j].umDong) {
+	for (var j = 0; guDongWeeksList[j]; j++) {
+		// 히스토리
+		if (addressArray[len - 1] == guDongWeeksList[j].umDong) {
 			day1 += Number(guDongWeeksList[j].day1);
 			day2 += Number(guDongWeeksList[j].day2);
 			day3 += Number(guDongWeeksList[j].day3);
 			day4 += Number(guDongWeeksList[j].day4);
 			day5 += Number(guDongWeeksList[j].day5);
 			day6 += Number(guDongWeeksList[j].day6);
-			day7 += Number(guDongWeeksList[j].day7);	
+			day7 += Number(guDongWeeksList[j].day7);
 			leak_date = guDongWeeksList[j].latelyLeak;
 		}
 	}
 
-	// 동  사용량 예측량
-	for(var j = 0; userConsumptionList[j] != null; j++)	{
-		if(addressArray[len-2] == userConsumptionList[j].siGoon){
+	// 동 사용량 예측량
+	for (var j = 0; userConsumptionList[j] != null; j++) {
+		if (addressArray[len - 2] == userConsumptionList[j].siGoon) {
 			siGoonSum += Number(userConsumptionList[j].consumed);
 			siGoonLen.push(userConsumptionList[j].umDong);
-			if(userConsumptionList[j].leak == '1') {
+			if (userConsumptionList[j].leak == '1') {
 				siGoonLeak++;
-			}
-			else if(userConsumptionList[j].absence == '1') {
+			} else if (userConsumptionList[j].absence == '1') {
 				siGoonAbsence++;
 				console.log(userConsumptionList[j].umDong);
 			}
 		}
-			if(addressArray[len-1] == userConsumptionList[j].umDong) {
-				cons_sum += Number(userConsumptionList[j].consumed);
-				pred_sum += Number(userConsumptionList[j].predicted);
-				
-				// 누수인 사람 
-				if( userConsumptionList[j].leak == '1') {
-					cnt_leak++;
-				}
-				
-				// 부재중 알람
-				if(userConsumptionList[j].absence == '1') {
-					cnt_absence++;
-				}
+		if (addressArray[len - 1] == userConsumptionList[j].umDong) {
+			cons_sum += Number(userConsumptionList[j].consumed);
+			pred_sum += Number(userConsumptionList[j].predicted);
+
+			// 누수인 사람
+			if (userConsumptionList[j].leak == '1') {
+				cnt_leak++;
+			}
+
+			// 부재중 알람
+			if (userConsumptionList[j].absence == '1') {
+				cnt_absence++;
 			}
 		}
-	siGoonLen = removeArrayDuplicate(siGoonLen);//중복제거
-	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 +day7;
-	
+	}
+	siGoonLen = removeArrayDuplicate(siGoonLen);// 중복제거
+	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 + day7;
+
 	// 요약 report 주소칸
-	document.getElementById('info_date').innerHTML = address;	// 주소 출력
-	info_date.style.fontSize = "100%";	// 주소 출력 폰트 사이즈
-	
-	if(leak_date != "null")
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :'+ ' ' + leak_date;
+	document.getElementById('info_date').innerHTML = address; // 주소 출력
+	info_date.style.fontSize = "100%"; // 주소 출력 폰트 사이즈
+
+	if (leak_date != "null")
+		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
+				+ leak_date;
 	else
 		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :';
-	
-	if(absence_date != "null")
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :'+ ' ' + absence_date;
+
+	if (absence_date != "null")
+		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
+				+ absence_date;
 	else
 		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :';
-	
+
 	// 요약 report 사용량,예측량,평균
-	drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math.round(weeks_sum/7), Math.round(siGoonSum/siGoonLen.length));	// column 그래프 그리기 (사용량, 예측량 , 일주일 평균, 지역평균)
+	drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math
+			.round(weeks_sum / 7), Math.round(siGoonSum / siGoonLen.length)); // column
+	// 그래프
+	// 그리기
+	// (사용량,
+	// 예측량
+	// ,
+	// 일주일
+	// 평균,
+	// 지역평균)
 	// 요약 report history 그래프 그리기
-	drawHistory(day7, day6, day5, day4, day3, day2, day1);	
-	
+	drawHistory(day7, day6, day5, day4, day3, day2, day1);
+
 	// 요약 report 부가서비스 누수, 부재
-	drawLeak(cnt_leak, (siGoonLeak/siGoonLen.length).toFixed(2), addressArray[len-2], addressArray[len-1]);		//동 누수 발생 횟수, 지역 평균 발생 횟수
-	drawAbsence(cnt_absence, (siGoonAbsence/siGoonLen.length).toFixed(2), addressArray[len-2], addressArray[len-1]); //동 부재중 발생 횟수, 지역 평균 발생 횟수
-		
+	drawLeak(cnt_leak, (siGoonLeak / siGoonLen.length).toFixed(2),
+			addressArray[len - 2], addressArray[len - 1]); // 동 누수 발생 횟수, 지역 평균
+	// 발생 횟수
+	drawAbsence(cnt_absence, (siGoonAbsence / siGoonLen.length).toFixed(2),
+			addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역
+	// 평균 발생 횟수
+
 	// 동 마커를 클릭했을때
 	getDetailAreaInformation(addressArray);
 }
@@ -759,125 +793,126 @@ function userSummary(addressArray) {
 	drawColumn(Math.round(cons), Math.round(pred), 0, Math.round(cons_sum
 			/ len_detail)); // column 그래프 (사용량, 예측량, 일주일 평균, 지역평균)
 	drawHistory(); // history 그래프 그리기
-	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 누수횟수, 지역평균 누수횟수, 
-	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 부재중 횟수,
-																	// 지역평균 횟수
+	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len - 2],
+			addressArray[len - 1]); // 누수횟수, 지역평균 누수횟수,
+	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),
+			addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수,
+	// 지역평균 횟수
 }
-
 
 function getMksInfo() {
 	// 동을 클릭했을때 이벤트
 	for (var i = 0; i < dongMarkers.length; i++) {
-		dongMarkers[i].addListener('click',
-			function() {
+		dongMarkers[i].addListener('click', function() {
 
-				globalMap.setCenter(this.position);
-				var address = this.title;
-				var addressArray = address.split(' ');
-				dongSummary(addressArray)	// 요약 리포트
-			});
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
 	}
 }
 
-
-function showDongMarkers ( ) {
-	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+function showDongMarkers() {
+	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].setMap(globalMap);
 	}
 }
 
-function hideDongMarkers ( ) {
-	for ( var i = 0 ; i < dongMarkers.length ; i ++ ) {
+function hideDongMarkers() {
+	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].setMap(null);
 	}
 }
 
-function showDetailMarkers ( ) {
-	for ( var i = 0 ; i < detailMarkers.length ; i ++ ) {
+function showDetailMarkers() {
+	for (var i = 0; i < detailMarkers.length; i++) {
 		detailMarkers[i].setMap(globalMap);
 	}
 }
 
-function hideDetailMarkers ( ) {
+function hideDetailMarkers() {
 	var i = 0;
-	while ( i < detailMarkers.length ) {
+	while (i < detailMarkers.length) {
 		detailMarkers[i].setMap(null);
 		i++;
 	}
-	detailMarkers = [ ];
+	detailMarkers = [];
 }
-
 
 function getDetailAreaInformation(addressArray) {
 
 	var redColor = "FF0000";
 	var greenColor = "00FFBC";
 	var color = "";
-	
-	//모든 마커를 지움.
+
+	// 모든 마커를 지움.
 	hideDongMarkers();
 	hideDetailMarkers();
-	
-	//이벤트 등록.
-	
-	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
-	if(globalMap.getZoom() < 16 ) {
-		globalMap.setOptions({ 'zoom' : 16 });
-	}
-	
-	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
-	for (var i = 0 ; i < userConsumptionList.length ; i ++ ) {
-		if ( userConsumptionList[i].umDong == addressArray[2] ) {
 
-			//Create Marker
-			if ( userConsumptionList[i].overused == 0 )
+	// 이벤트 등록.
+
+	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
+	if (globalMap.getZoom() < 16) {
+		globalMap.setOptions({
+			'zoom' : 16
+		});
+	}
+
+	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
+	for (var i = 0; i < userConsumptionList.length; i++) {
+		if (userConsumptionList[i].umDong == addressArray[2]) {
+
+			// Create Marker
+			if (userConsumptionList[i].overused == 0)
 				color = greenColor;
 			else
 				color = redColor;
-			
+
 			var pinImage = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-					+ color, new google.maps.Size(21, 34),
+							+ color, new google.maps.Size(21, 34),
 					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
 			var pinShadow = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
 					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
 					new google.maps.Point(12, 35));
-		
-			var marker = new google.maps.Marker({
-				title : addressArray[0] + " " + addressArray[1] + " " + addressArray[2] + " " + userConsumptionList[i].detail ,
-				position : new google.maps.LatLng(userConsumptionList[i].lat , userConsumptionList[i].lng ),
-				draggable : false,
-				icon : pinImage,
-				shadow : pinShadow,
-			});
+
+			var marker = new google.maps.Marker(
+					{
+						title : addressArray[0] + " " + addressArray[1] + " "
+								+ addressArray[2] + " "
+								+ userConsumptionList[i].detail,
+						position : new google.maps.LatLng(
+								userConsumptionList[i].lat,
+								userConsumptionList[i].lng),
+						draggable : false,
+						icon : pinImage,
+						shadow : pinShadow,
+					});
 			detailMarkers.push(marker);
 		}
 	}
 	console.log(detailMarkers);
 	showDetailMarkers();
 
-	//상세주소를 클릭했을때 이벤트 
+	// 상세주소를 클릭했을때 이벤트
 	/*
+	 * for (var i = 0; i < detailMarkers.length; i++) {
+	 * detailMarkers[i].addListener('click', function() {
+	 * globalMap.setCenter(this.position); }); }
+	 */
+
+	// 사용자를 클릭했을때 이벤트
 	for (var i = 0; i < detailMarkers.length; i++) {
-		detailMarkers[i].addListener('click',
-				function() {
-			globalMap.setCenter(this.position);
+		detailMarkers[i].addListener('click', function() {
+
+			// globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+
+			userSummary(addressArray); // 요약리포트
 		});
-	}
-	*/
-	
-	//사용자를 클릭했을때 이벤트 
-	for (var i = 0; i < detailMarkers.length; i++) {
-		detailMarkers[i].addListener('click',
-			function() {
-				
-				//globalMap.setCenter(this.position);
-				var address = this.title;
-				var addressArray = address.split(' ');
-				
-				userSummary(addressArray);	// 요약리포트
-			});
 	}
 
 }
@@ -921,7 +956,7 @@ function geocodeExcute(loc, next) {
 	});
 	marker.set("type", "point");
 	marker.set("id", markers.length.toString());
-	
+
 	// globalBounds.extend(marker.position);
 
 	markers.push(marker);
@@ -1021,30 +1056,33 @@ function codeAddress() {
 
 			var dongList = normalUsedDongList.concat(overUsedDongList);
 			var addressArray = address.split(' ');
-			addressArray = addressArray[1] + " " + addressArray[2] + " " + addressArray[3];
+			addressArray = addressArray[1] + " " + addressArray[2] + " "
+					+ addressArray[3];
 			addressArray = addressArray.split(" ");
-			
+
 			console.log(address);
-			
-			var i = 0 ;
-			while (  i < guDongLatLngList.length ) {
-				if( guDongLatLngList[i].umDong == address ) {
+
+			var i = 0;
+			while (i < guDongLatLngList.length) {
+				if (guDongLatLngList[i].umDong == address) {
 					addressArray[0] = "인천광역시";
 					addressArray[1] = guDongLatLngList[i].guGun;
 					addressArray[2] = guDongLatLngList[i].umDong;
 				}
 				i++;
 			}
-			
+
 			dongSummary(addressArray);
-			
+
 			// if address is dong or block or specific area , zoom level + 3
-			if ( dongList.indexOf(addressArray[2]) != -1 || dongList.indexOf(address) != -1 ) {
-				
+			if (dongList.indexOf(addressArray[2]) != -1
+					|| dongList.indexOf(address) != -1) {
+
 				getDetailAreaInformation(addressArray);
-				// if address is not a dong or specific area , restore zoom level to 13
-			} 
-			
+				// if address is not a dong or specific area , restore zoom
+				// level to 13
+			}
+
 			else {
 
 				globalMap.setOptions({
@@ -1068,16 +1106,14 @@ function codeAddress() {
 
 }
 
-function swap(targetId){
-	  if (document.getElementById){
-	        target = document.getElementById(targetId);
-	            if (target.style.display == "none"){
-	                target.style.display = "";
-	            } else{
-	                target.style.display = "none";
-	            }
-	                
-	  }
+function swap(targetId) {
+	if (document.getElementById) {
+		target = document.getElementById(targetId);
+		if (target.style.display == "none") {
+			target.style.display = "";
+		} else {
+			target.style.display = "none";
+		}
+
+	}
 }
-
-
