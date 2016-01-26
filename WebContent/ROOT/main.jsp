@@ -119,11 +119,11 @@
 						<li role="presentation">
 							<a href="main.jsp?MENU_NUM=1"><span>REPORT</span></a>
 						</li>
-						<li role="presentation">
+						<!--li role="presentation">
 							<a href="main.jsp?MENU_NUM=2"><span>ALERT</span></a>
 						</li>
 						<li role="presentation">
-							<a href="main.jsp?MENU_NUM=3"><span>SERVICE</span></a>
+							<a href="main.jsp?MENU_NUM=3"><span>SERVICE</span></a-->
 						</li>
 						<li role="presentation">
 							<a href="main.jsp?MENU_NUM=4"><span>ANALYSIS</span></a>
