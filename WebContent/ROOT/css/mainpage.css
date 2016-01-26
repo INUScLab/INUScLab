@@ -180,7 +180,7 @@ html, body {
 	padding: 0;
 }
 .map_controll_box{
-	height: 50%;
+	height: 5%;
 	width: 100%;
 	overflow:hidden;
 	z-index:100;
