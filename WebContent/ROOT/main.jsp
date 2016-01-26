@@ -17,6 +17,7 @@
 		}]
 	}'>
 </script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="User" class="sclab.db.User" />

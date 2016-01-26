@@ -180,10 +180,12 @@ html, body {
 	padding: 0;
 }
 .map_controll_box{
-	height:5%;
+	height: 50%;
 	width: 100%;
 	overflow:hidden;
+	z-index:100;
 	/* width:100px; */
+	position: absolute;
 }
 /* Search Box */ 
 .wrapper_search_box{
@@ -191,6 +193,7 @@ html, body {
 	width:20%;
 	overflow:hidden;
 	margin-left: 10px;
+	float: left;
 }
 
 #pac-input {
@@ -242,22 +245,54 @@ html, body {
 }
 
 /* Address Label */
-.wrapper_address_box{
-	width:30%;
+#address_label {
+	float:left;
 	overflow:hidden;
-	float:left;
+	width:100px;
+	z-index:100;
+}
+#address_label ul {
+  list-style-type: none;
+  list-style:none;
+  padding: 6px;
+  margin: 0;
+  z-index:100;
+}
+#address_label a {
+  text-decoration: none;
+  display: block;
+  padding: 3px 12px 3px 8px;
+  background-color: #666;
+  color: #fff;
+  border: 1px solid #ddd;
+  z-index:100;
+}
+#address_label a:active {
+  padding: 2px 13px 4px 7px;
+  background-color: #444;
+  color: #eee;
+  border: 1px solid #333;
+  z-index:100;
 }
 
-.address_label{
-	width:80%
-	float:left;
-
+#address_label li li a {
+  text-decoration: none;
+  padding: 3px 3px 3px 17px;
+  background-color: #999;
+  color: #111111;	
+  z-index:100;
 }
-.extend_button{
-	width:20%;
-	float:left;
+#address_label li li a:active {
+  padding: 2px 4px 4px 16px;
+  background-color: #888;
+  color: #000;
+  z-index:100;
 }
-
+#address_label ul li {
+	width:100px;
+	float:left;
+	z-index:100;
+}
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;
     width: 150px;

@@ -390,6 +390,9 @@ function initialize(x, y) {
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
 	//service.style.visibility="hidden";	// 부가서비스 테이블 숨기기
+	
+	//Add Address Label
+	
 }
 
 function createDongMarker( ) {
@@ -1055,3 +1058,17 @@ function codeAddress() {
 	});
 
 }
+
+function swap(targetId){
+	  if (document.getElementById){
+	        target = document.getElementById(targetId);
+	            if (target.style.display == "none"){
+	                target.style.display = "";
+	            } else{
+	                target.style.display = "none";
+	            }
+	                
+	  }
+}
+
+
