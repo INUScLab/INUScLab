@@ -386,8 +386,19 @@ function initialize(x, y) {
 
 
 	/* jQuery */
-	$('#guGun_select').change(function(e) {
+	$('#umDong_select').change(function(e) {
+		var optionSelected = $("option:selected", this);
+		var textSelected = optionSelected.text();
 		
+		for( var i = 0 ; i < guDongLatLngList.length ; i ++ ) {
+			if( guDongLatLngList[i].umDong == textSelected ){
+				//여기다가 코드 넣으셈 수창
+				globalMap.setCenter( new google.maps.LatLng(guDongLatLngList[i].lat , guDongLatLngList[i].lng ) );
+			}
+		}
+	});
+	
+	$('#guGun_select').change(function(e) {
 		$('#umDong_select').html('');
 		var optionSelected = $("option:selected", this);
 		var textSelected = optionSelected.text();
@@ -399,11 +410,8 @@ function initialize(x, y) {
 				option.text = guDongWeeksList[i].umDong;
 				console.log(option.text);
 				umDong_select.add(option);
-				
 			}
-		
 		}
-		
 	});
 }
 
