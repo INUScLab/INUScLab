@@ -10,7 +10,7 @@
 
 		<div id="address_label" class="address_label">
 			<select name="si" id="si_select">
-				<option value="">시</option>
+				<!--  <option value="">시</option> -->
 				<option value="incheon">인천광역시</option>
 			</select>
 		</div>

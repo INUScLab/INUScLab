@@ -392,6 +392,7 @@ function initialize(x, y) {
 		
 		for( var i = 0 ; i < guDongLatLngList.length ; i ++ ) {
 			if( guDongLatLngList[i].umDong == textSelected ){
+				
 				//여기다가 요약 리포트 추가 코드 넣으셈 수창
 				globalMap.setOptions({
 					'zoom' : 16
