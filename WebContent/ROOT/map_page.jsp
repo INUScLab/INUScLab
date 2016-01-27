@@ -32,10 +32,6 @@
 		<div id="address_label" class="address_label">
 			<select name="umDong" id="umDong_select" >
 				<option value="">읍/면/동</option>
-				<option value="">읍/면/동</option>
-				<option value="">읍/면/동</option>
-				<option value="">읍/면/동</option>
-				<option value="">읍/면/동</option>
 				
 			</select>
 		</div>

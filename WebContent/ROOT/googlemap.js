@@ -392,14 +392,17 @@ function initialize(x, y) {
 		
 		for( var i = 0 ; i < guDongLatLngList.length ; i ++ ) {
 			if( guDongLatLngList[i].umDong == textSelected ){
-				//여기다가 코드 넣으셈 수창
+				//여기다가 요약 리포트 추가 코드 넣으셈 수창
+				globalMap.setOptions({
+					'zoom' : 16
+				});
 				globalMap.setCenter( new google.maps.LatLng(guDongLatLngList[i].lat , guDongLatLngList[i].lng ) );
 			}
 		}
 	});
 	
 	$('#guGun_select').change(function(e) {
-		$('#umDong_select').html('');
+		$('#umDong_select').html('').append("<option value=''>읍/면/동</option>");
 		var optionSelected = $("option:selected", this);
 		var textSelected = optionSelected.text();
 		
