@@ -32,8 +32,16 @@
 		<div id="address_label" class="address_label">
 			<select name="umDong" id="umDong_select" >
 				<option value="">읍/면/동</option>
-				
 			</select>
+		</div>
+		<div id="icon">
+			<img src="img/leak.png" id="icon_img" class ="leak" onclick="leak_clicked()">
+		</div>
+		<div id="icon">
+			<img src="img/overused.png" id="icon_img" class ="overused" onclick="overused_clicked()">
+		</div>
+		<div id="icon">
+			<img src="img/absent.png" id="icon_img" class ="absent" onclick="absent_clicked()">
 		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>

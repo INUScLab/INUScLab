@@ -1132,3 +1132,18 @@ function swap(targetId) {
 
 	}
 }
+var leak_marker = [ ];
+var overused_clicked = [ ];
+var absent_clicked = [ ];
+
+function leak_clicked() {
+	
+}
+
+function overused_clicked() {
+	
+}
+
+function absent_clicked() {
+	
+}
