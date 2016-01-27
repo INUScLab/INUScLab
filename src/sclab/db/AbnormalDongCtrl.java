@@ -5,13 +5,13 @@ import java.util.*;
 
 import sclab.db.DbConnector;
 
-public class MapCtrl {
+public class AbnormalDongCtrl {
 
 	DbConnector dbconnector ;
 	Connection conn ;
 	PreparedStatement pstmt ;
 
-	public MapCtrl() {
+	public AbnormalDongCtrl() {
 		dbconnector = new DbConnector();
 		conn = dbconnector.getConn();
 		pstmt = dbconnector.getPstmt();
@@ -63,8 +63,53 @@ public class MapCtrl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		disconnect();
 		return normalDongList;
 	}
+	
+	//Leak flag 가 1인 동을 받아옴.
+	public ArrayList<String> getLeakDongList() {
+		
+		ArrayList<String> leakDongList = new ArrayList<String>();
+		
+		String sql = "SELECT UMDONG AS LEAK_DONG FROM USER WHERE CODE IN ( SELECT CODE FROM CONSUMPTION WHERE LEAK ='1' AND DATE = '2015-02-28') ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String umDong = new String();
+				umDong = rs.getString("LEAK_DONG");
+				leakDongList.add(umDong);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return leakDongList;
+	}
+	
+	//absence flag 가 1인 동을 받아옴.
+	public ArrayList<String> getAbsenceDongList() {
+		
+		ArrayList<String> absenceDongList = new ArrayList<String>();
+		
+		String sql = "SELECT UMDONG AS ABSENCE_DONG FROM USER WHERE CODE IN ( SELECT CODE FROM CONSUMPTION WHERE ABSENCE ='1' AND DATE = '2015-02-28') ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String umDong = new String();
+				umDong = rs.getString("ABSENCE_DONG");
+				absenceDongList.add(umDong);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		disconnect();
+		return absenceDongList;
+	}
+
 
 }
