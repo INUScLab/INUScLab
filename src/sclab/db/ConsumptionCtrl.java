@@ -7,9 +7,15 @@ import sclab.db.DbConnector;
 
 public class ConsumptionCtrl {
 
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector ;
+	Connection conn ;
+	PreparedStatement pstmt ;
+
+	public ConsumptionCtrl() {
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+	}
 	
 	public void disconnect(){
 		dbconnector.disconnect();

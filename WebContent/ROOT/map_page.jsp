@@ -36,7 +36,7 @@
 			</select>
 		</div>
 	</div>
-	<div id="map_canvas" style="width: 100%; height: 100%;"></div>
+	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->

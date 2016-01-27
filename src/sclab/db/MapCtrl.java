@@ -7,9 +7,19 @@ import sclab.db.DbConnector;
 
 public class MapCtrl {
 
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector ;
+	Connection conn ;
+	PreparedStatement pstmt ;
+
+	public MapCtrl() {
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+	}
+	
+	void disconnect(){
+		dbconnector.disconnect();
+	}
 
 	// OverUse flag가 1인 동을 받아옴 
 	public ArrayList<String> getOverUsedDongList() {
@@ -53,7 +63,7 @@ public class MapCtrl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		disconnect();
 		return normalDongList;
 	}
 

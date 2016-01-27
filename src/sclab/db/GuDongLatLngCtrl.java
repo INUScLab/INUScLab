@@ -8,9 +8,20 @@ import java.util.ArrayList;
 
 public class GuDongLatLngCtrl {
 
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector ;
+	Connection conn ;
+	PreparedStatement pstmt ;
+
+	public GuDongLatLngCtrl() {
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+	}
+
+	void disconnect(){
+		dbconnector.disconnect();
+	}
+
 
 	public ArrayList<GuDongLatLng> getGuDongLatLngList ( ) {
 
@@ -39,6 +50,7 @@ public class GuDongLatLngCtrl {
 			e.printStackTrace();
 		}
 
+		disconnect();
 		return guDongLatLngList;
 	}
 
