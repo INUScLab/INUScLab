@@ -382,9 +382,6 @@ function initialize(x, y) {
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addDomListener(window, 'load', initialize);
 
-	// service.style.visibility="hidden"; // 부가서비스 테이블 숨기기
-
-
 	/* jQuery */
 	$('#umDong_select').change(function(e) {
 		var optionSelected = $("option:selected", this);
@@ -393,6 +390,12 @@ function initialize(x, y) {
 		for( var i = 0 ; i < guDongLatLngList.length ; i ++ ) {
 			if( guDongLatLngList[i].umDong == textSelected ){
 				//여기다가 요약 리포트 추가 코드 넣으셈 수창
+				var addressArray = [];
+				addressArray[0] = "인천광역시";
+				addressArray[1] = guDongLatLngList[i].guGun;
+				addressArray[2] = guDongLatLngList[i].umDong;
+				dongSummary(addressArray);
+				
 				globalMap.setOptions({
 					'zoom' : 16
 				});
