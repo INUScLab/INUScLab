@@ -107,7 +107,6 @@ public class AbnormalDongCtrl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		disconnect();
 		return absenceDongList;
 	}
 	
@@ -132,6 +131,13 @@ public class AbnormalDongCtrl {
 		}
 		disconnect();
 		return freezedDongList;
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+		disconnect();
 	}
 
 }

@@ -72,8 +72,6 @@
 	freezedDongList[<%= i %>] = "<%= freezedDongList.get(i) %>"; 
 	<% } %>
 	
-	console.log(leakDongList , absenceDongList);
-	
 	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
 	userConsumptionList.push( {
 		siGoon:"<%= userConsumptionList.get(i).getSiGoon() %>",
