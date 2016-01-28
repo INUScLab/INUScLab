@@ -1,19 +1,13 @@
 var globalGeocoder;
 var globalMap;
-// var globalBounds;
-
-var address;
-var geoIter = 0;
-var delay = 100;
 var init_zoom = 13;
-var load_info;
-var addname = new Array();
-var markers = new Array();
-var visable = new Array();
 var geocoder = new google.maps.Geocoder();
-var searchMarkers = [];
-var overUsedDongMarkers = [];
-var detailMarkers = [];
+var searchMarkers = [ ];
+var overUsedDongMarkers = [ ];
+var leakDongMarkers = [ ];
+var freezedDongMarkers = [ ];
+var absenceDongMarkers = [ ];
+var detailMarkers = [ ];
 var cons_sum = 0;
 var cnt_leak = 0;
 var cnt_absence = 0;
@@ -27,40 +21,17 @@ function initialize(x, y) {
 	if (y == 0)
 		y = 126.70520620000002;
 
-	if (addname.length != d.aNodes.length) {
-		delete addname;
-		for (var i = d.aNodes.length - 1; i >= 0; i--)
-			addname.push(d.aNodes[i].name);
-	}
-
-	for ( var i in addname) {
-		visable.push(true);
-	}
 
 	globalGeocoder = new google.maps.Geocoder();
-	// globalBounds = new google.maps.LatLngBounds();
 	var latlng = new google.maps.LatLng(x, y);
 
 	var myOptions = {
 		zoom : init_zoom,
 		center : latlng,
-		// disableDoubleClickZoom:false,
-
-		navigationControl : false, // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택..
-		navigationControlOptions : {
-			position : google.maps.ControlPosition.TOP_RIGHT,
-			style : google.maps.NavigationControlStyle.DEFAULT
-		// ANDROID, DEFAULT, SMALL, ZOOM_PAN
-		},
-
 		streetViewControl : false,
 		scaleControl : false, // 지도 축적 보여줄 것인지.
-		// scaleControlOptions: { position:
-		// google.maps.ControlPosition.TOP_RIGHT },
-
 		mapTypeControl : false, // 지도,위성,하이브리드 등등 선택 컨트롤 보여줄 것인지
 		mapTypeId : google.maps.MapTypeId.ROADMAP
-	// HYBRID, ROADMAP, SATELLITE, TERRAIN
 	};
 
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"),
@@ -72,22 +43,11 @@ function initialize(x, y) {
 	// Color-interpolation Box
 	var colorBox = document.getElementById('color-interpolation');
 
-	// Hide boxes
-	/*
-	 * input.hidden = true; colorBox.hidden = true;
-	 */
 
 	// Appending boxes
 	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
-	/*
-	 * load_info = new google.maps.InfoWindow(); load_info.open(globalMap, new
-	 * google.maps.Marker({ map : globalMap, position : latlng, draggable :
-	 * false, icon : "null" }));
-	 */
-
-	// geocodeAddress();
 	createOverUsedDongMarker();
 
 	// Zoom Changed Event
@@ -96,7 +56,6 @@ function initialize(x, y) {
 		if (globalMap.getZoom() < 16) {
 			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
-
 			// 모든 동의 마커 출력.
 			showoverUsedDongMarkers();
 		}
@@ -151,7 +110,7 @@ function initialize(x, y) {
 		}
 	});
 }
-//과용한 사용자를 포함하는 동의 마커를 생성하는 함수 
+//과용한 사용자를 포함하는 동의 마커를 생성하는 함수 - overUsed만 생성해야함 
 function createOverUsedDongMarker() {
 
 	var redColor = "FF0000";
@@ -194,7 +153,18 @@ function createOverUsedDongMarker() {
 	showoverUsedDongMarkers();
 	getMksInfo();
 }
-
+//누수인 사용자를 포함하는 동의 마커를 생성하는 함수 
+function createLeakDongMarker() {
+	
+}
+//동파인 사용자를 포함하는 동의 마커를 생성하는 함수 
+function createFreezedDongMakrer() {
+	
+}
+//부재중인 사용자를 포함하는 동의 마커를 생성하는 함수
+function createAbsenceDongMarker() {
+	
+}
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
 function drawColumn(cons, pred, week, region) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
@@ -665,7 +635,7 @@ function getDetailAreaInformation(addressArray) {
 
 
 var searchMarker = new google.maps.Marker();
-//지도 검
+//지도 검색 
 function codeAddress() {
 
 	// Get Address from HTML
