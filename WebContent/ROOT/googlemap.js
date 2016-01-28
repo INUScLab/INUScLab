@@ -582,11 +582,12 @@ function drawAbsence(cons, pred, upperName, Name) {
 }
 
 // 일주일간 히스토리 꺾은선 그래프 그리는 함수
-function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
+function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Time of Day');
-	data.addColumn('number', 'Rating');
+	data.addColumn('number', 'Consumption');
+	data.addColumn('number', 'Average');
 
 	/*
 	 * data.addRows([ [new Date(2015, 1, 22), <%=days7Usage.get(6).get(0)%>],
@@ -599,13 +600,13 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
 	 */
 
 	data
-			.addRows([ [ new Date(2015, 1, 22), day1 ],
-					[ new Date(2015, 1, 23), day2 ],
-					[ new Date(2015, 1, 24), day3 ],
-					[ new Date(2015, 1, 25), day4 ],
-					[ new Date(2015, 1, 26), day5 ],
-					[ new Date(2015, 1, 27), day6 ],
-					[ new Date(2015, 1, 28), day7 ], ]);
+			.addRows([ [ new Date(2015, 1, 22), day1, avg ],
+					[ new Date(2015, 1, 23), day2, avg ],
+					[ new Date(2015, 1, 24), day3, avg ],
+					[ new Date(2015, 1, 25), day4, avg ],
+					[ new Date(2015, 1, 26), day5, avg ],
+					[ new Date(2015, 1, 27), day6, avg ],
+					[ new Date(2015, 1, 28), day7, avg ], ]);
 
 	var options = {
 		// width: 900,
@@ -628,7 +629,7 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7) {
 			maxValue : 1100
 		},
 		legend : {
-			position : "none"
+			position : "bottom"
 		}
 	};
 
@@ -668,6 +669,7 @@ function dongSummary(addressArray) {
 	var day6 = 0;
 	var day7 = 0;
 	var leak_date = "";
+	var monthAvg = 0;
 	var absence_date = "null";
 	var address = "";
 	var siGoonLeak = 0;
@@ -683,14 +685,16 @@ function dongSummary(addressArray) {
 	for (var j = 0; guDongWeeksList[j]; j++) {
 		// 히스토리
 		if (addressArray[len - 1] == guDongWeeksList[j].umDong) {
-			day1 += Number(guDongWeeksList[j].day1);
-			day2 += Number(guDongWeeksList[j].day2);
-			day3 += Number(guDongWeeksList[j].day3);
-			day4 += Number(guDongWeeksList[j].day4);
-			day5 += Number(guDongWeeksList[j].day5);
-			day6 += Number(guDongWeeksList[j].day6);
-			day7 += Number(guDongWeeksList[j].day7);
+			day1 = Number(guDongWeeksList[j].day1);
+			day2 = Number(guDongWeeksList[j].day2);
+			day3 = Number(guDongWeeksList[j].day3);
+			day4 = Number(guDongWeeksList[j].day4);
+			day5 = Number(guDongWeeksList[j].day5);
+			day6 = Number(guDongWeeksList[j].day6);
+			day7 = Number(guDongWeeksList[j].day7);
 			leak_date = guDongWeeksList[j].latelyLeak;
+			monthAvg = Number(guDongWeeksList[j].monthAverage);
+;
 		}
 	}
 
@@ -752,7 +756,7 @@ function dongSummary(addressArray) {
 	// 평균,
 	// 지역평균)
 	// 요약 report history 그래프 그리기
-	drawHistory(day7, day6, day5, day4, day3, day2, day1);
+	drawHistory(day7, day6, day5, day4, day3, day2, day1, monthAvg);
 
 	// 요약 report 부가서비스 누수, 부재
 	drawLeak(cnt_leak, (siGoonLeak / siGoonLen.length).toFixed(2),
