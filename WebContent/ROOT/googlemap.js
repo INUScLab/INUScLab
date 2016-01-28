@@ -630,6 +630,9 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 		},
 		legend : {
 			position : "bottom"
+		},
+		series: {
+			1: {lineDashStyle: [5, 5]}
 		}
 	};
 
