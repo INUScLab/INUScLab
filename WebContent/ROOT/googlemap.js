@@ -1143,23 +1143,34 @@ var leak_marker = [ ];
 var overused_clicked = [ ];
 var absent_clicked = [ ];
 
-var entire_flag = true;;
-var leak_flag = true;
-var freezed_flag = true;
-var absence_flag = true;
+var entire_flag = false;;
+var leak_flag = false;
+var freezed_flag = false;
+var absence_flag = false;
 
 function entire_clicked(id) {
 	
-//	entire_flag = true;
-	if ( entire_flag ) {
+	if ( entire_flag == false ) {
+		entire_flag = true;
+		leak_flag = true;
+		freezed_flag = true;
+		absence_flag = true;
+
 		$('#img_entire').css("background-color", "yellow");
-		console.log("entire_Flag is true");
-		entire_flag = false;
+		$('#img_leak').css("background-color", "yellow");
+		$('#img_freezed').css("background-color", "yellow");
+		$('#img_absence').css("background-color", "yellow");
+		
 	}
 	else{
+		entire_flag = false;
+		leak_flag = false;
+		freezed_flag = false;
+		absence_flag = false;
 		$('#img_entire').css("background-color", "#FFFFFF");
-		entire_flag = true;
-		console.log("entire_Flag is false");
+		$('#img_leak').css("background-color", "#FFFFFF");
+		$('#img_freezed').css("background-color", "#FFFFFF");
+		$('#img_absence').css("background-color", "#FFFFFF");
 	}
 }
 
@@ -1171,36 +1182,60 @@ function leak_clicked(id) {
 	//1.1 leak이 1인 user 를 찾는다.
 	var id = document.getElementById(id);
 
-	if ( leak_flag ) {
+	if ( leak_flag == false) {
+		leak_flag = true;
 		$('#img_leak').css("background-color", "yellow");
-		leak_flag = false;
+		
+		if( freezed_flag == true && absence_flag == true ) {
+			entire_flag == true;
+			$('#img_entire').css("background-color", "yellow");
+		}
+		
+		
 	}
 	else{
+		leak_flag = false;
+		entire_flag = false;
 		$('#img_leak').css("background-color", "#FFFFFF");
-		leak_flag = true;
+		$('#img_entire').css("background-color", "#FFFFFF");
 	}
 }
 
 function freezed_clicked(id) {
 
-	if ( freezed_flag ) {
+	if ( freezed_flag == false) {
+		freezed_flag = true;
 		$('#img_freezed').css("background-color", "yellow");
-		freezed_flag = false;
+		
+		if( leak_flag == true && absence_flag == true ) {
+			entire_flag == true;
+			$('#img_entire').css("background-color", "yellow");
+		}
 	}
 	else{
+		freezed_flag = false;
+		entire_flag = false;
 		$('#img_freezed').css("background-color", "#FFFFFF");
-		freezed_flag = true;
+		$('#img_entire').css("background-color", "#FFFFFF");
 	}
 }
 
 function absence_clicked(id) {
-	if ( absence_flag ) {
+	if ( absence_flag == false) {
+		absence_flag = true;
 		$('#img_absence').css("background-color", "yellow");
-		absence_flag = false;
+		
+		if( leak_flag == true && freezed_flag == true ) {
+			entire_flag == true;
+			$('#img_entire').css("background-color", "yellow");
+			
+		}
 	}
 	else{
+		absence_flag = false;
+		entire_flag = false;
 		$('#img_absence').css("background-color", "#FFFFFF");
-		absence_flag = true;
+		$('#img_entire').css("background-color", "#FFFFFF");
 	}
 }
 
