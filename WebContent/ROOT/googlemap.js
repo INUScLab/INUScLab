@@ -1143,24 +1143,64 @@ var leak_marker = [ ];
 var overused_clicked = [ ];
 var absent_clicked = [ ];
 
-function leak_clicked() {
+var entire_flag = true;;
+var leak_flag = true;
+var freezed_flag = true;
+var absence_flag = true;
 
-	console.log("leak_clicked");
+function entire_clicked(id) {
+	
+//	entire_flag = true;
+	if ( entire_flag ) {
+		$('#img_entire').css("background-color", "yellow");
+		console.log("entire_Flag is true");
+		entire_flag = false;
+	}
+	else{
+		$('#img_entire').css("background-color", "#FFFFFF");
+		entire_flag = true;
+		console.log("entire_Flag is false");
+	}
+}
+
+function leak_clicked(id) {
+
 	//누수에 해당하는 사람들이 사는 동들의 마커를 띄운다.
 	
 	//1.UserConsumption의 개수만큼 반복한다.
 	//1.1 leak이 1인 user 를 찾는다.
-	
+	var id = document.getElementById(id);
+
+	if ( leak_flag ) {
+		$('#img_leak').css("background-color", "yellow");
+		leak_flag = false;
+	}
+	else{
+		$('#img_leak').css("background-color", "#FFFFFF");
+		leak_flag = true;
+	}
 }
 
-function freezed_clicked() {
-	console.log("leak_clicked");
+function freezed_clicked(id) {
+
+	if ( freezed_flag ) {
+		$('#img_freezed').css("background-color", "yellow");
+		freezed_flag = false;
+	}
+	else{
+		$('#img_freezed').css("background-color", "#FFFFFF");
+		freezed_flag = true;
+	}
 }
 
-function absence_clicked() {
-	console.log("leak_clicked");
+function absence_clicked(id) {
+	if ( absence_flag ) {
+		$('#img_absence').css("background-color", "yellow");
+		absence_flag = false;
+	}
+	else{
+		$('#img_absence').css("background-color", "#FFFFFF");
+		absence_flag = true;
+	}
 }
 
-function entire_clicked() {
-	console.log("leak_clicked");
-}

@@ -274,8 +274,8 @@ html, body {
 	width:100%;
 	height:100%;
 }
-.img_icon :HOVER{
-	cursor: hand;
+.img_icon :ACTIVE{
+	background-color: #071918;
 }
 .img_entire {
 	background-image: url("../img/combine.png");
