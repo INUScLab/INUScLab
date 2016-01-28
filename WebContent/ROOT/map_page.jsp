@@ -34,16 +34,16 @@
 				<option value="">읍/면/동</option>
 			</select>
 		</div>
-		<div class="icon">
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
 			<img class ="img_entire img_icon" onclick="entire_clicked()">
 		</div>
-		<div class="icon">
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
 			<img class ="img_leak img_icon" onclick="leak_clicked()">
 		</div>
-		<div class="icon">
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
 			<img class ="img_freezed img_icon" onclick="freezed_clicked()">
 		</div>
-		<div class="icon">
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
 			<img class ="img_absence img_icon" onclick="absence_clicked()">
 		</div>
 	</div>

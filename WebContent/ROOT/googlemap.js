@@ -1142,6 +1142,7 @@ var absent_clicked = [ ];
 
 function leak_clicked() {
 
+	console.log("leak_clicked");
 	//누수에 해당하는 사람들이 사는 동들의 마커를 띄운다.
 	
 	//1.UserConsumption의 개수만큼 반복한다.
@@ -1150,13 +1151,13 @@ function leak_clicked() {
 }
 
 function freezed_clicked() {
-	
+	console.log("leak_clicked");
 }
 
-function absent_clicked() {
-	
+function absence_clicked() {
+	console.log("leak_clicked");
 }
 
 function entire_clicked() {
-	
+	console.log("leak_clicked");
 }
