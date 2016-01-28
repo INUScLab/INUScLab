@@ -261,19 +261,39 @@ html, body {
 }
 
 /* icon */
-#icon{
+.icon{
 	margin-left:2%;
 	float:left;
 	overflow:hidden;
-	width:60px;
-	height:30px;
+	width:50px;
+	height:100%;
+	border-color:solid 1px #FFFFFF;
 }
-#icon_img{
-	padding:4px;
+.img_icon{
 	width:100%;
 	height:100%;
-	background-size:cover;
 }
+.img_entire {
+	background-image: url("../img/entire.png");
+	background-size:100% 100%;
+}
+
+.img_leak {
+	background-image: url("../img/leak.png");
+	background-size:100% 100%;
+}
+
+.img_freezed {
+	background-image: url("../img/freezed.png");
+	background-size:100% 100%;
+}
+
+.img_absence {
+	background-image: url("../img/absence.png");
+	background-size:100% 100%;
+}
+
+.icon 
 
 .map_section_box .color-interpolation {
 	margin-bottom: 10px;

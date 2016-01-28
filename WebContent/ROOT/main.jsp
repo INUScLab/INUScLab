@@ -36,6 +36,7 @@
 	ArrayList<String> normalUsedDongList = abnormalDongCtrl.getNormalDongList();
 	ArrayList<String> leakDongList = abnormalDongCtrl.getLeakDongList();
 	ArrayList<String> absenceDongList = abnormalDongCtrl.getAbsenceDongList();
+	ArrayList<String> freezedDongList = abnormalDongCtrl.getFreezeDongList();
 	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
 	ArrayList<GuDongLatLng> guDongLatLngList = GuDongLatLngCtrl.getGuDongLatLngList();
 	ArrayList<GuDongWeeks> guDongWeeksList = GuDongWeeksCtrl.getGuDongWeeksList();
@@ -46,6 +47,7 @@
 	var normalUsedDongList = new Array();
 	var leakDongList = new Array();
 	var absenceDongList = new Array();
+	var freezedDongList = new Array();
 	var userConsumptionList = new Array();
 	var guDongLatLngList = new Array();
 	var guDongWeeksList = new Array();
@@ -64,6 +66,10 @@
 	
 	<% for (int i=0; i<absenceDongList.size(); i++) { %>
 	absenceDongList[<%= i %>] = "<%= absenceDongList.get(i) %>"; 
+	<% } %>
+	
+	<% for (int i=0; i<freezedDongList.size(); i++) { %>
+	freezedDongList[<%= i %>] = "<%= freezedDongList.get(i) %>"; 
 	<% } %>
 	
 	console.log(leakDongList , absenceDongList);
