@@ -110,6 +110,28 @@ public class AbnormalDongCtrl {
 		disconnect();
 		return absenceDongList;
 	}
-
+	
+	//freezed flag 가 1인 동을 받아옴.
+	public ArrayList<String> getFreezeDongList() {
+		
+		ArrayList<String> freezedDongList = new ArrayList<String>();
+		
+		String sql = "SELECT UMDONG AS FREEZED_DONG FROM USER WHERE CODE IN ( SELECT CODE FROM CONSUMPTION WHERE FREEZED ='1' AND DATE = '2015-02-28') ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String umDong = new String();
+				umDong = rs.getString("FREEZED_DONG");
+				freezedDongList.add(umDong);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		disconnect();
+		return freezedDongList;
+	}
 
 }

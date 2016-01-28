@@ -34,14 +34,17 @@
 				<option value="">읍/면/동</option>
 			</select>
 		</div>
-		<div id="icon">
-			<img src="img/leak.png" id="icon_img" class ="leak" onclick="leak_clicked()">
+		<div class="icon">
+			<img class ="img_entire img_icon" onclick="entire_clicked()">
 		</div>
-		<div id="icon">
-			<img src="img/overused.png" id="icon_img" class ="overused" onclick="overused_clicked()">
+		<div class="icon">
+			<img class ="img_leak img_icon" onclick="leak_clicked()">
 		</div>
-		<div id="icon">
-			<img src="img/absent.png" id="icon_img" class ="absent" onclick="absent_clicked()">
+		<div class="icon">
+			<img class ="img_freezed img_icon" onclick="freezed_clicked()">
+		</div>
+		<div class="icon">
+			<img class ="img_absence img_icon" onclick="absence_clicked()">
 		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
