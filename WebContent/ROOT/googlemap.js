@@ -125,17 +125,6 @@ function initialize(x, y) {
 		}
 	});
 	
-	//add selected class 
-	$(".img_icon").click(function() {
-//		$(this).$('.selected').removeClass('selected');
-		$(this).addClass("selected");
-	});
-	
-	$('.img_leak').change( function(e) {
-		
-		
-	});
-	
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
@@ -389,7 +378,6 @@ function drawColumn(cons, pred, week, region) {
 }
 
 // 부가서비스 누수 column 그래프
-
 function drawLeak(cons, pred, upperName, Name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -429,7 +417,6 @@ function drawLeak(cons, pred, upperName, Name) {
 }
 
 // 부가서비스 부재중 알람 column 그래프
-
 function drawAbsence(cons, pred, upperName, Name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -469,7 +456,6 @@ function drawAbsence(cons, pred, upperName, Name) {
 }
 
 // 일주일간 히스토리 꺾은선 그래프 그리는 함수
-
 function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 
 	var data = new google.visualization.DataTable();
@@ -532,8 +518,6 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 }
 
 // 배열 내 중복된 값 제거하는 함수
-
-
 function removeArrayDuplicate(array) {
 	var a = {};
 
@@ -548,7 +532,6 @@ function removeArrayDuplicate(array) {
 }
 
 // 동 요약 리포트
-
 function dongSummary(addressArray) {
 
 	var len = addressArray.length;
@@ -664,12 +647,6 @@ function dongSummary(addressArray) {
 	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
 	getDetailAreaInformation(addressArray);
 }
-
-
-
-
-
-
 
 // 사용자 요약 리포트
 function userSummary(addressArray) {
@@ -843,16 +820,14 @@ function hideAbsenceDongMarkers() {
 	}
 }
 
-// 사용자의 마커를 지도에 출력 
 // 세부 사용자들의 마커를 지도에 출력
 function showDetailMarkers() {
 	for (var i = 0; i < detailMarkers.length; i++) {
 		detailMarkers[i].setMap(globalMap);
 	}
 }
-// 세부 사용자들의 마커를 지도에서 숨김.
 
-// 사용자의 마커를 지도에서 숨김 
+// 세부 사용자들의 마커를 지도에서 숨김.
 function hideDetailMarkers() {
 	var i = 0;
 	while (i < detailMarkers.length) {
@@ -1010,7 +985,43 @@ function codeAddress() {
 
 }
 
-//전체 아이콘을 클릭했을때  
+//Flag가 True인 아이콘을 출력.
+function showIcon ( ) {
+	
+	if( entire_flag ) {
+		showEntireDongMarkers();
+	}
+	else{
+		hideEntireDongMarkers();
+		hideAbsenceDongMarkers();
+		hideFreezedDongMarkers();
+		hideLeakDongMarkers();
+		hideoverUsedDongMarkers();
+	}
+	
+	if ( leak_flag ) {
+		showLeakDongMarkers();
+	}
+	else{
+		hideLeakDongMarkers();
+	}
+	
+	if( absence_flag ) {
+		showAbsenceDongMarkers();
+	}
+	else{
+		hideAbsenceDongMarkers();
+	}
+	
+	if( freezed_flag ) {
+		showFreezedDongMarkers();
+	}
+	else{
+		hideFreezedDongMarkers();
+	}
+	
+}
+
 // 전체 보기 아이콘을 클릭했을때
 function entire_clicked(id) {
 
@@ -1020,17 +1031,10 @@ function entire_clicked(id) {
 		freezed_flag = true;
 		absence_flag = true;
 		
-		hideLeakDongMarkers();
-		hideoverUsedDongMarkers();
-		hideFreezedDongMarkers();
-		hideAbsenceDongMarkers();
-		
-		showEntireDongMarkers();
-
-//		$('#img_entire').css("background-color", "yellow");
-//		$('#img_leak').css("background-color", "yellow");
-//		$('#img_freezed').css("background-color", "yellow");
-//		$('#img_absence').css("background-color", "yellow");
+		$('#img_entire').css("background-color", "yellow");
+		$('#img_leak').css("background-color", "yellow");
+		$('#img_freezed').css("background-color", "yellow");
+		$('#img_absence').css("background-color", "yellow");
 
 	} else {
 		entire_flag = false;
@@ -1038,19 +1042,14 @@ function entire_clicked(id) {
 		freezed_flag = false;
 		absence_flag = false;
 		
-		hideLeakDongMarkers();
-		hideoverUsedDongMarkers();
-		hideFreezedDongMarkers();
-		hideAbsenceDongMarkers();
-		hideEntireDongMarkers();
-		
 		$('#img_entire').css("background-color", "#FFFFFF");
 		$('#img_leak').css("background-color", "#FFFFFF");
 		$('#img_freezed').css("background-color", "#FFFFFF");
 		$('#img_absence').css("background-color", "#FFFFFF");
 	}
+	
+	showIcon();
 }
-// 누수 아이콘을 클릭했을때
 
 //누수 아이콘을 클릭했을때 
 function leak_clicked(id) {
@@ -1058,79 +1057,69 @@ function leak_clicked(id) {
 	if (leak_flag == false) {
 		leak_flag = true;
 		
-		showLeakDongMarkers();
-
-//		$('#img_leak').css("background-color", "yellow");
+		$('#img_leak').css("background-color", "yellow");
 
 		if (freezed_flag == true && absence_flag == true) {
 			entire_flag = true;
 			
-			showLeakDongMarkers();
-//			$('#img_entire').css("background-color", "yellow");
+			$('#img_entire').css("background-color", "yellow");
 		}
 
 	} else {
 		leak_flag = false;
 		entire_flag = false;
 		
-		hideEntireDongMarkers();
-		hideLeakDongMarkers();
-		
 		$('#img_leak').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
 	}
+	
+	showIcon();
 }
 
-//동파 아이콘을 클릭했을때 
 // 동파 아이콘을 클릭했을때
 function freezed_clicked(id) {
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
 		
-		showFreezedDongMarkers();
 		
-//		$('#img_freezed').css("background-color", "yellow");
+		$('#img_freezed').css("background-color", "yellow");
 
 		if (leak_flag == true && absence_flag == true) {
 			entire_flag = true;
 			
-//			$('#img_entire').css("background-color", "yellow");
+			$('#img_entire').css("background-color", "yellow");
 		}
 	} else {
 		freezed_flag = false;
 		entire_flag = false;
 		
-		hideFreezedDongMarkers();
-		hideEntireDongMarkers();
 		$('#img_freezed').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
 		
 	}
+	
+	showIcon();
 }
-// 부재중 알림 아이콘을 클릭했을때
 
-//부재중 아이콘을 클릭했을때 
+// 부재중 알림 아이콘을 클릭했을때
 function absence_clicked(id) {
 	if (absence_flag == false  ) {
 		absence_flag = true;
 		
-		showAbsenceDongMarkers();
-		
-//		$('#img_absence').css("background-color", "yellow");
+		$('#img_absence').css("background-color", "yellow");
 		
 		if( leak_flag == true && freezed_flag == true ) {
 			entire_flag = true;
-//			$('#img_entire').css("background-color", "yellow");
+			$('#img_entire').css("background-color", "yellow");
 		}
 	} else {
 		absence_flag = false;
 		entire_flag = false;
 		
-		hideAbsenceDongMarkers();
-		hideEntireDongMarkers();
-		
 		$('#img_absence').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
 	}
+	
+	showIcon();
 }
