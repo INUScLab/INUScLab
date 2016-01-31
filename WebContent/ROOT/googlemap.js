@@ -69,7 +69,7 @@ function initialize(x, y) {
 			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
 			// 모든 동의 마커 출력.
-			showEntireDongMarkers();
+//			showEntireDongMarkers();
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if (globalMap.getZoom() == 16) {
@@ -124,6 +124,18 @@ function initialize(x, y) {
 			}
 		}
 	});
+	
+	//add selected class 
+	$(".img_icon").click(function() {
+//		$(this).$('.selected').removeClass('selected');
+		$(this).addClass("selected");
+	});
+	
+	$('.img_leak').change( function(e) {
+		
+		
+	});
+	
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
@@ -182,7 +194,7 @@ function createEntireDongMarker() {
 		
 	}
 	showEntireDongMarkers();
-	getMksInfo();
+	getEntireMksInfo();
 	
 }
 
@@ -259,6 +271,7 @@ function createLeakDongMarker() {
 			}
 		}
 	}
+	getLeakMksInfo();
 }
 
 // 동파인 사용자를 포함하는 동의 마커를 생성하는 함수
@@ -296,6 +309,7 @@ function createFreezedDongMakrer() {
 			}
 		}
 	}
+	getFreezedMksInfo();
 }
 
 // 부재중인 사용자를 포함하는 동의 마커를 생성하는 함수
@@ -333,6 +347,7 @@ function createAbsenceDongMarker() {
 			}
 		}
 	}
+	getAbsenceMksInfo();
 }
 
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
@@ -646,7 +661,7 @@ function dongSummary(addressArray) {
 			addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역
 	// 평균 발생 횟수
 
-	// 동 마커를 클릭했을때
+	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
 	getDetailAreaInformation(addressArray);
 }
 
@@ -705,11 +720,50 @@ function userSummary(addressArray) {
 	// 지역평균 횟수
 }
 
-function getMksInfo() {
-	// 모든 동을 클릭했을때 이벤트
+//전체 동을 클릭했을때 
+function getEntireMksInfo() {
 	for (var i = 0; i <entireDongMarkers.length; i++) {
 		entireDongMarkers[i].addListener('click', function() {
 
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
+}
+
+//누수인 동을 클릭했을때 
+function getLeakMksInfo() {
+	for (var i = 0; i < leakDongMarkers.length; i++) {
+		leakDongMarkers[i].addListener('click', function() {
+			
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
+}
+
+//동파인 동을 클릭했을때 
+function getFreezedMksInfo() {
+	for (var i = 0; i < freezedDongMarkers.length; i++) {
+		freezedDongMarkers[i].addListener('click', function() {
+			
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
+}
+
+//부재중인 동을 클릭했을때 
+function getAbsenceMksInfo() {
+	for (var i = 0; i < absenceDongMarkers.length; i++) {
+		absenceDongMarkers[i].addListener('click', function() {
+			
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
@@ -862,7 +916,6 @@ function getDetailAreaInformation(addressArray) {
 			detailMarkers.push(marker);
 		}
 	}
-	console.log(detailMarkers);
 	showDetailMarkers();
 
 	// 사용자를 클릭했을때 이벤트
@@ -966,17 +1019,31 @@ function entire_clicked(id) {
 		leak_flag = true;
 		freezed_flag = true;
 		absence_flag = true;
+		
+		hideLeakDongMarkers();
+		hideoverUsedDongMarkers();
+		hideFreezedDongMarkers();
+		hideAbsenceDongMarkers();
+		
+		showEntireDongMarkers();
 
-		$('#img_entire').css("background-color", "yellow");
-		$('#img_leak').css("background-color", "yellow");
-		$('#img_freezed').css("background-color", "yellow");
-		$('#img_absence').css("background-color", "yellow");
+//		$('#img_entire').css("background-color", "yellow");
+//		$('#img_leak').css("background-color", "yellow");
+//		$('#img_freezed').css("background-color", "yellow");
+//		$('#img_absence').css("background-color", "yellow");
 
 	} else {
 		entire_flag = false;
 		leak_flag = false;
 		freezed_flag = false;
 		absence_flag = false;
+		
+		hideLeakDongMarkers();
+		hideoverUsedDongMarkers();
+		hideFreezedDongMarkers();
+		hideAbsenceDongMarkers();
+		hideEntireDongMarkers();
+		
 		$('#img_entire').css("background-color", "#FFFFFF");
 		$('#img_leak').css("background-color", "#FFFFFF");
 		$('#img_freezed').css("background-color", "#FFFFFF");
@@ -988,24 +1055,27 @@ function entire_clicked(id) {
 //누수 아이콘을 클릭했을때 
 function leak_clicked(id) {
 
-	// 누수에 해당하는 사람들이 사는 동들의 마커를 띄운다.
-
-	// 1.UserConsumption의 개수만큼 반복한다.
-	// 1.1 leak이 1인 user 를 찾는다.
-	var id = document.getElementById(id);
-
 	if (leak_flag == false) {
 		leak_flag = true;
-		$('#img_leak').css("background-color", "yellow");
+		
+		showLeakDongMarkers();
+
+//		$('#img_leak').css("background-color", "yellow");
 
 		if (freezed_flag == true && absence_flag == true) {
 			entire_flag = true;
-			$('#img_entire').css("background-color", "yellow");
+			
+			showLeakDongMarkers();
+//			$('#img_entire').css("background-color", "yellow");
 		}
 
 	} else {
 		leak_flag = false;
 		entire_flag = false;
+		
+		hideEntireDongMarkers();
+		hideLeakDongMarkers();
+		
 		$('#img_leak').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
 	}
@@ -1017,17 +1087,25 @@ function freezed_clicked(id) {
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
-		$('#img_freezed').css("background-color", "yellow");
+		
+		showFreezedDongMarkers();
+		
+//		$('#img_freezed').css("background-color", "yellow");
 
 		if (leak_flag == true && absence_flag == true) {
 			entire_flag = true;
-			$('#img_entire').css("background-color", "yellow");
+			
+//			$('#img_entire').css("background-color", "yellow");
 		}
 	} else {
 		freezed_flag = false;
 		entire_flag = false;
+		
+		hideFreezedDongMarkers();
+		hideEntireDongMarkers();
 		$('#img_freezed').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
+		
 	}
 }
 // 부재중 알림 아이콘을 클릭했을때
@@ -1036,16 +1114,22 @@ function freezed_clicked(id) {
 function absence_clicked(id) {
 	if (absence_flag == false  ) {
 		absence_flag = true;
-		$('#img_absence').css("background-color", "yellow");
+		
+		showAbsenceDongMarkers();
+		
+//		$('#img_absence').css("background-color", "yellow");
 		
 		if( leak_flag == true && freezed_flag == true ) {
 			entire_flag = true;
-			$('#img_entire').css("background-color", "yellow");
+//			$('#img_entire').css("background-color", "yellow");
 		}
 	} else {
-		console.log("?");
 		absence_flag = false;
 		entire_flag = false;
+		
+		hideAbsenceDongMarkers();
+		hideEntireDongMarkers();
+		
 		$('#img_absence').css("background-color", "#FFFFFF");
 		$('#img_entire').css("background-color", "#FFFFFF");
 	}

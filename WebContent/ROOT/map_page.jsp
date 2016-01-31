@@ -35,16 +35,16 @@
 			</select>
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_entire img_icon" id="img_entire" onclick="entire_clicked('img_entire')">
+			<img class =" img_icon img_entire " id="img_entire" onclick="entire_clicked('img_entire')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_leak img_icon" id="img_leak" onclick="leak_clicked('img_leak')">
+			<img class ="img_icon img_leak" id="img_leak" onclick="leak_clicked('img_leak')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_freezed img_icon" id="img_freezed" onclick="freezed_clicked('img_freezed')">
+			<img class ="img_icon img_freezed " id="img_freezed" onclick="freezed_clicked('img_freezed')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_absence img_icon" id="img_absence" onclick="absence_clicked('img_absence')">
+			<img class ="img_icon img_absence" id="img_absence" onclick="absence_clicked('img_absence')">
 		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
