@@ -1096,11 +1096,11 @@ function leak_clicked(id) {
 		
 		$('#img_leak').css("background-color", "yellow");
 
-		if (freezed_flag == true && absence_flag == true) {
-			entire_flag = true;
-			
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if (freezed_flag == true && absence_flag == true) {
+//			entire_flag = true;
+//			
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 
 	} else {
 		leak_flag = false;
@@ -1122,11 +1122,11 @@ function freezed_clicked(id) {
 		
 		$('#img_freezed').css("background-color", "yellow");
 
-		if (leak_flag == true && absence_flag == true) {
-			entire_flag = true;
-			
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if (leak_flag == true && absence_flag == true) {
+//			entire_flag = true;
+//			
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 	} else {
 		freezed_flag = false;
 		entire_flag = false;
@@ -1146,10 +1146,10 @@ function absence_clicked(id) {
 		
 		$('#img_absence').css("background-color", "yellow");
 		
-		if( leak_flag == true && freezed_flag == true ) {
-			entire_flag = true;
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if( leak_flag == true && freezed_flag == true ) {
+//			entire_flag = true;
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 	} else {
 		absence_flag = false;
 		entire_flag = false;

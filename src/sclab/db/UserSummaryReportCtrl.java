@@ -70,8 +70,6 @@ public class UserSummaryReportCtrl {
 			e.printStackTrace();
 		}
 		
-		System.out.println(userSummuryReportList.size());
-
 		return userSummuryReportList;
 	}
 
