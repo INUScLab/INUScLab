@@ -53,7 +53,6 @@ public class UserConsumptionCtrl {
 				leak = rs.getInt("LEAK");
 				absence = rs.getInt("ABSENCE");
 				overused= rs.getInt("OVERUSED");
-
 				
 				UserConsumption userConsumption = new UserConsumption(siGoon , umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
 				userConsumptionList.add(userConsumption);

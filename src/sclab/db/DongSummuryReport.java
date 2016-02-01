@@ -1,6 +1,6 @@
 package sclab.db;
 
-public class GuDongWeeks {
+public class DongSummuryReport {
 	
 	private String guGun;
 	private String umDong;
@@ -17,9 +17,9 @@ public class GuDongWeeks {
 	
 	
 	
-	public GuDongWeeks() {
+	public DongSummuryReport() {
 	}
-	public GuDongWeeks(String guGun, String umDong, double monthAverage,
+	public DongSummuryReport(String guGun, String umDong, double monthAverage,
 			String latelyLeak, double day1, double day2, double day3,
 			double day4, double day5, double day6, double day7) {
 		this.guGun = guGun;

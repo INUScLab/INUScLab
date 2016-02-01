@@ -21,17 +21,18 @@
 <script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="User" class="sclab.db.User" />
-<jsp:useBean id="MapCtrl" class="sclab.db.AbnormalDongCtrl" />
+<jsp:useBean id="abnormalDongCtrl" class="sclab.db.AbnormalDongCtrl" />
 <jsp:useBean id="UserConsumption" class="sclab.db.UserConsumption" />
 <jsp:useBean id="UserConsumptionCtrl" class="sclab.db.UserConsumptionCtrl" />
 <jsp:useBean id="GuDongLatLng" class="sclab.db.GuDongLatLng" />
 <jsp:useBean id="GuDongLatLngCtrl" class="sclab.db.GuDongLatLngCtrl" />
-<jsp:useBean id="GuDongWeeks" class="sclab.db.GuDongWeeks" />
-<jsp:useBean id="GuDongWeeksCtrl" class="sclab.db.GuDongWeeksCtrl" />
+<jsp:useBean id="DongSummuryReport" class="sclab.db.DongSummuryReport" />
+<jsp:useBean id="UserSummuryReport" class="sclab.db.UserSummuryReport" />
+<jsp:useBean id="DongSummuryReportCtrl" class="sclab.db.DongSummuryReportCtrl" />
+<jsp:useBean id="UserSummuryReportCtrl" class="sclab.db.UserSummuryReportCtrl" />
 
 
 <%
-	AbnormalDongCtrl abnormalDongCtrl = new AbnormalDongCtrl();
 	ArrayList<String> overUsedDongList = abnormalDongCtrl.getOverUsedDongList();
 	ArrayList<String> normalUsedDongList = abnormalDongCtrl.getNormalDongList();
 	ArrayList<String> leakDongList = abnormalDongCtrl.getLeakDongList();
@@ -39,7 +40,8 @@
 	ArrayList<String> freezedDongList = abnormalDongCtrl.getFreezeDongList();
 	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
 	ArrayList<GuDongLatLng> guDongLatLngList = GuDongLatLngCtrl.getGuDongLatLngList();
-	ArrayList<GuDongWeeks> guDongWeeksList = GuDongWeeksCtrl.getGuDongWeeksList();
+	ArrayList<DongSummuryReport> dongSummuryReportList = DongSummuryReportCtrl.getDongSummuryReportList();
+	ArrayList<UserSummuryReport> userSummuryReportList = UserSummuryReportCtrl.getUserSummuryReportList();
 %>
 
 <script type="text/javascript">	
@@ -50,7 +52,8 @@
 	var freezedDongList = new Array();
 	var userConsumptionList = new Array();
 	var guDongLatLngList = new Array();
-	var guDongWeeksList = new Array();
+	var dongSummuryReportList = new Array();
+	var userSummuryReportList = new Array();
 	
 	<% for (int i=0; i<overUsedDongList.size(); i++) { %>
 	overUsedDongList[<%= i %>] = "<%= overUsedDongList.get(i) %>"; 
@@ -96,19 +99,35 @@
 	});
 	<% } %>
 	
-	<% for (int i=0; i < guDongWeeksList.size(); i++) { %>
-	guDongWeeksList.push( {
-		guGun:"<%= guDongWeeksList.get(i).getGuGun() %>",
-		umDong:"<%= guDongWeeksList.get(i).getUmDong() %>",
-		monthAverage:"<%= guDongWeeksList.get(i).getMonthAverage() %>",
-		latelyLeak:"<%= guDongWeeksList.get(i).getLatelyLeak() %>",
-		day1:"<%= guDongWeeksList.get(i).getDay1() %>",
-		day2:"<%= guDongWeeksList.get(i).getDay2() %>",
-		day3:"<%= guDongWeeksList.get(i).getDay3() %>",
-		day4:"<%= guDongWeeksList.get(i).getDay4() %>",
-		day5:"<%= guDongWeeksList.get(i).getDay5() %>",
-		day6:"<%= guDongWeeksList.get(i).getDay6() %>",
-		day7:"<%= guDongWeeksList.get(i).getDay7() %>",
+	<% for (int i=0; i < dongSummuryReportList.size(); i++) { %>
+	dongSummuryReportList.push( {
+		guGun:"<%= dongSummuryReportList.get(i).getGuGun() %>",
+		umDong:"<%= dongSummuryReportList.get(i).getUmDong() %>",
+		monthAverage:"<%= dongSummuryReportList.get(i).getMonthAverage() %>",
+		latelyLeak:"<%= dongSummuryReportList.get(i).getLatelyLeak() %>",
+		day1:"<%= dongSummuryReportList.get(i).getDay1() %>",
+		day2:"<%= dongSummuryReportList.get(i).getDay2() %>",
+		day3:"<%= dongSummuryReportList.get(i).getDay3() %>",
+		day4:"<%= dongSummuryReportList.get(i).getDay4() %>",
+		day5:"<%= dongSummuryReportList.get(i).getDay5() %>",
+		day6:"<%= dongSummuryReportList.get(i).getDay6() %>",
+		day7:"<%= dongSummuryReportList.get(i).getDay7() %>",
+	});
+	<% } %>
+	
+	<% for (int i=0; i < userSummuryReportList.size(); i++) { %>
+	userSummuryReportList.push( {
+		guGun:"<%= userSummuryReportList.get(i).getGuGun() %>",
+		umDong:"<%= userSummuryReportList.get(i).getUmDong() %>",
+		monthAverage:"<%= userSummuryReportList.get(i).getMonthAverage() %>",
+		latelyLeak:"<%= userSummuryReportList.get(i).getLatelyLeak() %>",
+		day1:"<%= userSummuryReportList.get(i).getDay1() %>",
+		day2:"<%= userSummuryReportList.get(i).getDay2() %>",
+		day3:"<%= userSummuryReportList.get(i).getDay3() %>",
+		day4:"<%= userSummuryReportList.get(i).getDay4() %>",
+		day5:"<%= userSummuryReportList.get(i).getDay5() %>",
+		day6:"<%= userSummuryReportList.get(i).getDay6() %>",
+		day7:"<%= userSummuryReportList.get(i).getDay7() %>",
 	});
 	<% } %>
 </script>

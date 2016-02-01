@@ -125,10 +125,10 @@ function initialize(x, y) {
 		var textSelected = optionSelected.text();
 
 		var umDong_select = document.getElementById("umDong_select");
-		for (var i = 0; i < guDongWeeksList.length; i++) {
-			if (guDongWeeksList[i].guGun == textSelected) {
+		for (var i = 0; i < dongSummuryReportList.length; i++) {
+			if (dongSummuryReportList[i].guGun == textSelected) {
 				var option = document.createElement("option");
-				option.text = guDongWeeksList[i].umDong;
+				option.text = dongSummuryReportList[i].umDong;
 				console.log(option.text);
 				umDong_select.add(option);
 			}
@@ -570,18 +570,18 @@ function dongSummary(addressArray) {
 		address += addressArray[i] + ' ';
 	}
 
-	for (var j = 0; guDongWeeksList[j]; j++) {
+	for (var j = 0; dongSummuryReportList[j]; j++) {
 		// 히스토리
-		if (addressArray[len - 1] == guDongWeeksList[j].umDong) {
-			day1 = Number(guDongWeeksList[j].day1);
-			day2 = Number(guDongWeeksList[j].day2);
-			day3 = Number(guDongWeeksList[j].day3);
-			day4 = Number(guDongWeeksList[j].day4);
-			day5 = Number(guDongWeeksList[j].day5);
-			day6 = Number(guDongWeeksList[j].day6);
-			day7 = Number(guDongWeeksList[j].day7);
-			leak_date = guDongWeeksList[j].latelyLeak;
-			monthAvg = Number(guDongWeeksList[j].monthAverage);
+		if (addressArray[len - 1] == dongSummuryReportList[j].umDong) {
+			day1 = Number(dongSummuryReportList[j].day1);
+			day2 = Number(dongSummuryReportList[j].day2);
+			day3 = Number(dongSummuryReportList[j].day3);
+			day4 = Number(dongSummuryReportList[j].day4);
+			day5 = Number(dongSummuryReportList[j].day5);
+			day6 = Number(dongSummuryReportList[j].day6);
+			day7 = Number(dongSummuryReportList[j].day7);
+			leak_date = dongSummuryReportList[j].latelyLeak;
+			monthAvg = Number(dongSummuryReportList[j].monthAverage);
 			;
 		}
 	}
