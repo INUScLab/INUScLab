@@ -69,7 +69,7 @@ function initialize(x, y) {
 			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
 			// 모든 동의 마커 출력.
-//			showEntireDongMarkers();
+			showEntireDongMarkers();
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if (globalMap.getZoom() == 16) {
