@@ -8,15 +8,21 @@ import java.util.ArrayList;
 
 public class ProcessedDataCtrl {
 	
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector;
+	Connection conn;
+	PreparedStatement pstmt;
 	
 	public String pd_sido;
 	public String pd_sigoon;
 	public String pd_umdong;
 	public String startday;
 	public String endday;
+	
+	public ProcessedDataCtrl(){
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+	}
 	
 	void setParameters(String pd_sido, String pd_sigoon, String pd_umdong, String startday, String endday){
 		this.pd_sido = pd_sido;
@@ -77,11 +83,11 @@ public class ProcessedDataCtrl {
 		
 		ProcessedData pd = new ProcessedData();
 		
-		pd.setrank_difference(getRank("abs(sum(consumed)-sum(predicted))"));
-		pd.setrank_leak(getRank("sum(leak)"));
-		pd.setrank_absence(getRank("sum(absence)"));
-		pd.setrank_overused(getRank("sum(overused)"));
-		pd.setrank_freezed(getRank("sum(freezed)"));
+		pd.setRank_difference(getRank("abs(sum(consumed)-sum(predicted))"));
+		pd.setRank_leak(getRank("sum(leak)"));
+		pd.setRank_absence(getRank("sum(absence)"));
+		pd.setRank_overused(getRank("sum(overused)"));
+		pd.setRank_freezed(getRank("sum(freezed)"));
 		
 		disconnect();
 		

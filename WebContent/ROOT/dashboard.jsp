@@ -19,6 +19,10 @@
 %>
 
 <script type="text/javascript">
+window.onload = function dateInput() {
+	var inputData = document.getElementById('startDate');
+	inputData.style.backgroundcolor = '#005147';
+}
 
 
 
@@ -40,52 +44,84 @@ function sendIt(){
     	  
         var diff_data = google.visualization.arrayToDataTable([  
 			['동', '차이량'],  
-			<%for (ArrayList<String> ab : pd.getrank_difference()) {%>  
-         		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
+			<%for (ArrayList<String> ab : pd.getRank_difference()) {%>  
+         		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
         	<%}%>	  
         ]);  
         
         var leak_data = google.visualization.arrayToDataTable([  
                                               			['동', '누수 횟수'],  
-                                              			<%for (ArrayList<String> ab : pd.getrank_leak()) {%>  
-                                                       		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
+                                              			<%for (ArrayList<String> ab : pd.getRank_leak()) {%>  
+                                                       		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                       	<%}%>	  
                                                       ]);
         var absence_data = google.visualization.arrayToDataTable([  
                                                      			['동', '부재중 횟수'],  
-                                                     			<%for (ArrayList<String> ab : pd.getrank_absence()) {%>  
-                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
+                                                     			<%for (ArrayList<String> ab : pd.getRank_absence()) {%>  
+                                                              		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]);
         var overused_data = google.visualization.arrayToDataTable([  
                                                      			['동', '과용 횟수'],  
-                                                     			<%for (ArrayList<String> ab : pd.getrank_overused()) {%>  
-                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
+                                                     			<%for (ArrayList<String> ab : pd.getRank_overused()) {%>  
+                                                              		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]);
         var freezed_data = google.visualization.arrayToDataTable([  
                                                      			['동', '동파 횟수'],  
-                                                     			<%for (ArrayList<String> ab : pd.getrank_freezed()) {%>  
-                                                              		['<%=ab.get(0) %>',<%=ab.get(1)%>],  
-                                                             	<%}%>	  
-                                                             ]);
-	   
-       var options = {  
-         title: 'Water Consumption'  
-        };  
- 
-       var diff_chart = new google.visualization.ColumnChart(document.getElementById('diff_info'));
-       var leak_chart = new google.visualization.ColumnChart(document.getElementById('leak_info'));
-       var absence_chart = new google.visualization.ColumnChart(document.getElementById('absence_info'));
-       var overused_chart = new google.visualization.ColumnChart(document.getElementById('overused_info'));
-       var freezed_chart = new google.visualization.ColumnChart(document.getElementById('freezed_info'));
+                                                     			<%for (ArrayList<String> ab : pd.getRank_freezed()) {%>  
+                                                              		['<%=ab.get(0)%>',<%=ab.get(1)%>],
+																<%}%>
+																]);
 
-      diff_chart.draw(diff_data, options);
-      leak_chart.draw(leak_data, options);
-      absence_chart.draw(absence_data, options);
-      overused_chart.draw(overused_data, options);
-      freezed_chart.draw(freezed_data, options);
- }  
+		var diff_options = {
+			title : 'Water Consumption',
+			//width : '100%',
+			//height : 143,
+
+			bar : {
+				groupWidth : "95%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+				//ticks : [ 0, 5, 10, 15, 20 ],
+				gridlines : {
+					count : 4
+				}
+			}
+		};
+		var leak_options = {
+			title : 'Water Consumption'
+		};
+		var absence_options = {
+			title : 'Water Consumption'
+		};
+		var overused_options = {
+			title : 'Water Consumption'
+		};
+		var freezed_options = {
+			title : 'Water Consumption'
+		};
+
+		var diff_chart = new google.visualization.ColumnChart(document
+				.getElementById('diff_info'));
+		var leak_chart = new google.visualization.ColumnChart(document
+				.getElementById('leak_info'));
+		var absence_chart = new google.visualization.ColumnChart(document
+				.getElementById('absence_info'));
+		var overused_chart = new google.visualization.ColumnChart(document
+				.getElementById('overused_info'));
+		var freezed_chart = new google.visualization.ColumnChart(document
+				.getElementById('freezed_info'));
+
+		diff_chart.draw(diff_data, diff_options);
+		leak_chart.draw(leak_data, leak_options);
+		absence_chart.draw(absence_data, absence_options);
+		overused_chart.draw(overused_data, overused_options);
+		freezed_chart.draw(freezed_data, freezed_options);
+	}
 </script>
 
 
@@ -119,9 +155,8 @@ function sendIt(){
 							<tr>
 								<td>
 									<div class="Date_wrap">
-										<input type="text" class="startDate" name="startDate"
-											size="10" /> <img alt="calendar" src="./img/calendar.png"
-											id="calendar" width="25px" height="25px">
+										<input type="text" class="startDate" id="startDate" name="startDate" size="10" /> 
+										<img alt="calendar" src="./img/calendar.png" id="calendar" width="25px" height="25px">
 									</div>
 								</td>
 								<td>&nbsp;-&nbsp;</td>
@@ -149,14 +184,14 @@ function sendIt(){
 					<!-- #1 -->
 					사용량 예측량 차이
 					<div class="summary_sub">
-						<%=pd.getrank_difference().get(0).get(0)%>
+						<%=pd.getRank_difference().get(0).get(0)%>
 					</div>
 				</div>
 				<div class="summary leak_summary">
 					<!-- #2 -->
 					누수
 					<div class="summary_sub">
-						<%=pd.getrank_leak().get(0).get(0)%>
+						<%=pd.getRank_leak().get(0).get(0)%>
 					</div>
 				</div>
 			</div>
@@ -165,14 +200,14 @@ function sendIt(){
 					<!-- #4 -->
 					과용
 					<div class="summary_sub">
-						<%=pd.getrank_overused().get(0).get(0)%>
+						<%=pd.getRank_overused().get(0).get(0)%>
 					</div>
 				</div>
 				<div class="summary freezed_summary">
 					<!-- #5 -->
 					동파
 					<div class="summary_sub">
-						<%=pd.getrank_freezed().get(0).get(0)%>
+						<%=pd.getRank_freezed().get(0).get(0)%>
 					</div>
 				</div>
 			</div>
@@ -180,7 +215,7 @@ function sendIt(){
 				<!-- #3 -->
 				부재
 				<div class="summary_sub">
-					<%=pd.getrank_absence().get(0).get(0)%>
+					<%=pd.getRank_absence().get(0).get(0)%>
 				</div>
 			</div>
 		</div>
