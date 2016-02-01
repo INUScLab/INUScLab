@@ -37,13 +37,6 @@ window.onload = function dateInput() {
 				var optionSelected = $("option:selected", this);
 				var textSelected = optionSelected.text();
 
-				for (var i = 0; i < guDongLatLngList.length; i++) {
-					if (guDongLatLngList[i].umDong == textSelected) {
-
-						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
-						
-					}
-				}
 			});
 
 	$('#analysis_guGun_select').change(function(e) {
@@ -99,19 +92,14 @@ function sendIt(){
                                                      			<%for (ArrayList<String> ab : pd.getRank_absence()) {%>  
                                                               		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
-                                                             ]);
-        var overused_data = google.visualization.arrayToDataTable([  
-                                                     			['동', '과용 횟수'],  
-                                                     			<%for (ArrayList<String> ab : pd.getRank_overused()) {%>  
-                                                              		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
-                                                             	<%}%>	  
-                                                             ]);
+                                                             ]); 
+                                                           
         var freezed_data = google.visualization.arrayToDataTable([  
                                                      			['동', '동파 횟수'],  
                                                      			<%for (ArrayList<String> ab : pd.getRank_freezed()) {%>  
                                                               		['<%=ab.get(0)%>',<%=ab.get(1)%>],
 																<%}%>
-	]);
+																	]);
 
 		var diff_options = {
 			title : 'Water Consumption',
@@ -119,7 +107,7 @@ function sendIt(){
 			//height : 143,
 
 			bar : {
-				groupWidth : "95%"
+				groupWidth : "80%"
 			},
 			legend : {
 				position : "none"
@@ -128,20 +116,69 @@ function sendIt(){
 				//ticks : [ 0, 5, 10, 15, 20 ],
 				gridlines : {
 					count : 4
+				},
+				//minValue : 0,
+				viewWindow : {
+					min : 0
 				}
 			}
 		};
 		var leak_options = {
-			title : 'Water Consumption'
+			title : '누수 횟수',
+			bar : {
+				groupWidth : "80%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+				//ticks : [ 0, 5, 10, 15, 20 ],
+				gridlines : {
+					count : 4
+				},
+				//minValue : 0,
+				viewWindow : {
+					min : 0
+				}
+			}
 		};
 		var absence_options = {
-			title : 'Water Consumption'
-		};
-		var overused_options = {
-			title : 'Water Consumption'
+				title : '부재중 횟수',
+				bar : {
+					groupWidth : "80%"
+				},
+				legend : {
+					position : "none"
+				},
+				vAxis : {
+					//ticks : [ 0, 5, 10, 15, 20 ],
+					gridlines : {
+						count : 4
+					},
+					//minValue : 0,
+					viewWindow : {
+						min : 0
+					}
+				}
 		};
 		var freezed_options = {
-			title : 'Water Consumption'
+				title : '동파 횟수',
+				bar : {
+					groupWidth : "80%"
+				},
+				legend : {
+					position : "none"
+				},
+				vAxis : {
+					//ticks : [ 0, 5, 10, 15, 20 ],
+					gridlines : {
+						count : 4
+					},
+					//minValue : 0,
+					viewWindow : {
+						min : 0
+					}
+				}
 		};
 
 		var diff_chart = new google.visualization.ColumnChart(document
@@ -150,15 +187,12 @@ function sendIt(){
 				.getElementById('leak_info'));
 		var absence_chart = new google.visualization.ColumnChart(document
 				.getElementById('absence_info'));
-		var overused_chart = new google.visualization.ColumnChart(document
-				.getElementById('overused_info'));
 		var freezed_chart = new google.visualization.ColumnChart(document
 				.getElementById('freezed_info'));
 
 		diff_chart.draw(diff_data, diff_options);
 		leak_chart.draw(leak_data, leak_options);
 		absence_chart.draw(absence_data, absence_options);
-		overused_chart.draw(overused_data, overused_options);
 		freezed_chart.draw(freezed_data, freezed_options);
 	}
 </script>
@@ -187,33 +221,42 @@ function sendIt(){
 			<table cellpadding="0" cellspacing="0" class="table_main">
 				<tr>
 					<td id="juso_search">
-						<div id="analysis_address_label" class="address_label">
-							<select name="si" id="si_select">
-								<option value="전체">시</option>
-								<option value="인천광역시">인천광역시</option>
-							</select>
-						</div>
-						<div id="analysis_address_label" class="address_label">
-							<select name="guGun" id="analysis_guGun_select">
-								<option value="전체">구/군</option>
-								<option value="강화군">강화군</option>
-								<option value="계양구">계양구</option>
-								<option value="남구">남구</option>
-								<option value="남동구">남동구</option>
-								<option value="동구">동구</option>
-								<option value="부평구">부평구</option>
-								<option value="서구">서구</option>
-								<option value="연수구">연수구</option>
-								<option value="웅진군">웅진군</option>
-								<option value="중구">중구</option>
-							</select>
-						</div>
-						<div id="analysis_address_label" class="address_label">
-							<select name="umDong" id="analysis_umDong_select">
-								<option value="">읍/면/동</option>
-							</select>
-						</div>
-
+						<table>
+							<tr>
+								<td>
+									<div id="analysis_address_label" class="address_label">
+										<select name="si" id="si_select">
+											<option value="전체">시</option>
+											<option value="인천광역시">인천광역시</option>
+										</select>
+									</div>
+								</td>
+								<td>
+									<div id="analysis_address_label" class="address_label">
+										<select name="guGun" id="analysis_guGun_select">
+											<option value="전체">구/군</option>
+											<option value="강화군">강화군</option>
+											<option value="계양구">계양구</option>
+											<option value="남구">남구</option>
+											<option value="남동구">남동구</option>
+											<option value="동구">동구</option>
+											<option value="부평구">부평구</option>
+											<option value="서구">서구</option>
+											<option value="연수구">연수구</option>
+											<option value="웅진군">웅진군</option>
+											<option value="중구">중구</option>
+										</select>
+									</div>
+								</td>
+								<td>
+									<div id="analysis_address_label" class="address_label">
+										<select name="umDong" id="analysis_umDong_select">
+											<option value="전체">읍/면/동</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</td>
 
 					<td align="center" width="50px">기간:</td>
@@ -292,14 +335,12 @@ function sendIt(){
 
 	<div id="dashboard_info">
 		<div class="info_row">
-			<div class="info info1 diff_info" id="diff_info"></div>
-		</div>
-		<div class="info_row">
+			<div class="info info2 diff_info" id="diff_info"></div>
 			<div class="info info2 leak_info" id="leak_info"></div>
-			<div class="info info2 absence_info" id="absence_info"></div>
+			
 		</div>
 		<div class="info_row">
-			<div class="info info2 overused_info" id="overused_info"></div>
+			<div class="info info2 absence_info" id="absence_info"></div>
 			<div class="info info2 freezed_info" id="freezed_info"></div>
 		</div>
 	</div>
