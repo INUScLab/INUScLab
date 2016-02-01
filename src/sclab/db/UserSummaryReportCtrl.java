@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UserSummuryReportCtrl {
+public class UserSummaryReportCtrl {
 
 	DbConnector dbconnector ;
 	Connection conn  ;
 	PreparedStatement pstmt ;
 	
-	public UserSummuryReportCtrl() {
+	public UserSummaryReportCtrl() {
 		dbconnector = new DbConnector();
 		conn = dbconnector.getConn();
 		pstmt = dbconnector.getPstmt();
@@ -25,9 +25,9 @@ public class UserSummuryReportCtrl {
 
 	
 
-	public ArrayList<UserSummuryReport> getUserSummuryReportList ( ) {
+	public ArrayList<UserSummaryReport> getUserSummuryReportList ( ) {
 
-		ArrayList<UserSummuryReport> userSummuryReportList  = new ArrayList<UserSummuryReport> () ;
+		ArrayList<UserSummaryReport> userSummuryReportList  = new ArrayList<UserSummaryReport> () ;
 		
 		String guGun;
 		String umDong;
@@ -42,7 +42,7 @@ public class UserSummuryReportCtrl {
 		double day6;
 		double day7;
 		
-		String sql = "SELECT  U.SIGOON , U.UMDONG , U.DETAIL , ( SELECT SUM(CONSUMED)/28 FROM CONSUMPTION WHERE CODE = U.CODE AND DATE BETWEEN '2015-02-01' AND '2015-02-28') AS MONTHAVG , (SELECT DATE FROM CONSUMPTION WHERE CODE = U.CODE AND LEAK=1 ORDER BY DATE DESC LIMIT 1 ) AS LATELYLEEK ,  (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-21')  AS 1DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-22')  AS 2DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-23')  AS 3DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-24')  AS 4DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-25')  AS 5DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-26')  AS 6DAY , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-27')  AS 7DAY FROM USER U";
+		String sql = "SELECT  U.SIGOON , U.UMDONG , U.DETAIL , ( SELECT SUM(CONSUMED)/28 FROM CONSUMPTION WHERE CODE = U.CODE AND DATE BETWEEN '2015-02-01' AND '2015-02-28') AS MONTHAVG , (SELECT DATE FROM CONSUMPTION WHERE CODE = U.CODE AND LEAK=1 ORDER BY DATE DESC LIMIT 1 ) AS LATELYLEEK ,  (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-21')  AS DAY1 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-22')  AS DAY2 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-23')  AS DAY3 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-24')  AS DAY4 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-25')  AS DAY5 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-26')  AS DAY6 , (SELECT CONSUMED FROM CONSUMPTION WHERE CODE = U.CODE AND DATE = '2015-02-27')  AS DAY7 FROM USER U";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class UserSummuryReportCtrl {
 				day6 = rs.getDouble("DAY6");
 				day7 = rs.getDouble("DAY7");
 				
-				UserSummuryReport userSummuryReport = new UserSummuryReport( guGun , umDong, detail, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
+				UserSummaryReport userSummuryReport = new UserSummaryReport( guGun , umDong, detail, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
 				userSummuryReportList.add(userSummuryReport);
 			}
 			rs.close();
@@ -69,8 +69,9 @@ public class UserSummuryReportCtrl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println(userSummuryReportList.size());
 
-		disconnect();
 		return userSummuryReportList;
 	}
 

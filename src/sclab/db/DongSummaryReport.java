@@ -1,10 +1,9 @@
 package sclab.db;
 
-public class UserSummuryReport {
+public class DongSummaryReport {
 	
 	private String guGun;
 	private String umDong;
-	private String detail;
 	private double monthAverage;
 	private String latelyLeak;
 	private double day1;
@@ -18,15 +17,13 @@ public class UserSummuryReport {
 	
 	
 	
-	public UserSummuryReport() {
+	public DongSummaryReport() {
 	}
-	
-	public UserSummuryReport(String guGun, String umDong, String detail,
-			double monthAverage, String latelyLeak, double day1, double day2,
-			double day3, double day4, double day5, double day6, double day7) {
+	public DongSummaryReport(String guGun, String umDong, double monthAverage,
+			String latelyLeak, double day1, double day2, double day3,
+			double day4, double day5, double day6, double day7) {
 		this.guGun = guGun;
 		this.umDong = umDong;
-		this.detail = detail;
 		this.monthAverage = monthAverage;
 		this.latelyLeak = latelyLeak;
 		this.day1 = day1;
@@ -48,12 +45,6 @@ public class UserSummuryReport {
 	}
 	public void setUmDong(String umDong) {
 		this.umDong = umDong;
-	}
-	public String getDetail() {
-		return detail;
-	}
-	public void setDetail(String detail) {
-		this.detail = detail;
 	}
 	public double getMonthAverage() {
 		return monthAverage;
@@ -109,10 +100,6 @@ public class UserSummuryReport {
 	public void setDay7(double day7) {
 		this.day7 = day7;
 	}
-	
-	
-	
-	
 	
 	
 

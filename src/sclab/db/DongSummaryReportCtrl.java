@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DongSummuryReportCtrl {
+public class DongSummaryReportCtrl {
 
 	DbConnector dbconnector ;
 	Connection conn  ;
 	PreparedStatement pstmt ;
 	
-	public DongSummuryReportCtrl() {
+	public DongSummaryReportCtrl() {
 		dbconnector = new DbConnector();
 		conn = dbconnector.getConn();
 		pstmt = dbconnector.getPstmt();
@@ -25,9 +25,9 @@ public class DongSummuryReportCtrl {
 
 	
 
-	public ArrayList<DongSummuryReport> getDongSummuryReportList ( ) {
+	public ArrayList<DongSummaryReport> getDongSummuryReportList ( ) {
 
-		ArrayList<DongSummuryReport> dongSummuryReportList  = new ArrayList<DongSummuryReport> () ;
+		ArrayList<DongSummaryReport> dongSummuryReportList  = new ArrayList<DongSummaryReport> () ;
 		
 		String guGun;
 		String umDong;
@@ -59,9 +59,7 @@ public class DongSummuryReportCtrl {
 				day6 = rs.getDouble("DAY6");
 				day7 = rs.getDouble("DAY7");
 				
-				System.out.println(rs);
-				
-				DongSummuryReport guDongWeeks = new DongSummuryReport( guGun , umDong, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
+				DongSummaryReport guDongWeeks = new DongSummaryReport( guGun , umDong, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
 				dongSummuryReportList.add(guDongWeeks);
 			}
 			rs.close();
@@ -70,8 +68,6 @@ public class DongSummuryReportCtrl {
 			e.printStackTrace();
 		}
 
-		
-		disconnect();
 		return dongSummuryReportList;
 	}
 
