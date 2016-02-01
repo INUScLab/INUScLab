@@ -16,6 +16,7 @@ var entire_flag = false;
 var leak_flag = false;
 var freezed_flag = false;
 var absence_flag = false;
+var initial_flag = false;
 
 // 맵 초기화
 function initialize(x, y) {
@@ -66,10 +67,19 @@ function initialize(x, y) {
 	globalMap.addListener('zoom_changed', function() {
 		console.log(globalMap.getZoom());
 		if (globalMap.getZoom() < 16) {
+			
 			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
-			// 모든 동의 마커 출력.
-			showEntireDongMarkers();
+			
+			// FLAG가 켜진 동을 출력.
+			showIcon();
+			
+			//첫 로딩 
+			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
+				showEntireDongMarkers();
+				console.log("?");
+			}
+			
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if (globalMap.getZoom() == 16) {
