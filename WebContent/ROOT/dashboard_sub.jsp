@@ -21,11 +21,11 @@
 <% 
 	pd = pdctrl.returnRanks("인천광역시","부평구","부개1동",startDate,endDate);
 	
-	diff_summary = pd.getrank_difference().get(0).get(0);
-	leak_summary = pd.getrank_leak().get(0).get(0);
-	overused_summary = pd.getrank_overused().get(0).get(0);
-	freezed_summary = pd.getrank_freezed().get(0).get(0);
-	absence_summary = pd.getrank_absence().get(0).get(0);
+	diff_summary = pd.getRank_difference().get(0).get(0);
+	leak_summary = pd.getRank_leak().get(0).get(0);
+	overused_summary = pd.getRank_overused().get(0).get(0);
+	freezed_summary = pd.getRank_freezed().get(0).get(0);
+	absence_summary = pd.getRank_absence().get(0).get(0);
 
 	request.setAttribute("DIFF_SUMMARY", diff_summary);
 	request.setAttribute("LEAK_SUMMARY", leak_summary);
