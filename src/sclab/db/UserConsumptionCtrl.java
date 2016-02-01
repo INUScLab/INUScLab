@@ -8,9 +8,20 @@ import java.util.ArrayList;
 
 public class UserConsumptionCtrl {
 
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector ;
+	Connection conn ;
+	PreparedStatement pstmt ;
+	
+	public UserConsumptionCtrl() {
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+	}
+
+	void disconnect(){
+		dbconnector.disconnect();
+	}
+
 
 	public ArrayList<UserConsumption> getUSerConsumption ( ) {
 
@@ -50,7 +61,8 @@ public class UserConsumptionCtrl {
 			rs.close();
 		} catch (SQLException e) {
 		}
-
+		
+		disconnect();
 		return userConsumptionList;
 	}
 

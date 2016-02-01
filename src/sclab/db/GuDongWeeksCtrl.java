@@ -8,9 +8,22 @@ import java.util.ArrayList;
 
 public class GuDongWeeksCtrl {
 
-	DbConnector dbconnector = new DbConnector();
-	Connection conn = dbconnector.getConn();
-	PreparedStatement pstmt = dbconnector.getPstmt();
+	DbConnector dbconnector ;
+	Connection conn  ;
+	PreparedStatement pstmt ;
+	
+	public GuDongWeeksCtrl() {
+		dbconnector = new DbConnector();
+		conn = dbconnector.getConn();
+		pstmt = dbconnector.getPstmt();
+		
+	}
+	
+	void disconnect(){
+		dbconnector.disconnect();
+	}
+
+	
 
 	public ArrayList<GuDongWeeks> getGuDongWeeksList ( ) {
 
@@ -53,10 +66,13 @@ public class GuDongWeeksCtrl {
 				getGuDongWeeksList.add(guDongWeeks);
 			}
 			rs.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		
+		disconnect();
 		return getGuDongWeeksList;
 	}
 

@@ -10,7 +10,7 @@
 
 		<div id="address_label" class="address_label">
 			<select name="si" id="si_select">
-				<option value="">시</option>
+				<!--  <option value="">시</option> -->
 				<option value="incheon">인천광역시</option>
 			</select>
 		</div>
@@ -32,11 +32,22 @@
 		<div id="address_label" class="address_label">
 			<select name="umDong" id="umDong_select" >
 				<option value="">읍/면/동</option>
-				
 			</select>
 		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class =" img_icon img_entire " id="img_entire" onclick="entire_clicked('img_entire')">
+		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class ="img_icon img_leak" id="img_leak" onclick="leak_clicked('img_leak')">
+		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class ="img_icon img_freezed " id="img_freezed" onclick="freezed_clicked('img_freezed')">
+		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class ="img_icon img_absence" id="img_absence" onclick="absence_clicked('img_absence')">
+		</div>
 	</div>
-	<div id="map_canvas" style="width: 100%; height: 100%;"></div>
+	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->

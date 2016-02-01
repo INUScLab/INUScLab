@@ -21,7 +21,7 @@
 <script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="User" class="sclab.db.User" />
-<jsp:useBean id="MapCtrl" class="sclab.db.MapCtrl" />
+<jsp:useBean id="MapCtrl" class="sclab.db.AbnormalDongCtrl" />
 <jsp:useBean id="UserConsumption" class="sclab.db.UserConsumption" />
 <jsp:useBean id="UserConsumptionCtrl" class="sclab.db.UserConsumptionCtrl" />
 <jsp:useBean id="GuDongLatLng" class="sclab.db.GuDongLatLng" />
@@ -31,8 +31,12 @@
 
 
 <%
-	ArrayList<String> overUsedDongList = MapCtrl.getOverUsedDongList();
-	ArrayList<String> normalUsedDongList = MapCtrl.getNormalDongList();
+	AbnormalDongCtrl abnormalDongCtrl = new AbnormalDongCtrl();
+	ArrayList<String> overUsedDongList = abnormalDongCtrl.getOverUsedDongList();
+	ArrayList<String> normalUsedDongList = abnormalDongCtrl.getNormalDongList();
+	ArrayList<String> leakDongList = abnormalDongCtrl.getLeakDongList();
+	ArrayList<String> absenceDongList = abnormalDongCtrl.getAbsenceDongList();
+	ArrayList<String> freezedDongList = abnormalDongCtrl.getFreezeDongList();
 	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
 	ArrayList<GuDongLatLng> guDongLatLngList = GuDongLatLngCtrl.getGuDongLatLngList();
 	ArrayList<GuDongWeeks> guDongWeeksList = GuDongWeeksCtrl.getGuDongWeeksList();
@@ -41,6 +45,9 @@
 <script type="text/javascript">	
 	var overUsedDongList = new Array();
 	var normalUsedDongList = new Array();
+	var leakDongList = new Array();
+	var absenceDongList = new Array();
+	var freezedDongList = new Array();
 	var userConsumptionList = new Array();
 	var guDongLatLngList = new Array();
 	var guDongWeeksList = new Array();
@@ -51,6 +58,18 @@
 	
 	<% for (int i=0; i<normalUsedDongList.size(); i++) { %>
 	normalUsedDongList[<%= i %>] = "<%= normalUsedDongList.get(i) %>"; 
+	<% } %>
+	
+	<% for (int i=0; i<leakDongList.size(); i++) { %>
+	leakDongList[<%= i %>] = "<%= leakDongList.get(i) %>"; 
+	<% } %>
+	
+	<% for (int i=0; i<absenceDongList.size(); i++) { %>
+	absenceDongList[<%= i %>] = "<%= absenceDongList.get(i) %>"; 
+	<% } %>
+	
+	<% for (int i=0; i<freezedDongList.size(); i++) { %>
+	freezedDongList[<%= i %>] = "<%= freezedDongList.get(i) %>"; 
 	<% } %>
 	
 	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
