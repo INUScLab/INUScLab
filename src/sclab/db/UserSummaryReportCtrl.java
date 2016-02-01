@@ -25,7 +25,7 @@ public class UserSummaryReportCtrl {
 
 	
 
-	public ArrayList<UserSummaryReport> getUserSummuryReportList ( ) {
+	public ArrayList<UserSummaryReport> getUserSummaryReportList ( ) {
 
 		ArrayList<UserSummaryReport> userSummuryReportList  = new ArrayList<UserSummaryReport> () ;
 		

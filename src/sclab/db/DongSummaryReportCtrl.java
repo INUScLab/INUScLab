@@ -25,7 +25,7 @@ public class DongSummaryReportCtrl {
 
 	
 
-	public ArrayList<DongSummaryReport> getDongSummuryReportList ( ) {
+	public ArrayList<DongSummaryReport> getDongSummaryReportList ( ) {
 
 		ArrayList<DongSummaryReport> dongSummuryReportList  = new ArrayList<DongSummaryReport> () ;
 		
