@@ -62,6 +62,7 @@
 
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
+	<div class="info_icon"></div>
 	<div class="info_graph" id="info_graph"></div>
 	<div class="info_history" id="info_history"></div>
 	<div class="info_service" id="info_service">
@@ -72,6 +73,10 @@
 		<div class="info_absence" id="info_absence">
 			<div class="absence_text" id="absence_text"></div>
 			<div class="absence_graph" id="absence_graph"></div>
+		</div>
+		<div class="info_freezed">
+		
+		
 		</div>
 	</div>
 </div>

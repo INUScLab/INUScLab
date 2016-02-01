@@ -47,30 +47,37 @@
 	margin-bottom: 5px;
 }
 
+.left_section_box2 .info_icon {
+	width: 100%;
+	height: 40px;
+	border: thin solid black;
+	margin-bottom: 5px;
+}
+
 .left_section_box2 .info_graph {
 	width: 100%;
-	height: 30%;
+	height: 25%;
 	border: thin solid black;
 	margin-bottom: 5px;
 }
 
 .left_section_box2 .info_history {
 	width: 100%;
-	height: 30%;
+	height: 25%;
 	border: thin solid black;
 	margin-bottom: 5px;
 }
 
 .left_section_box2 .info_service {
 	width: 100%;
-	height: 30%;
+	height: 37%;
 	border: thin solid black;
 	margin-bottom: 5px;
 }
 
 .left_section_box2 .info_service .info_leak {
 	width: 100%;
-	height: 50%;
+	height: 33.33%;
 	margin-bottom: 5px;
 }
 
@@ -87,19 +94,24 @@
 
 .left_section_box2 .info_service .info_absence {
 	width: 100%;
-	height: 50%;
-	margin-bottom: 5px;
+	height: 33.33%;
 }
 
 .left_section_box2 .info_service .info_absence .absence_text {
 	width: 100%;
 	height: 20%;
+	margin-bottom: 5px;
 }
 
 .left_section_box2 .info_service .info_absence .absence_graph {
 	width: 100%;
 	height: 80%;
 	margin-bottom: 5px;
+}
+
+.left_section_box2 .info_service .info_leak {
+	width: 100%;
+	height: 33.33%%;
 }
 
 /*temp*/
