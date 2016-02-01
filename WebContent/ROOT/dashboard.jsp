@@ -1,3 +1,4 @@
+
 <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
@@ -6,6 +7,13 @@
 
 	String startDate = request.getParameter("startDate");
 	String endDate = request.getParameter("endDate");
+	String si = request.getParameter("si");
+	String guGun = request.getParameter("guGun");
+	String umDong = request.getParameter("umDong");
+	
+	System.out.println(si);
+	System.out.println(guGun);
+	System.out.println(umDong);
 %>
 
 <jsp:useBean id="pd" class="sclab.db.ProcessedData" />
@@ -14,7 +22,7 @@
 	if (startDate == null || endDate == null || startDate.length() == 0 || endDate.length() == 0) {
 		pd = pdctrl.returnRanks("인천광역시", "전체", "", "20150622", "20150629");
 	} else {
-		pd = pdctrl.returnRanks("인천광역시", "부평구", "부개1동", startDate, endDate);
+		pd = pdctrl.returnRanks(si, guGun, umDong, startDate, endDate);
 	}
 %>
 
@@ -22,6 +30,37 @@
 window.onload = function dateInput() {
 	var inputData = document.getElementById('startDate');
 	inputData.style.backgroundcolor = '#005147';
+	
+	/* jQuery for SELECT BOX */
+	$('#analysis_umDong_select').change(
+			function(e) {
+				var optionSelected = $("option:selected", this);
+				var textSelected = optionSelected.text();
+
+				for (var i = 0; i < guDongLatLngList.length; i++) {
+					if (guDongLatLngList[i].umDong == textSelected) {
+
+						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
+						
+					}
+				}
+			});
+
+	$('#analysis_guGun_select').change(function(e) {
+		$('#analysis_umDong_select').html('').append("<option value=''>읍/면/동</option>");
+		var optionSelected = $("option:selected", this);
+		var textSelected = optionSelected.text();
+
+		var umDong_select = document.getElementById("analysis_umDong_select");
+		for (var i = 0; i < guDongWeeksList.length; i++) {
+			if (guDongWeeksList[i].guGun == textSelected) {
+				var option = document.createElement("option");
+				option.text = guDongWeeksList[i].umDong;
+				//console.log(option.text);
+				umDong_select.add(option);
+			}
+		}
+	});
 }
 
 
@@ -72,7 +111,7 @@ function sendIt(){
                                                      			<%for (ArrayList<String> ab : pd.getRank_freezed()) {%>  
                                                               		['<%=ab.get(0)%>',<%=ab.get(1)%>],
 																<%}%>
-																]);
+	]);
 
 		var diff_options = {
 			title : 'Water Consumption',
@@ -147,7 +186,35 @@ function sendIt(){
 		<form action="" name="search_form" method="post">
 			<table cellpadding="0" cellspacing="0" class="table_main">
 				<tr>
-					<td id="juso_search">&nbsp;</td>
+					<td id="juso_search">
+						<div id="analysis_address_label" class="address_label">
+							<select name="si" id="si_select">
+								<option value="전체">시</option>
+								<option value="인천광역시">인천광역시</option>
+							</select>
+						</div>
+						<div id="analysis_address_label" class="address_label">
+							<select name="guGun" id="analysis_guGun_select">
+								<option value="전체">구/군</option>
+								<option value="강화군">강화군</option>
+								<option value="계양구">계양구</option>
+								<option value="남구">남구</option>
+								<option value="남동구">남동구</option>
+								<option value="동구">동구</option>
+								<option value="부평구">부평구</option>
+								<option value="서구">서구</option>
+								<option value="연수구">연수구</option>
+								<option value="웅진군">웅진군</option>
+								<option value="중구">중구</option>
+							</select>
+						</div>
+						<div id="analysis_address_label" class="address_label">
+							<select name="umDong" id="analysis_umDong_select">
+								<option value="">읍/면/동</option>
+							</select>
+						</div>
+
+					</td>
 
 					<td align="center" width="50px">기간:</td>
 					<td id="date_search">
@@ -155,8 +222,10 @@ function sendIt(){
 							<tr>
 								<td>
 									<div class="Date_wrap">
-										<input type="text" class="startDate" id="startDate" name="startDate" size="10" /> 
-										<img alt="calendar" src="./img/calendar.png" id="calendar" width="25px" height="25px">
+										<input type="text" class="startDate" id="startDate"
+											name="startDate" size="10" /> <img alt="calendar"
+											src="./img/calendar.png" id="calendar" width="25px"
+											height="25px">
 									</div>
 								</td>
 								<td>&nbsp;-&nbsp;</td>
