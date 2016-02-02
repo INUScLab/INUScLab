@@ -15,7 +15,7 @@
 			</select>
 		</div>
 		<div id="address_label" class="address_label">
-			<select name="guGun" id="guGun_select" >
+			<select name="guGun" id="guGun_select">
 				<option value="">구/군</option>
 				<option value="ganghwa">강화군</option>
 				<option value="gyeyang">계양구</option>
@@ -30,38 +30,35 @@
 			</select>
 		</div>
 		<div id="address_label" class="address_label">
-			<select name="umDong" id="umDong_select" >
+			<select name="umDong" id="umDong_select">
 				<option value="">읍/면/동</option>
 			</select>
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class =" img_icon img_entire " id="img_entire" onclick="entire_clicked('img_entire')">
+			<img class=" img_icon img_entire " id="img_entire"
+				onclick="entire_clicked('img_entire')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_icon img_leak" id="img_leak" onclick="leak_clicked('img_leak')">
+			<img class="img_icon img_leak" id="img_leak"
+				onclick="leak_clicked('img_leak')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_icon img_freezed " id="img_freezed" onclick="freezed_clicked('img_freezed')">
+			<img class="img_icon img_freezed " id="img_freezed"
+				onclick="freezed_clicked('img_freezed')">
 		</div>
 		<div class="icon" onMouseOver="this.style.cursor='pointer'">
-			<img class ="img_icon img_absence" id="img_absence" onclick="absence_clicked('img_absence')">
+			<img class="img_icon img_absence" id="img_absence"
+				onclick="absence_clicked('img_absence')">
 		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->
-<div class="left_section_box">
-	<div class="tree_section_box">
-		<div class="tree">
-			<jsp:include page="treemenu.jsp" flush="false" />
-		</div>
-	</div>
-
-</div>
 
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
+	<div class="info_icon"></div>
 	<div class="info_graph" id="info_graph"></div>
 	<div class="info_history" id="info_history"></div>
 	<div class="info_service" id="info_service">
@@ -73,5 +70,6 @@
 			<div class="absence_text" id="absence_text"></div>
 			<div class="absence_graph" id="absence_graph"></div>
 		</div>
+		<div class="info_freezed"></div>
 	</div>
 </div>

@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GuDongWeeksCtrl {
+public class DongSummaryReportCtrl {
 
 	DbConnector dbconnector ;
 	Connection conn  ;
 	PreparedStatement pstmt ;
 	
-	public GuDongWeeksCtrl() {
+	public DongSummaryReportCtrl() {
 		dbconnector = new DbConnector();
 		conn = dbconnector.getConn();
 		pstmt = dbconnector.getPstmt();
@@ -25,9 +25,9 @@ public class GuDongWeeksCtrl {
 
 	
 
-	public ArrayList<GuDongWeeks> getGuDongWeeksList ( ) {
+	public ArrayList<DongSummaryReport> getDongSummaryReportList ( ) {
 
-		ArrayList<GuDongWeeks> getGuDongWeeksList  = new ArrayList<GuDongWeeks> () ;
+		ArrayList<DongSummaryReport> dongSummuryReportList  = new ArrayList<DongSummaryReport> () ;
 		
 		String guGun;
 		String umDong;
@@ -48,7 +48,6 @@ public class GuDongWeeksCtrl {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				guGun = rs.getString("GOON");
-				
 				umDong = rs.getString("DONG");
 				latelyLeak = rs.getString("LATELYLEEK");
 				monthAverage = rs.getDouble("MONTHAVG");
@@ -60,10 +59,8 @@ public class GuDongWeeksCtrl {
 				day6 = rs.getDouble("DAY6");
 				day7 = rs.getDouble("DAY7");
 				
-				System.out.println(rs);
-				
-				GuDongWeeks guDongWeeks = new GuDongWeeks( guGun , umDong, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
-				getGuDongWeeksList.add(guDongWeeks);
+				DongSummaryReport guDongWeeks = new DongSummaryReport( guGun , umDong, monthAverage, latelyLeak, day1 , day2 , day3 , day4 , day5 , day6 , day7);
+				dongSummuryReportList.add(guDongWeeks);
 			}
 			rs.close();
 			
@@ -71,9 +68,7 @@ public class GuDongWeeksCtrl {
 			e.printStackTrace();
 		}
 
-		
-		disconnect();
-		return getGuDongWeeksList;
+		return dongSummuryReportList;
 	}
 
 }

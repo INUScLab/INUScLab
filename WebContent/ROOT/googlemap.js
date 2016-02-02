@@ -16,6 +16,7 @@ var entire_flag = false;
 var leak_flag = false;
 var freezed_flag = false;
 var absence_flag = false;
+var initial_flag = false;
 
 // 맵 초기화
 function initialize(x, y) {
@@ -66,10 +67,19 @@ function initialize(x, y) {
 	globalMap.addListener('zoom_changed', function() {
 		console.log(globalMap.getZoom());
 		if (globalMap.getZoom() < 16) {
+			
 			// 상세 주소 마커 지우기.
 			hideDetailMarkers();
-			// 모든 동의 마커 출력.
-			showEntireDongMarkers();
+			
+			// FLAG가 켜진 동을 출력.
+			showIcon();
+			
+			//첫 로딩 
+			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
+				showEntireDongMarkers();
+				console.log("?");
+			}
+			
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if (globalMap.getZoom() == 16) {
@@ -115,10 +125,10 @@ function initialize(x, y) {
 		var textSelected = optionSelected.text();
 
 		var umDong_select = document.getElementById("umDong_select");
-		for (var i = 0; i < guDongWeeksList.length; i++) {
-			if (guDongWeeksList[i].guGun == textSelected) {
+		for (var i = 0; i < DongSummaryReportList.length; i++) {
+			if (DongSummaryReportList[i].guGun == textSelected) {
 				var option = document.createElement("option");
-				option.text = guDongWeeksList[i].umDong;
+				option.text = DongSummaryReportList[i].umDong;
 				console.log(option.text);
 				umDong_select.add(option);
 			}
@@ -360,8 +370,8 @@ function drawColumn(cons, pred, week, region) {
 			color : "black",
 			fontSize : 17
 		},
-		width : "100%",
-		height : "100%",
+		//width : "100%",
+		//height : "100%",
 		fontSize : 11,
 		bar : {
 			groupWidth : "80%"
@@ -482,8 +492,6 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 			[ new Date(2015, 1, 28), day7, avg ], ]);
 
 	var options = {
-		// width: 900,
-		// height: 500,
 		title : "일주일 간 history",
 
 		titleTextStyle : {
@@ -498,8 +506,6 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 			gridlines : {
 				color : 'none'
 			},
-			minValue : 900,
-			maxValue : 1100
 		},
 		legend : {
 			position : "bottom"
@@ -560,18 +566,18 @@ function dongSummary(addressArray) {
 		address += addressArray[i] + ' ';
 	}
 
-	for (var j = 0; guDongWeeksList[j]; j++) {
+	for (var j = 0; DongSummaryReportList[j]; j++) {
 		// 히스토리
-		if (addressArray[len - 1] == guDongWeeksList[j].umDong) {
-			day1 = Number(guDongWeeksList[j].day1);
-			day2 = Number(guDongWeeksList[j].day2);
-			day3 = Number(guDongWeeksList[j].day3);
-			day4 = Number(guDongWeeksList[j].day4);
-			day5 = Number(guDongWeeksList[j].day5);
-			day6 = Number(guDongWeeksList[j].day6);
-			day7 = Number(guDongWeeksList[j].day7);
-			leak_date = guDongWeeksList[j].latelyLeak;
-			monthAvg = Number(guDongWeeksList[j].monthAverage);
+		if (addressArray[len - 1] == DongSummaryReportList[j].umDong) {
+			day1 = Number(DongSummaryReportList[j].day1);
+			day2 = Number(DongSummaryReportList[j].day2);
+			day3 = Number(DongSummaryReportList[j].day3);
+			day4 = Number(DongSummaryReportList[j].day4);
+			day5 = Number(DongSummaryReportList[j].day5);
+			day6 = Number(DongSummaryReportList[j].day6);
+			day7 = Number(DongSummaryReportList[j].day7);
+			leak_date = DongSummaryReportList[j].latelyLeak;
+			monthAvg = Number(DongSummaryReportList[j].monthAverage);
 			;
 		}
 	}
@@ -614,13 +620,13 @@ function dongSummary(addressArray) {
 		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
 				+ leak_date;
 	else
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :';
+		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
 
 	if (absence_date != "null")
 		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
 				+ absence_date;
 	else
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :';
+		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
 
 	// 요약 report 사용량,예측량,평균
 	drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math
@@ -648,6 +654,7 @@ function dongSummary(addressArray) {
 	getDetailAreaInformation(addressArray);
 }
 
+
 // 사용자 요약 리포트
 function userSummary(addressArray) {
 
@@ -658,7 +665,17 @@ function userSummary(addressArray) {
 	var leak = 0;
 	var absence = 0;
 	var leak_date = "";
-	var address = ""
+	var absence_date = "null";
+	var address = "";
+	var day1 = 0;
+	var day2 = 0;
+	var day3 = 0;
+	var day4 = 0;
+	var day5 = 0;
+	var day6 = 0;
+	var day7 = 0;
+	var monthAvg = 0;
+	var week_sum = 0;
 
 	for (var i = 0; i < len; i++) {
 		address += addressArray[i] + ' ';
@@ -675,26 +692,46 @@ function userSummary(addressArray) {
 			if (userConsumptionList[j].leak == '1') {
 				leak++;
 			}
-
 			// 부재중 알람
-			if (userConsumptionList[j].absence == '1') {
+			else if (userConsumptionList[j].absence == '1') {
 				absence++;
 			}
 		}
 	}
+	
+	for (var j = 0; UserSummaryReportList[j]; j++) {
+		// 히스토리
+		if (addressArray[len - 1] == UserSummaryReportList[j].detail) {
+			day1 = Number(UserSummaryReportList[j].day1);
+			day2 = Number(UserSummaryReportList[j].day2);
+			day3 = Number(UserSummaryReportList[j].day3);
+			day4 = Number(UserSummaryReportList[j].day4);
+			day5 = Number(UserSummaryReportList[j].day5);
+			day6 = Number(UserSummaryReportList[j].day6);
+			day7 = Number(UserSummaryReportList[j].day7);
+			leak_date = UserSummaryReportList[j].latelyLeak;
+			monthAvg = Number(UserSummaryReportList[j].monthAverage);
+		}
+	}
+	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 + day7;
+	
+	
 	document.getElementById('info_date').innerHTML = address;
 	info_date.style.fontSize = "100%";
-	document.getElementById('leak_text').innerHTML = '누수 날짜 :' + leak_date;
-	document.getElementById('absence_text').innerHTML = '부재중 날짜 :'
-
-	drawColumn(Math.round(cons), Math.round(pred), 0, Math.round(cons_sum
-			/ len_detail)); // column 그래프 (사용량, 예측량, 일주일 평균, 지역평균)
-	drawHistory(); // history 그래프 그리기
-	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len - 2],
-			addressArray[len - 1]); // 누수횟수, 지역평균 누수횟수,
-	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수,
-	// 지역평균 횟수
+	if (leak_date != "null")
+		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' ' + leak_date;
+	else
+		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
+	
+	if (absence_date != "null")
+		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' ' + absence_date;
+	else
+		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
+	
+	drawColumn(Math.round(cons), Math.round(pred), Math.round(weeks_sum / 7), Math.round(cons_sum/ len_detail)); // column 그래프 (사용량, 예측량, 일주일 평균, 지역평균)
+	drawHistory(day7, day6, day5, day4, day3, day2, day1, monthAvg); // history 그래프 그리기
+	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 누수횟수, 지역평균 누수횟수,
+	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수, 지역평균 횟수
 }
 
 //전체 동을 클릭했을때 
@@ -1059,11 +1096,11 @@ function leak_clicked(id) {
 		
 		$('#img_leak').css("background-color", "yellow");
 
-		if (freezed_flag == true && absence_flag == true) {
-			entire_flag = true;
-			
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if (freezed_flag == true && absence_flag == true) {
+//			entire_flag = true;
+//			
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 
 	} else {
 		leak_flag = false;
@@ -1085,11 +1122,11 @@ function freezed_clicked(id) {
 		
 		$('#img_freezed').css("background-color", "yellow");
 
-		if (leak_flag == true && absence_flag == true) {
-			entire_flag = true;
-			
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if (leak_flag == true && absence_flag == true) {
+//			entire_flag = true;
+//			
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 	} else {
 		freezed_flag = false;
 		entire_flag = false;
@@ -1109,10 +1146,10 @@ function absence_clicked(id) {
 		
 		$('#img_absence').css("background-color", "yellow");
 		
-		if( leak_flag == true && freezed_flag == true ) {
-			entire_flag = true;
-			$('#img_entire').css("background-color", "yellow");
-		}
+//		if( leak_flag == true && freezed_flag == true ) {
+//			entire_flag = true;
+//			$('#img_entire').css("background-color", "yellow");
+//		}
 	} else {
 		absence_flag = false;
 		entire_flag = false;
