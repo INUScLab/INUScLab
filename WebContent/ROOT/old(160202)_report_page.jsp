@@ -50,7 +50,6 @@ function sendIt(){
 }
 </script>
 
-<!-- 새롭게 바뀐 페이지 -->
 <div id="report_content">
 	<div class="report_search">
 		<form action="" name="search_form" method="post">
