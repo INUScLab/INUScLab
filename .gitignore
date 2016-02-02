@@ -1,2 +1,10 @@
-/build/
-/bin/
+# Eclipse project files
+.classpath
+.project
+ 
+# codeigniter files
+*/config/development
+*/logs/log-*.php
+*/logs/!index.html
+*/cache/*
+*/cache/!index.html
