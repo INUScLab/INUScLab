@@ -151,6 +151,8 @@ function initialize(x, y) {
 	document.getElementById('leak_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '누수 의심 동 :' + ' ' + leakDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '누수 의심 :' + ' ' + leakUser;
 	document.getElementById('freeze_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '동파 의심 동 :' + ' ' + freezedDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '동파 의심 :' + ' ' + freezeUser;
 	document.getElementById('absence_graph').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '부재중 발생 동 :' + ' ' + absenceDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '부재중 알람 :' + ' ' + absenceUser;
+	
+	//leak_info.style.textAlign = 'left';
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
