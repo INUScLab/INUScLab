@@ -27,10 +27,10 @@ window.onload = function () {
 		var textSelected = optionSelected.text();
 
 		var umDong_select = document.getElementById("analysis_umDong_select");
-		for (var i = 0; i < guDongWeeksList.length; i++) {
-			if (guDongWeeksList[i].guGun == textSelected) {
+		for (var i = 0; i < DongSummaryReportList.length; i++) {
+			if (DongSummaryReportList[i].guGun == textSelected) {
 				var option = document.createElement("option");
-				option.text = guDongWeeksList[i].umDong;
+				option.text = DongSummaryReportList[i].umDong;
 				//console.log(option.text);
 				umDong_select.add(option);
 			}
@@ -127,28 +127,27 @@ function sendIt(){
 
 
 	</div>
-	<div class="report_info">
-		<jsp:include page="report_graph.jsp" flush="false" />
-		<div class="info">
-			<div id="today_chart"></div>
-			<h1>today</h1>
+	
+	
+	<div class="report_info report_info_data">
+		<div class="report_info_list">
+		
+		
 		</div>
-		<div class="info">
-			<div id="weekly_chart"></div>
-			<h1>weekly</h1>
+		<div class="report_history_graph">
+		
+		
+		
+		
 		</div>
-		<div class="info">
-			<div id="monthly_chart"></div>
-			<h1>monthly</h1>
-		</div>
-
 	</div>
 
-	<div class="table">
-		<jsp:include page="table.jsp" flush="false" />
+
+	<div class="report_graph_info report_info ">
+		
 	</div>
 
-	<div id="history">
-		<jsp:include page="report_graph_history.jsp" flush="false" />
+	<div class="report_info report_info_service">
+		
 	</div>
 </div>

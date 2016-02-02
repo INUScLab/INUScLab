@@ -45,10 +45,10 @@ window.onload = function dateInput() {
 		var textSelected = optionSelected.text();
 
 		var umDong_select = document.getElementById("analysis_umDong_select");
-		for (var i = 0; i < guDongWeeksList.length; i++) {
-			if (guDongWeeksList[i].guGun == textSelected) {
+		for (var i = 0; i < DongSummaryReportList.length; i++) {
+			if (DongSummaryReportList[i].guGun == textSelected) {
 				var option = document.createElement("option");
-				option.text = guDongWeeksList[i].umDong;
+				option.text = DongSummaryReportList[i].umDong;
 				//console.log(option.text);
 				umDong_select.add(option);
 			}
@@ -67,6 +67,7 @@ function sendIt(){
 	f.submit();
 }
 </script>
+<script type="text/javascript" src="calendar.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">  
       google.load("visualization", "1", {packages:["corechart"]});  
@@ -265,18 +266,15 @@ function sendIt(){
 							<tr>
 								<td>
 									<div class="Date_wrap">
-										<input type="text" class="startDate" id="startDate"
-											name="startDate" size="10" /> <img alt="calendar"
-											src="./img/calendar.png" id="calendar" width="25px"
-											height="25px">
+										<input type="text" class="startDate" id="startDate" name="startDate" size="10" onclick="fnPopUpCalendar(startDate,startDate,'yyyy-mm-dd')"/> 
+										<!-- <img alt="calendar" src="./img/calendar.png" id="calendar" width="25px" height="25px"> -->
 									</div>
 								</td>
 								<td>&nbsp;-&nbsp;</td>
 								<td>
 									<div class="endDate Date_wrap">
-										<input type="text" class="endDate" name="endDate" size="10" />
-										<img alt="calendar" src="./img/calendar.png" width="25px"
-											height="25px">
+										<input type="text" class="endDate" name="endDate" size="10" onclick="fnPopUpCalendar(endDate,endDate,'yyyy-mm-dd')"/>
+										<!-- <img alt="calendar" src="./img/calendar.png" width="25px" height="25px"> -->
 									</div>
 								</td>
 							</tr>
