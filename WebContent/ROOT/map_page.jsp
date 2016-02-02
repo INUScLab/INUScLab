@@ -70,6 +70,9 @@
 			<div class="absence_text" id="absence_text"></div>
 			<div class="absence_graph" id="absence_graph"></div>
 		</div>
-		<div class="info_freezed"></div>
+		<div class="info_freezed" id="info_freezed">
+			<div class="freeze_text" id="freeze_text"></div>
+			<div class="freeze_graph" id="freeze_graph"></div>
+		</div>
 	</div>
 </div>
