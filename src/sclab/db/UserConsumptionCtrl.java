@@ -37,8 +37,9 @@ public class UserConsumptionCtrl {
 		int leak;
 		int absence;
 		int overused;
+		int freezed;
 		
-		String sql = "SELECT U.SIGOON , U.UMDONG , U.DETAIL , U.LAT , U.LNG , C.CONSUMED , C.PREDICTED , C.LEAK , C.ABSENCE , C.OVERUSED FROM USER U INNER JOIN CONSUMPTION C ON U.CODE = C.CODE AND C.DATE = '2015-02-28'";
+		String sql = "SELECT U.SIGOON , U.UMDONG , U.DETAIL , U.LAT , U.LNG , C.CONSUMED , C.PREDICTED , C.LEAK , C.ABSENCE , C.OVERUSED, C.FREEZED FROM USER U INNER JOIN CONSUMPTION C ON U.CODE = C.CODE AND C.DATE = '2015-02-28'";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
@@ -53,15 +54,16 @@ public class UserConsumptionCtrl {
 				leak = rs.getInt("LEAK");
 				absence = rs.getInt("ABSENCE");
 				overused= rs.getInt("OVERUSED");
+				freezed = rs.getInt("FREEZED");
 				
-				UserConsumption userConsumption = new UserConsumption(siGoon , umDong, detail, lat, lng, consumed, predicted, leak, absence, overused);
+				UserConsumption userConsumption = new UserConsumption(siGoon , umDong, detail, lat, lng, consumed, predicted, leak, absence, overused , freezed);
+				System.out.println(userConsumption);
 				userConsumptionList.add(userConsumption);
 			}
 			rs.close();
 		} catch (SQLException e) {
 		}
 		
-		disconnect();
 		return userConsumptionList;
 	}
 

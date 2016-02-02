@@ -88,6 +88,7 @@
 		leak:"<%= userConsumptionList.get(i).getLeak() %>",
 		absence:"<%= userConsumptionList.get(i).getAbsence() %>",
 		overused:"<%= userConsumptionList.get(i).getOverused() %>",
+		freezed:"<%= userConsumptionList.get(i).getFreezed() %>",
 	});
 	<% } %>
 	

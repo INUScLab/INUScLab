@@ -12,6 +12,7 @@ public class UserConsumption {
 	private int leak;
 	private int absence;
 	private int overused;
+	private int freezed;
 	
 	
 	
@@ -26,13 +27,14 @@ public class UserConsumption {
 		this.leak=0;
 		this.absence=0;
 		this.overused=0;
+		this.freezed=0;
 	}
 
 
 
 	public UserConsumption( String siGoon ,String umDong, String detail, double lat,
 			double lng, double consumed, double predicted, int leak,
-			int absence, int overused) {
+			int absence, int overused , int freezed ) {
 		this.siGoon = siGoon;
 		this.umDong = umDong;
 		this.detail = detail;
@@ -43,8 +45,16 @@ public class UserConsumption {
 		this.leak = leak;
 		this.absence = absence;
 		this.overused = overused;
+		this.freezed = freezed;
 	}
 
+	public int getFreezed() {
+		return freezed;
+	}
+	
+	public void setFreezed(int freezed) {
+		this.freezed = freezed;
+	}
 
 
 	public String getSiGoon() {
