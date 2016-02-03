@@ -69,7 +69,7 @@ public class UserSummaryReportCtrl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		disconnect();
 		return userSummuryReportList;
 	}
 
