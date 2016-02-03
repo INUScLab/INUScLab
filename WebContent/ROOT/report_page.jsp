@@ -14,24 +14,23 @@
 <script type="text/javascript">
 window.onload = function () {	
 	/* jQuery for SELECT BOX */
-	$('#analysis_umDong_select').change(
+	$('#report_umDong_select').change(
 			function(e) {
 				var optionSelected = $("option:selected", this);
 				var textSelected = optionSelected.text();
 
 			});
 
-	$('#analysis_guGun_select').change(function(e) {
-		$('#analysis_umDong_select').html('').append("<option value=''>읍/면/동</option>");
+	$('#report_guGun_select').change(function(e) {
+		$('#report_umDong_select').html('').append("<option value=''>읍/면/동</option>");
 		var optionSelected = $("option:selected", this);
 		var textSelected = optionSelected.text();
 
-		var umDong_select = document.getElementById("analysis_umDong_select");
+		var umDong_select = document.getElementById("report_umDong_select");
 		for (var i = 0; i < DongSummaryReportList.length; i++) {
 			if (DongSummaryReportList[i].guGun == textSelected) {
 				var option = document.createElement("option");
 				option.text = DongSummaryReportList[i].umDong;
-				//console.log(option.text);
 				umDong_select.add(option);
 			}
 		}
@@ -69,7 +68,7 @@ function sendIt(){
 								</td>
 								<td>
 									<div id="analysis_address_label" class="address_label">
-										<select name="guGun" id="analysis_guGun_select">
+										<select name="guGun" id="report_guGun_select">
 											<option value="전체">구/군</option>
 											<option value="강화군">강화군</option>
 											<option value="계양구">계양구</option>
@@ -86,7 +85,7 @@ function sendIt(){
 								</td>
 								<td>
 									<div id="analysis_address_label" class="address_label">
-										<select name="umDong" id="analysis_umDong_select">
+										<select name="umDong" id="report_umDong_select">
 											<option value="전체">읍/면/동</option>
 										</select>
 									</div>
