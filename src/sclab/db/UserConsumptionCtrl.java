@@ -57,7 +57,6 @@ public class UserConsumptionCtrl {
 				freezed = rs.getInt("FREEZED");
 				
 				UserConsumption userConsumption = new UserConsumption(siGoon , umDong, detail, lat, lng, consumed, predicted, leak, absence, overused , freezed);
-				System.out.println(userConsumption);
 				userConsumptionList.add(userConsumption);
 			}
 			rs.close();
