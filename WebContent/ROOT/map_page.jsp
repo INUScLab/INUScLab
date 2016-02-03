@@ -73,16 +73,12 @@
 
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">
-			<img class="img_icon img_leak" id="img_leak"
-				onclick="leak_clicked('img_leak')">
 		</div>
 		<div class="leak_info" id="leak_info"></div>
 	</div>
 
 	<div class="info_history" id="info_history">
 		<div class="freeze_icon" id="freeze_icon">
-			<img class="img_icon img_freezed " id="img_freezed"
-				onclick="freezed_clicked('img_freezed')">
 		</div>
 		<div class="freeze_info" id="freeze_info"></div>
 	</div>
@@ -91,8 +87,6 @@
 		<div class="info_leak" id="info_leak">
 			<div class="leak_text" id="leak_text"></div>
 			<div class="leak_graph" id="leak_graph">
-				<img class="img_icon img_absence" id="img_absence"
-					onclick="absence_clicked('img_absence')">
 			</div>
 		</div>
 		<div class="info_absence" id="info_absence">
