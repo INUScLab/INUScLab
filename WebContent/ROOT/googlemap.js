@@ -75,6 +75,9 @@ function initialize(x, y) {
 			// FLAG가 켜진 동을 출력.
 			showIcon();
 			
+			//초기 리포트 페이지를 띄움.
+			$("#left_section_box_init").show();
+			
 			//첫 로딩 & 모든 아이콘이 꺼졌을때
 //			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
 //				console.log("dd");
@@ -694,7 +697,7 @@ function dongSummary(addressArray) {
 	
 	
 	//초기 리포트 페이지를 숨김
-	$("#left_section_box_init").css("display","none");
+	$("#left_section_box_init").hide();
 	
 	console.log(addressArray);
 	
@@ -1291,6 +1294,9 @@ function showIcon ( ) {
 
 // 전체 보기 아이콘을 클릭했을때
 function entire_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (entire_flag == false) {
 		entire_flag = true;
@@ -1321,6 +1327,9 @@ function entire_clicked(id) {
 
 //누수 아이콘을 클릭했을때 
 function leak_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (leak_flag == false) {
 		leak_flag = true;
@@ -1349,6 +1358,9 @@ function leak_clicked(id) {
 
 // 동파 아이콘을 클릭했을때
 function freezed_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
@@ -1379,6 +1391,10 @@ function freezed_clicked(id) {
 
 // 부재중 알림 아이콘을 클릭했을때
 function absence_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
+	
 	if (absence_flag == false  ) {
 		absence_flag = true;
 		
