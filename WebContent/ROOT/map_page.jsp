@@ -54,43 +54,21 @@
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
-<!--본문 Left (tree)-->
 
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon"></div>
-	
-	<div class="info_graph" id="info_graph">
-		<div class="leak_icon" id="leak_icon">
-			<img class="img_icon img_leak" id="img_leak"
-				onclick="leak_clicked('img_leak')">
-		</div>
-		<div class="leak_info" id="leak_info"></div>
-	</div>
-	
-	<div class="info_history" id="info_history">
-		<div class="freeze_icon" id="freeze_icon">
-			<img class="img_icon img_freezed " id="img_freezed"
-				onclick="freezed_clicked('img_freezed')">
-		</div>
-		<div class="freeze_info" id="freeze_info"></div>
-	</div>
-	
+	<div class="info_graph" id="info_graph"></div>
+	<div class="info_history" id="info_history"></div>
 	<div class="info_service" id="info_service">
 		<div class="info_leak" id="info_leak">
 			<div class="leak_text" id="leak_text"></div>
-			<div class="leak_graph" id="leak_graph">
-				<img class="img_icon img_absence" id="img_absence"
-					onclick="absence_clicked('img_absence')">
-			</div>
+			<div class="leak_graph" id="leak_graph"></div>
 		</div>
 		<div class="info_absence" id="info_absence">
 			<div class="absence_text" id="absence_text"></div>
 			<div class="absence_graph" id="absence_graph"></div>
 		</div>
-		<div class="info_freezed" id="info_freezed">
-			<div class="freeze_text" id="freeze_text"></div>
-			<div class="freeze_graph" id="freeze_graph"></div>
-		</div>
+		<div class="info_freezed"></div>
 	</div>
 </div>

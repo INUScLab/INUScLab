@@ -13,7 +13,7 @@ var cons_sum = 0;
 var cnt_leak = 0;
 var cnt_absence = 0;
 var cnt_freeze = 0;
-var entire_flag = false;
+var entire_flag = true;
 var leak_flag = false;
 var freezed_flag = false;
 var absence_flag = false;
@@ -62,7 +62,7 @@ function initialize(x, y) {
 	createLeakDongMarker();
 	createFreezedDongMakrer();
 	createAbsenceDongMarker();
-	
+	showIcon();
 
 	// Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
@@ -75,10 +75,21 @@ function initialize(x, y) {
 			// FLAG가 켜진 동을 출력.
 			showIcon();
 			
-			//첫 로딩 
-			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
-				showEntireDongMarkers();
-			}
+			//첫 로딩 & 모든 아이콘이 꺼졌을때
+//			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
+//				console.log("dd");
+//				showEntireDongMarkers();
+//				for (var i = 0; i <entireDongMarkers.length; i++) {
+//					entireDongMarkers[i].addListener('click', function() {
+//
+//						//상세 주소만 띄우고 동 마커들은 숨김.
+//						globalMap.setCenter(this.position);
+//						var address = this.title;
+//						var addressArray = address.split(' ');
+//						dongSummary(addressArray) // 요약 리포트
+//					});
+//				}
+//			}
 			
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
@@ -208,18 +219,22 @@ function createEntireDongMarker() {
 		
 	}
 	
-	showEntireDongMarkers();
+//	showEntireDongMarkers();
 	//생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
 	for (var i = 0; i <entireDongMarkers.length; i++) {
 		entireDongMarkers[i].addListener('click', function() {
 
+			//상세 주소만 띄우고 동 마커들은 숨김.
+			hideEntireDongMarkers();
+			hideFreezedDongMarkers();
+			hideLeakDongMarkers();
+			hideAbsenceDongMarkers();
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
 			dongSummary(addressArray) // 요약 리포트
 		});
 	}
-	
 }
 
 // 과용한 사용자를 포함하는 동의 마커를 생성하는 함수
@@ -300,6 +315,12 @@ function createLeakDongMarker() {
 	for (var i = 0; i <leakDongMarkers.length; i++) {
 		leakDongMarkers[i].addListener('click', function() {
 
+			//상세 주소만 띄우고 동 마커들은 숨김.
+			hideEntireDongMarkers();
+			hideFreezedDongMarkers();
+			hideLeakDongMarkers();
+			hideAbsenceDongMarkers();
+			
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
@@ -348,6 +369,12 @@ function createFreezedDongMakrer() {
 	for (var i = 0; i < freezedDongMarkers.length; i++) {
 		freezedDongMarkers[i].addListener('click', function() {
 
+			//상세 주소만 띄우고 동 마커들은 숨김.
+			hideEntireDongMarkers();
+			hideFreezedDongMarkers();
+			hideLeakDongMarkers();
+			hideAbsenceDongMarkers();
+			
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
@@ -396,6 +423,12 @@ function createAbsenceDongMarker() {
 	for (var i = 0; i < absenceDongMarkers.length; i++) {
 		absenceDongMarkers[i].addListener('click', function() {
 
+			//상세 주소만 띄우고 동 마커들은 숨김.
+			hideEntireDongMarkers();
+			hideFreezedDongMarkers();
+			hideLeakDongMarkers();
+			hideAbsenceDongMarkers();
+			
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
@@ -955,7 +988,7 @@ function getDetailAreaInformation(addressArray) {
 	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
 	for (var i = 0; i < userConsumptionList.length; i++) {
 		//누수 아이콘이 켜져있고 해당하는 동에 누수인 사람들이 있으면
-		if (leak_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].leak == 1) {
+		if (( entire_flag == true || leak_flag == true )&& userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].leak == 1) {
 
 			// Create Marker
 			var pinImage = new google.maps.MarkerImage(
@@ -983,7 +1016,7 @@ function getDetailAreaInformation(addressArray) {
 		}
 		
 		//동파 아이콘이 켜져있고 해당하는 동에 동파인 사람들이 있으면
-		if ( freezed_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].freezed == 1) {
+		if ( ( entire_flag == true || freezed_flag == true ) && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].freezed == 1) {
 			
 			// Create Marker
 			var pinImage = new google.maps.MarkerImage(
@@ -1011,7 +1044,7 @@ function getDetailAreaInformation(addressArray) {
 		}
 		
 		//부재중 알림 아이콘이 켜져있고 해당하는 동에 부재중인 사람들이 있으면
-		if ( absence_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].absence == 1) {
+		if (  ( entire_flag == true || absence_flag == true )&& userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].absence == 1) {
 			
 			// Create Marker
 			var pinImage = new google.maps.MarkerImage(
@@ -1134,15 +1167,14 @@ function codeAddress() {
 
 }
 
-var trueIcon = [ ];
 //Flag가 True인 아이콘을 출력.
 function showIcon ( ) {
 	
-	trueIcon = [ ];
 	
 	if( entire_flag ) {
 		showEntireDongMarkers();
-		trueIcon.push("entire");
+		$('#img_entire').css("background-color", "yellow");
+		console.log("ddd");
 	}
 	else{
 		hideEntireDongMarkers();
@@ -1150,30 +1182,37 @@ function showIcon ( ) {
 		hideFreezedDongMarkers();
 		hideLeakDongMarkers();
 		hideoverUsedDongMarkers();
+		$('#img_entire').css("background-color", "#FFFFFF");
+		$('#img_leak').css("background-color", "#FFFFFF");
+		$('#img_freezed').css("background-color", "#FFFFFF");
+		$('#img_absence').css("background-color", "#FFFFFF");
 	}
 	
 	if ( leak_flag ) {
 		showLeakDongMarkers();
-		trueIcon.push("leak");
+		$('#img_leak').css("background-color", "yellow");
 	}
 	else{
 		hideLeakDongMarkers();
+		$('#img_leak').css("background-color", "#FFFFFF");
 	}
 	
 	if( absence_flag ) {
 		showAbsenceDongMarkers();
-		trueIcon.push("absence");
+		$('#img_absence').css("background-color", "yellow");
 	}
 	else{
 		hideAbsenceDongMarkers();
+		$('#img_absence').css("background-color", "#FFFFFF");
 	}
 	
 	if( freezed_flag ) {
 		showFreezedDongMarkers();
-		trueIcon.push("freezed");
+		$('#img_freezed').css("background-color", "yellow");
 	}
 	else{
 		hideFreezedDongMarkers();
+		$('#img_freezed').css("background-color", "#FFFFFF");
 	}
 	
 }
@@ -1183,14 +1222,15 @@ function entire_clicked(id) {
 
 	if (entire_flag == false) {
 		entire_flag = true;
-		leak_flag = true;
-		freezed_flag = true;
-		absence_flag = true;
 		
-		$('#img_entire').css("background-color", "yellow");
-		$('#img_leak').css("background-color", "yellow");
-		$('#img_freezed').css("background-color", "yellow");
-		$('#img_absence').css("background-color", "yellow");
+		leak_flag = false;
+		freezed_flag = false;
+		absence_flag = false;
+		
+//		$('#img_entire').css("background-color", "yellow");
+//		$('#img_leak').css("background-color", "yellow");
+//		$('#img_freezed').css("background-color", "yellow");
+//		$('#img_absence').css("background-color", "yellow");
 
 	} else {
 		entire_flag = false;
@@ -1198,10 +1238,10 @@ function entire_clicked(id) {
 		freezed_flag = false;
 		absence_flag = false;
 		
-		$('#img_entire').css("background-color", "#FFFFFF");
-		$('#img_leak').css("background-color", "#FFFFFF");
-		$('#img_freezed').css("background-color", "#FFFFFF");
-		$('#img_absence').css("background-color", "#FFFFFF");
+//		$('#img_entire').css("background-color", "#FFFFFF");
+//		$('#img_leak').css("background-color", "#FFFFFF");
+//		$('#img_freezed').css("background-color", "#FFFFFF");
+//		$('#img_absence').css("background-color", "#FFFFFF");
 	}
 	
 	showIcon();
@@ -1213,7 +1253,11 @@ function leak_clicked(id) {
 	if (leak_flag == false) {
 		leak_flag = true;
 		
-		$('#img_leak').css("background-color", "yellow");
+		entire_flag = false;
+		freezed_flag = false;
+		absence_flag = false;
+		
+//		$('#img_leak').css("background-color", "yellow");
 
 //		if (freezed_flag == true && absence_flag == true) {
 //			entire_flag = true;
@@ -1223,10 +1267,9 @@ function leak_clicked(id) {
 
 	} else {
 		leak_flag = false;
-		entire_flag = false;
 		
-		$('#img_leak').css("background-color", "#FFFFFF");
-		$('#img_entire').css("background-color", "#FFFFFF");
+//		$('#img_leak').css("background-color", "#FFFFFF");
+//		$('#img_entire').css("background-color", "#FFFFFF");
 	}
 	
 	showIcon();
@@ -1237,9 +1280,14 @@ function freezed_clicked(id) {
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
+
+		entire_flag = false;
+		leak_flag = false;
+		absence_flag = false;
 		
 		
-		$('#img_freezed').css("background-color", "yellow");
+		
+//		$('#img_freezed').css("background-color", "yellow");
 
 //		if (leak_flag == true && absence_flag == true) {
 //			entire_flag = true;
@@ -1248,10 +1296,9 @@ function freezed_clicked(id) {
 //		}
 	} else {
 		freezed_flag = false;
-		entire_flag = false;
 		
-		$('#img_freezed').css("background-color", "#FFFFFF");
-		$('#img_entire').css("background-color", "#FFFFFF");
+//		$('#img_freezed').css("background-color", "#FFFFFF");
+//		$('#img_entire').css("background-color", "#FFFFFF");
 		
 	}
 	
@@ -1263,7 +1310,11 @@ function absence_clicked(id) {
 	if (absence_flag == false  ) {
 		absence_flag = true;
 		
-		$('#img_absence').css("background-color", "yellow");
+		entire_flag = false;
+		leak_flag = false;
+		freezed_flag = false;
+		
+//		$('#img_absence').css("background-color", "yellow");
 		
 //		if( leak_flag == true && freezed_flag == true ) {
 //			entire_flag = true;
@@ -1271,10 +1322,9 @@ function absence_clicked(id) {
 //		}
 	} else {
 		absence_flag = false;
-		entire_flag = false;
 		
-		$('#img_absence').css("background-color", "#FFFFFF");
-		$('#img_entire').css("background-color", "#FFFFFF");
+//		$('#img_absence').css("background-color", "#FFFFFF");
+//		$('#img_entire').css("background-color", "#FFFFFF");
 	}
 	
 	showIcon();
