@@ -25,7 +25,7 @@
 				<option value="bupyeong">부평구</option>
 				<option value="seo">서구</option>
 				<option value="yeonsu">연수구</option>
-				<option value="ungjin">웅진군</option>
+				<option value="ungjin">옹진군</option>
 				<option value="zung">중구</option>
 			</select>
 		</div>
