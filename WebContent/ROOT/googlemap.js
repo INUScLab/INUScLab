@@ -77,6 +77,7 @@ function initialize(x, y) {
 			
 			//초기 리포트 페이지를 띄움.
 			$("#left_section_box_init").show();
+			$("#left_section_box2").hide();
 			
 			//첫 로딩 & 모든 아이콘이 꺼졌을때
 //			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
@@ -700,6 +701,7 @@ function dongSummary(addressArray) {
 	
 	//초기 리포트 페이지를 숨김
 	$("#left_section_box_init").hide();
+	$("#left_section_box2").show();
 	
 	console.log(addressArray);
 	
@@ -1299,6 +1301,7 @@ function entire_clicked(id) {
 	
 	//초기 리포트 페이지를 띄움.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
 
 	if (entire_flag == false) {
 		entire_flag = true;
@@ -1332,6 +1335,7 @@ function leak_clicked(id) {
 	
 	//초기 리포트 페이지를 띄움.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
 
 	if (leak_flag == false) {
 		leak_flag = true;
@@ -1363,6 +1367,7 @@ function freezed_clicked(id) {
 	
 	//초기 리포트 페이지를 띄움.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
@@ -1396,6 +1401,7 @@ function absence_clicked(id) {
 	
 	//초기 리포트 페이지를 띄움.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
 	
 	if (absence_flag == false  ) {
 		absence_flag = true;
