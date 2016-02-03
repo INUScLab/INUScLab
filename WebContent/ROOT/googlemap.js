@@ -787,9 +787,6 @@ function dongSummary(addressArray) {
 	drawAbsence(cnt_absence, (siGoonAbsence / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역 평균 발생 횟수
 	drawFreeze(cnt_freeze, (siGoonFreeze / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]);
 	
-	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
-	getDetailAreaInformation(addressArray);
-	
 	if(cnt_leak != 0 ) {
 		var text_leak = "누수 : " + cnt_leak + "명";
 		$("#check_leak").text(text_leak);
@@ -822,8 +819,10 @@ function dongSummary(addressArray) {
 		$("#check_absence").text("부재중 : 0명" );
 		$('#checkBox_absence').prop('checked', false);
 	}
+	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
+	getDetailAreaInformation(addressArray);
 	
-	console.log(cnt_leak , cnt_freeze , cnt_absence );
+	
 }
 
 
@@ -918,6 +917,37 @@ function userSummary(addressArray) {
 	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 누수횟수, 지역평균 누수횟수,
 	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수, 지역평균 횟수
 	drawFreeze(freeze, (cnt_freeze / len_detail).toFixed(2), addressArray[len - 2], addressArray[len - 1]);
+	
+	if(leak != 0 ) {
+		$("#check_leak").text("누수");
+		$('#checkBox_leak').prop('checked', true);
+	}
+	else{
+		$("#check_leak").text("누수");
+		$('#checkBox_leak').prop('checked', false);
+	}
+	
+	
+	if(freeze != 0 ) {
+		$("#check_freezed").text("동파");
+		$('#checkBox_freezed').prop('checked', true);
+	}
+	else{
+		$("#check_freezed").text("동파");
+		$('#checkBox_freezed').prop('checked', false);
+	}
+	
+	
+	
+	if( absence != 0 ) {
+		$("#check_absence").text("부재중");
+		$('#checkBox_absence').prop('checked', true);
+	}
+	else{
+		$("#check_absence").text("부재중");
+		$('#checkBox_absence').prop('checked', false);
+	}
+
 	
 }
 
