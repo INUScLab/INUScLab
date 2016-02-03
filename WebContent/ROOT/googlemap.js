@@ -110,6 +110,8 @@ function initialize(x, y) {
 
 				for (var i = 0; i < guDongLatLngList.length; i++) {
 					if (guDongLatLngList[i].umDong == textSelected) {
+						
+						//초기 리포트hide
 
 						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
 						var addressArray = [];
@@ -690,6 +692,12 @@ function dongSummary(addressArray) {
 	cnt_absence = 0;
 	cnt_freeze = 0;
 	
+	
+	//초기 리포트 페이지를 숨김
+	$("#left_section_box_init").css("display","none");
+	
+	console.log(addressArray);
+	
 	for (var i = 0; i < len; i++) {
 		address += addressArray[i] + ' ';
 	}
@@ -779,10 +787,43 @@ function dongSummary(addressArray) {
 	drawAbsence(cnt_absence, (siGoonAbsence / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역 평균 발생 횟수
 	drawFreeze(cnt_freeze, (siGoonFreeze / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]);
 	
-	console.log(siGoonFreeze);
-	console.log(siGoonLen);
 	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
 	getDetailAreaInformation(addressArray);
+	
+	if(cnt_leak != 0 ) {
+		var text_leak = "누수 : " + cnt_leak + "명";
+		$("#check_leak").text(text_leak);
+		$('#checkBox_leak').prop('checked', true);
+	}
+	else{
+		$("#check_leak").text("누수 : 0명" );
+		$('#checkBox_leak').prop('checked', false);
+	}
+	
+	
+	if(cnt_freeze != 0 ) {
+		var text_freezed = "동파 : " + cnt_freeze + "명";
+		$("#check_freezed").text(text_freezed);
+		$('#checkBox_freezed').prop('checked', true);
+	}
+	else{
+		$("#check_freezed").text("동파 : 0명" );
+		$('#checkBox_freezed').prop('checked', false);
+	}
+	
+	
+	
+	if( cnt_absence != 0 ) {
+		var text_absence = "부재중 : " + cnt_absence + "명";
+		$("#check_absence").text(text_absence);
+		$('#checkBox_absence').prop('checked', true);
+	}
+	else{
+		$("#check_absence").text("부재중 : 0명" );
+		$('#checkBox_absence').prop('checked', false);
+	}
+	
+	console.log(cnt_leak , cnt_freeze , cnt_absence );
 }
 
 
@@ -877,6 +918,7 @@ function userSummary(addressArray) {
 	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 누수횟수, 지역평균 누수횟수,
 	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수, 지역평균 횟수
 	drawFreeze(freeze, (cnt_freeze / len_detail).toFixed(2), addressArray[len - 2], addressArray[len - 1]);
+	
 }
 
 //전체 동들의 마커를 지도에 출력 

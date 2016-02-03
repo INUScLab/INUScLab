@@ -56,7 +56,7 @@
 </div>
 <!--본문 Left (tree)-->
 
-<div class="left_section_box_init">
+<div class="left_section_box_init" id="left_section_box_init" >
 
 	<div class="init_info init_all_info">
 		<div class="init_info_sub">
@@ -107,17 +107,18 @@
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_leak" >누수 
+			<input type="checkbox"  id="checkBox_leak" class="checkBox" >
+			<div id ="check_leak" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_freezed" >동파
+			<input type="checkbox" id="checkBox_freezed" class="checkBox" >
+			<div id="check_freezed" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_absence" >부재중 
+			<input type="checkbox"  id="checkBox_absence" class="checkBox" > 
+			<div id="check_absence" class="checkbox_text"></div>
 		</div>
 	</div>
-	
-	<div class="info_icon"></div>
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">
 		</div>
