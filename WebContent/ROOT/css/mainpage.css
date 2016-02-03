@@ -42,7 +42,34 @@
 
 .init_info{
 	height: 24%;
+	border: thin solid black;
+	margin-bottom: 1%;
 }
+
+.init_info_sub {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.init_info_sub img{
+	float: left;
+	width: 40px;
+	height: 40px;
+	padding: 10px;
+}
+
+.init_info_sub h2{
+	padding: 10px;
+	float: left;
+}
+
+.init_info ul {
+	list-style: none;
+	text-align: left;
+	margin-left: 20px;
+}
+
 
 /*temp*/
 #main_content .left_section_box2 {
