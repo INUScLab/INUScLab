@@ -27,7 +27,7 @@
 %>
 
 <script type="text/javascript">
-window.onload = function () {
+$(document).ready(function() {
 	var inputData = document.getElementById('startDate');
 	inputData.style.backgroundcolor = '#005147';
 	
@@ -54,7 +54,7 @@ window.onload = function () {
 			}
 		}
 	});
-}
+});
 
 
 </script>

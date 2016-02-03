@@ -23,14 +23,8 @@
 %>
 
 <script type="text/javascript">
-window.onload = function () {	
+$(document).ready(function() {
 	/* jQuery for SELECT BOX */
-	$('#report_umDong_select').change(
-			function(e) {
-				var optionSelected = $("option:selected", this);
-				var textSelected = optionSelected.text();
-
-			});
 
 	$('#report_guGun_select').change(function(e) {
 		$('#report_umDong_select').html('').append("<option value=''>읍/면/동</option>");
@@ -46,7 +40,25 @@ window.onload = function () {
 			}
 		}
 	});
-}
+	
+	
+	$('#report_umDong_select').change(
+			function(e) {
+				var optionSelected = $("option:selected", this);
+				var textSelected = optionSelected.text();
+				
+				$('#report_id_select').html('').append("<option value=''>ID</option>");
+				var detail_select = document.getElementById("report_id_select");
+				for ( var i = 0 ; i < userConsumptionList.length ; i ++ ) {
+					if( userConsumptionList[i].umDong == textSelected ) {
+						var option = document.createElement("option");
+						option.text = userConsumptionList[i].detail;
+						detail_select.add(option);
+					}
+				}
+
+	});
+});
 
 
 
@@ -55,236 +67,235 @@ window.onload = function () {
 function sendIt(){
 	var f = document.search_form;
 	
-	f.action = "<%=cp%>/ROOT/main.jsp?MENU_NUM=1";
-	f.submit();
-}
+	f.action = '<%=cp%>/ROOT/main.jsp?MENU_NUM=1';
+		f.submit();
+	}
 </script>
 
 <script type="text/javascript" src="calendar.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">  
-      google.load("visualization", "1", {packages:["corechart"]});  
-     google.setOnLoadCallback(report_drawChart);  
-      function report_drawChart() {  
-    	  
-    	  var cons = 300;
-    	  var week = 300;
-    	  var region = 200;
-    	  var pred = 300;
-    	  
-    	  var Name =  <%=umDong %>;
-  			var upperName = <%=guGun %>;
-    	  
-    	  var info_graph_data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-    			role : "style"
-    		} ], [ '사용량', <%=detailData.getConsumed()%>, '#b87333' ], // RGB value
-    		[ '지역 평균', <%=detailData.getAvg_consumed()%>, '#b87333' ] ]);
-    	  
-    	  var report_service_leak_data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-  			role : "style"
-  		} ], [ Name, <%=detailData.getLeak()%>, '#b87333' ], // RGB value
-  		[ upperName + '평균', <%=detailData.getAvg_leak()%>, 'silver' ] // English color name
-  		]);
-    	  
-    	  var report_service_absence_data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-  			role : "style"
-  		} ], [ Name, <%=detailData.getAbsence()%>, '#b87333' ], // RGB value
-  		[ upperName + '평균', <%=detailData.getAvg_absence()%>, 'silver' ] // English color name
-  		]);
-    	  
-    	  var report_service_freezed_data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-  			role : "style"
-  		} ], [ Name, <%=detailData.getFreezed()%>, '#b87333' ], // RGB value
-  		[ upperName + '평균', <%=detailData.getAvg_freezed()%>, 'silver' ] // English color name
-  		]);
-    	  
-    	  var report_history_graph_data = new google.visualization.DataTable();
-        	report_history_graph_data.addColumn('date', 'Time of Day');
-        	report_history_graph_data.addColumn('number', 'Consumption');
+<script type="text/javascript">
+	google.load("visualization", "1", {
+		packages : [ "corechart" ]
+	});
+	google.setOnLoadCallback(report_drawChart);
+	function report_drawChart() {
 
-        	report_history_graph_data.addRows([
-        	                                   
-				<%for (String ab : detailData.getConsumed_days()) {%>  
-					[new Date(2015,1,22),'<%=ab%>'],  
-				<%}%>	  
-        	        ]);
+		var Name = "<%=umDong%>";
+		var upperName = "<%=guGun%>";
 
+		var info_graph_data = google.visualization.arrayToDataTable([
+				[ 'Element', 'value', {
+					role : "style"
+				} ], [ '사용량',<%=detailData.getConsumed()%>, 'blue' ],
+				[ '지역 평균',<%=detailData.getAvg_consumed()%>	, 'green' ] ]);
 
-    	  
-    		var info_graph_view = new google.visualization.DataView(info_graph_data);
-    		info_graph_view.setColumns([ 0, 1, {
-    			calc : "stringify",
-    			sourceColumn : 1,
-    			type : "string",
-    			role : "annotation"
-    		}, 2 ]);
-    		
-    		var report_service_leak_view = new google.visualization.DataView(report_service_leak_data);
-    		report_service_leak_view.setColumns([ 0, 1, {
-    			calc : "stringify",
-    			sourceColumn : 1,
-    			type : "string",
-    			role : "annotation"
-    		}, 2 ]);
-    		
-    		var report_service_absence_view = new google.visualization.DataView(report_service_absence_data);
-    		report_service_absence_view.setColumns([ 0, 1, {
-    			calc : "stringify",
-    			sourceColumn : 1,
-    			type : "string",
-    			role : "annotation"
-    		}, 2 ]);
-    		
-    		var report_service_freezed_view = new google.visualization.DataView(report_service_freezed_data);
-    		report_service_freezed_view.setColumns([ 0, 1, {
-    			calc : "stringify",
-    			sourceColumn : 1,
-    			type : "string",
-    			role : "annotation"
-    		}, 2 ]);
-    		
-    		
-    		
-    		
-    		
+		var report_service_leak_data = google.visualization.arrayToDataTable([
+				[ 'Element', 'value', {
+					role : "style"
+				} ], [ Name,<%=detailData.getLeak()%>	, '#b87333' ], // RGB value
+				[ upperName + '평균',<%=detailData.getAvg_leak()%>	, 'silver' ] // English color name
+		]);
 
-    		var info_graph_options = {
-    			fontSize : 11,
-    			bar : {
-    				groupWidth : "80%"
-    			},
-    			legend : {
-    				position : "none"
-    			},
-    			vAxis: {
-    	            minValue:0,
-    	            viewWindow: {
-    	                min: 0
-    	            }
-    	        }
-    		};
-    		
-    		var report_service_leak_options = {
-        			title : "누수횟수",
-        			titleTextStyle : {
-        				color : "black",
-        				fontSize : 11
-        			},
-        			fontSize : 11,
-        			bar : {
-        				groupWidth : "50%"
-        			},
-        			legend : {
-        				position : "none"
-        			},
-        			vAxis: {
-        	            minValue:0,
-        	            viewWindow: {
-        	                min: 0
-        	            }
-        	        }
-        		};
-    		
-    		var report_service_absence_options = {
-        			title : "부재중 알람 횟수",
-        			titleTextStyle : {
-        				color : "black",
-        				fontSize : 11
-        			},
-        			fontSize : 11,
-        			bar : {
-        				groupWidth : "50%"
-        			},
-        			legend : {
-        				position : "none"
-        			},
-        			vAxis: {
-        	            minValue:0,
-        	            viewWindow: {
-        	                min: 0
-        	            }
-        	        }
-        		};
-    		
-    		var report_service_freezed_options = {
-        			title : "동파 횟수",
-        			titleTextStyle : {
-        				color : "black",
-        				fontSize : 11
-        			},
-        			fontSize : 11,
-        			bar : {
-        				groupWidth : "50%"
-        			},
-        			legend : {
-        				position : "none"
-        			},
-        			vAxis: {
-        	            minValue:0,
-        	            viewWindow: {
-        	                min: 0
-        	            }
-        	        }
-        		};
-    		
-    		var report_history_graph_options = {
-    	      		title : "일주일 간 history",
+		var report_service_absence_data = google.visualization
+				.arrayToDataTable([
+						[ 'Element', 'value', {
+							role : "style"
+						} ],
+						[ Name,<%=detailData.getAbsence()%>	, '#b87333' ], // RGB value
+						[ upperName + '평균',<%=detailData.getAvg_absence()%>	,'silver' ] // English color name
+				]);
 
-    	      		titleTextStyle : {
-    	      			color : "black",
-    	      			fontSize : 15
-    	      		},
-    	      		hAxis : {
-    	      			format : 'yy-MM-dd'
-    	      		// gridlines: {count: 15}
-    	      		},
-    	      		vAxis : {
-    	      			gridlines : {
-    	      				color : 'none'
-    	      			},
-    	      		},
-    	      		legend : {
-    	      			position : "bottom"
-    	      		},
-    	      		series : {
-    	      			1 : {
-    	      				lineDashStyle : [ 5, 5 ]
-    	      			}
-    	      		}
-    	      	};
-    		
-    		
+		var report_service_freezed_data = google.visualization
+				.arrayToDataTable([
+						[ 'Element', 'value', {
+							role : "style"
+						} ],
+						[ Name,<%=detailData.getFreezed()%>	, '#b87333' ], // RGB value
+						[ upperName + '평균',<%=detailData.getAvg_freezed()%>	,'silver' ] // English color name
+				]);
 
-    		var info_graph_chart = new google.visualization.ColumnChart(document
-    				.getElementById('service_info_graph'));
-    		
-    		var report_service_leak_chart = new google.visualization.ColumnChart(document
-    				.getElementById('report_service_leak'));
-    		
-    		var report_service_absence_chart = new google.visualization.ColumnChart(document
-    				.getElementById('report_service_absence'));
-    		
-    		var report_service_freezed_chart = new google.visualization.ColumnChart(document
-    				.getElementById('report_service_freezed'));
-    		
-    		var report_history_graph_chart = new google.visualization.LineChart(document
-          			.getElementById('report_history_graph'));
-    		
+		var report_history_graph_data = new google.visualization.DataTable();
+		report_history_graph_data.addColumn('date', 'Time of Day');
+		report_history_graph_data.addColumn('number', 'Consumption');
+		
+		var i=0;
+		report_history_graph_data.addRows([
+		<% int i = 0; for (String ab : detailData.getConsumed_days()) {%>
+			[new Date(2015, 1, 28- <%=i %>),<%=ab%>	],
+		<% i++; }%>
+	]);
 
-    		info_graph_chart.draw(info_graph_view, info_graph_options);
-    		
-    		report_service_leak_chart.draw(report_service_leak_view, report_service_leak_options);
-    		
-    		report_service_absence_chart.draw(report_service_absence_view, report_service_absence_options);
-    		
-    		report_service_freezed_chart.draw(report_service_freezed_view, report_service_freezed_options);
-    		
-    		report_history_graph_chart.draw(report_history_graph_data, report_history_graph_options);
+		var info_graph_view = new google.visualization.DataView(info_graph_data);
+		info_graph_view.setColumns([ 0, 1, {
+			calc : "stringify",
+			sourceColumn : 1,
+			type : "string",
+			role : "annotation"
+		}, 2 ]);
 
-    		
-    		
+		var report_service_leak_view = new google.visualization.DataView(
+				report_service_leak_data);
+		report_service_leak_view.setColumns([ 0, 1, {
+			calc : "stringify",
+			sourceColumn : 1,
+			type : "string",
+			role : "annotation"
+		}, 2 ]);
+
+		var report_service_absence_view = new google.visualization.DataView(
+				report_service_absence_data);
+		report_service_absence_view.setColumns([ 0, 1, {
+			calc : "stringify",
+			sourceColumn : 1,
+			type : "string",
+			role : "annotation"
+		}, 2 ]);
+
+		var report_service_freezed_view = new google.visualization.DataView(
+				report_service_freezed_data);
+		report_service_freezed_view.setColumns([ 0, 1, {
+			calc : "stringify",
+			sourceColumn : 1,
+			type : "string",
+			role : "annotation"
+		}, 2 ]);
+
+		var info_graph_options = {
+			fontSize : 11,
+			bar : {
+				groupWidth : "80%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+			/* minValue:0,
+			viewWindow: {
+			    min: 0
+			} */
+			}
+		};
+
+		var report_service_leak_options = {
+			title : "누수횟수",
+			titleTextStyle : {
+				color : "black",
+				fontSize : 11
+			},
+			fontSize : 11,
+			bar : {
+				groupWidth : "50%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+				minValue : 0,
+				viewWindow : {
+					min : 0
+				}
+			}
+		};
+
+		var report_service_absence_options = {
+			title : "부재중 알람 횟수",
+			titleTextStyle : {
+				color : "black",
+				fontSize : 11
+			},
+			fontSize : 11,
+			bar : {
+				groupWidth : "50%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+				minValue : 0,
+				viewWindow : {
+					min : 0
+				}
+			}
+		};
+
+		var report_service_freezed_options = {
+			title : "동파 횟수",
+			titleTextStyle : {
+				color : "black",
+				fontSize : 11
+			},
+			fontSize : 11,
+			bar : {
+				groupWidth : "50%"
+			},
+			legend : {
+				position : "none"
+			},
+			vAxis : {
+				minValue : 0,
+				viewWindow : {
+					min : 0
+				}
+			}
+		};
+
+		var report_history_graph_options = {
+			title : " history",
+
+			titleTextStyle : {
+				color : "black",
+				fontSize : 15
+			},
+			hAxis : {
+				format : 'yy-MM-dd'
+			// gridlines: {count: 15}
+			},
+			vAxis : {
+				gridlines : {
+					color : 'none'
+				},
+			},
+			/* legend : {
+				position : "bottom"
+			}, */
+			series : {
+				1 : {
+					lineDashStyle : [ 5, 5 ]
+				}
+			}
+		};
+
+		var info_graph_chart = new google.visualization.ColumnChart(document
+				.getElementById('report_info_graph'));
+
+		var report_service_leak_chart = new google.visualization.ColumnChart(
+				document.getElementById('report_service_leak'));
+
+		var report_service_absence_chart = new google.visualization.ColumnChart(
+				document.getElementById('report_service_absence'));
+
+		var report_service_freezed_chart = new google.visualization.ColumnChart(
+				document.getElementById('report_service_freezed'));
+
+		var report_history_graph_chart = new google.visualization.LineChart(
+				document.getElementById('report_history_graph'));
+
+		info_graph_chart.draw(info_graph_view, info_graph_options);
+
+		report_service_leak_chart.draw(report_service_leak_view,
+				report_service_leak_options);
+
+		report_service_absence_chart.draw(report_service_absence_view,
+				report_service_absence_options);
+
+		report_service_freezed_chart.draw(report_service_freezed_view,
+				report_service_freezed_options);
+
+		report_history_graph_chart.draw(report_history_graph_data,
+				report_history_graph_options);
+
 	}
-      
 </script>
 
 <!-- 새롭게 바뀐 페이지 -->
@@ -328,6 +339,13 @@ function sendIt(){
 										</select>
 									</div>
 								</td>
+								<td>
+									<div>
+										<select name="userId" id="report_id_select">
+											<option value="전체">ID</option>
+										</select>
+									</div>
+								</td>
 							</tr>
 						</table>
 					</td>
@@ -338,14 +356,17 @@ function sendIt(){
 							<tr>
 								<td>
 									<div class="Date_wrap">
-										<input type="text" class="startDate" id="startDate" name="startDate" size="10" onclick="fnPopUpCalendar(startDate,startDate,'yyyy-mm-dd')"/> 
+										<input type="text" class="startDate" id="startDate"
+											name="startDate" size="10"
+											onclick="fnPopUpCalendar(startDate,startDate,'yyyy-mm-dd')" />
 										<!-- <img alt="calendar" src="./img/calendar.png" id="calendar" width="25px"	height="25px"> -->
 									</div>
 								</td>
 								<td>&nbsp;-&nbsp;</td>
 								<td>
 									<div class="endDate Date_wrap">
-										<input type="text" class="endDate" name="endDate" size="10" onclick="fnPopUpCalendar(endDate,endDate,'yyyy-mm-dd')"/>
+										<input type="text" class="endDate" name="endDate" size="10"
+											onclick="fnPopUpCalendar(endDate,endDate,'yyyy-mm-dd')" />
 										<!-- <img alt="calendar" src="./img/calendar.png" width="25px" height="25px"> -->
 									</div>
 								</td>
@@ -361,13 +382,13 @@ function sendIt(){
 
 
 	</div>
-	
-	
+
+
 	<div class="report_info report_info_data">
 		<div class="report_info_list">
 			<ul>
-				<li>총 사용향</li>
-				<li>요금</li>
+				<li>총 사용 량 : </li>
+				<li>요금 : </li>
 			</ul>
 		</div>
 		<div class="report_history_graph" id="report_history_graph"></div>
@@ -375,13 +396,20 @@ function sendIt(){
 
 	<div class="report_info report_info_row2">
 		<div class="report_info_row2_wrap report_info_row2_wrap_left">
-			<div class="report_info_ele report_info_graph" id="report_info_graph"></div><!-- 1 -->
-			<div class="report_info_ele report_service_leak" id="report_service_leak"></div><!-- 2 -->
+			<div class="report_info_ele report_info_graph" id="report_info_graph"></div>
+			<!-- 1 -->
+			<div class="report_info_ele report_service_leak"
+				id="report_service_leak"></div>
+			<!-- 2 -->
 		</div>
-		
+
 		<div class="report_info_row2_wrap report_info_row2_wrap_right">
-			<div class="report_info_ele report_service_absence" id="report_service_absence"></div><!-- 3 -->
-			<div class="report_info_ele report_service_freezed" id="report_service_freezed"></div><!-- 4 -->
+			<div class="report_info_ele report_service_absence"
+				id="report_service_absence"></div>
+			<!-- 3 -->
+			<div class="report_info_ele report_service_freezed"
+				id="report_service_freezed"></div>
+			<!-- 4 -->
 		</div>
 	</div>
 </div>

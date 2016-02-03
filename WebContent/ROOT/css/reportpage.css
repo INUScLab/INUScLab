@@ -14,13 +14,22 @@
 
 .report_info_data{
 	overflow: hidden;
-	height: 20%;
+	height: 35%;
 }
 
 .report_info_list {
 	float: left;
 	width: 25%;
 	border-right: 1px solid #d3d3d3;
+
+}
+
+.report_info_list ul li {
+	text-align: left;
+	margin-left: 20px;
+	margin-right: 20px;
+	border-bottom: 1px solid #d3d3d3;
+	list-style: none;
 }
 .report_history_graph {
 	float: left;
@@ -31,7 +40,7 @@
 /* graph*/
 .report_info_row2 {
 	width: 100%;
-	height: 20%;
+	height: 40%;
 	margin-bottom: 10px;
 	overflow: hidden;
 }
@@ -45,14 +54,14 @@
 .report_info_row2_wrap_right { float: right; }
 
 .report_info_ele {
-	width: 49.5 %
+	width: 48%;
 } 
 
 .report_info_graph {float: left;}
-.report_info_graph_leak { float: right; }
+.report_service_leak { float: right; }
 
-.report_info_graph_absence { float: left; }
-.report_info_graph_freezed { float: right;}
+.report_service_absence { float: left; }
+.report_service_freezed { float: right;}
 
 
 /* footer*/
