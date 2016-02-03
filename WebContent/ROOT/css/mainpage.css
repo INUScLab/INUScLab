@@ -342,8 +342,16 @@ html, body {
 	float:left;
 	width:33.3%;
 	height:100%;
-	margin-left:-10px;
 	margin-top:5px;
+}
+
+.checkbox_text{
+	float:right;
+	width:80px;
+	font-size:14px;
+	text-align:left;
+	margin-top:2px;
+
 }
 
 /* Address Label */

@@ -56,46 +56,46 @@
 </div>
 <!--본문 Left (tree)-->
 
-<div class="left_section_box_init">
+<div class="left_section_box_init" id="left_section_box_init" >
 
 	<div class="init_info init_all_info">
 		<div class="init_info_sub">
-			<img alt="전체 아이콘" src=""/>
+			<img alt="전체 아이콘" src="./img/combine.png"/>
 			<h2>[전체]</h2>
 		</div>
-		<ul>
-			<li>전체 동 개수 : </li>
-			<li>전체 사용자 수 : </li>
+		<ul id="init_entire_text">
+			<li>전체 동 개수 : 221동 </li>
+			<li>전체 사용자 수 : 1000명 </li>
 		</ul>
 	</div>
 	<div class="init_info init_leak_info">
 		<div class="init_info_sub">
-			<img alt="누수 아이콘" src=""/>
+			<img alt="누수 아이콘" src="./img/leak.png"/>
 			<h2>[누수 경보]</h2>
 		</div>
-		<ul>
-			<li>누수 동 개수 : </li>
-			<li>누수 사용자 수 : </li>
+		<ul id="init_leak_text">
+			<li>누수 동 개수 : 4동 </li>
+			<li>누수 사용자 수 : 4개 </li>
 		</ul>
 	</div>
 	<div class="init_info init_freezed_info">
 		<div class="init_info_sub">
-			<img alt="동파 아이콘" src=""/>
+			<img alt="동파 아이콘" src="./img/freezed.png"/>
 			<h2>[동파 경보]</h2>
 		</div>
-		<ul>
-			<li>동보 동 개수 : </li>
-			<li>동파 사용자 수 : </li>
+		<ul id="init_freezed_text">
+			<li>동파 동 개수 : 5동</li>
+			<li>동파 사용자 수 : 5명</li>
 		</ul>
 	</div>
 	<div class="init_info init_absence">
 		<div class="init_info_sub">
-			<img alt="부재중 알람 아이콘" src=""/>
+			<img alt="부재중 알람 아이콘" src="./img/absence.png"/>
 			<h2>[부재중 알람]</h2>
 		</div>
-		<ul>
-			<li>부재중 알람 동 개수 : </li>
-			<li>부재중 알람 사용자 수 : </li>
+		<ul id="init_absence_text">
+			<li>부재중 알람 동 개수 : 4동</li>
+			<li>부재중 알람 사용자 수 : 4명</li>
 		</ul>
 	</div>
 </div>
@@ -107,17 +107,18 @@
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_leak" >누수 
+			<input type="checkbox"  id="checkBox_leak" class="checkBox" >
+			<div id ="check_leak" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_freezed" >동파
+			<input type="checkbox" id="checkBox_freezed" class="checkBox" >
+			<div id="check_freezed" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox" class="check_absence" >부재중 
+			<input type="checkbox"  id="checkBox_absence" class="checkBox" > 
+			<div id="check_absence" class="checkbox_text"></div>
 		</div>
 	</div>
-	
-	<div class="info_icon"></div>
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">
 		</div>

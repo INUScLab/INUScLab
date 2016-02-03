@@ -75,6 +75,9 @@ function initialize(x, y) {
 			// FLAG가 켜진 동을 출력.
 			showIcon();
 			
+			//초기 리포트 페이지를 띄움.
+			$("#left_section_box_init").show();
+			
 			//첫 로딩 & 모든 아이콘이 꺼졌을때
 //			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
 //				console.log("dd");
@@ -110,6 +113,8 @@ function initialize(x, y) {
 
 				for (var i = 0; i < guDongLatLngList.length; i++) {
 					if (guDongLatLngList[i].umDong == textSelected) {
+						
+						//초기 리포트hide
 
 						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
 						var addressArray = [];
@@ -156,9 +161,11 @@ function initialize(x, y) {
 		if(userConsumptionList[i].absence == '1')
 			absenceUser++;
 	}
-	document.getElementById('leak_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '누수 의심 동 :' + ' ' + leakDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '누수 의심 :' + ' ' + leakUser;
-	document.getElementById('freeze_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '동파 의심 동 :' + ' ' + freezedDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '동파 의심 :' + ' ' + freezeUser;
-	document.getElementById('absence_graph').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '부재중 발생 동 :' + ' ' + absenceDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '부재중 알람 :' + ' ' + absenceUser;
+	
+	
+//	document.getElementById('init_leak_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '누수 의심 동 :' + ' ' + leakDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '누수 의심 :' + ' ' + leakUser;
+//	document.getElementById('freeze_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '동파 의심 동 :' + ' ' + freezedDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '동파 의심 :' + ' ' + freezeUser;
+//	document.getElementById('absence_graph').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '부재중 발생 동 :' + ' ' + absenceDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '부재중 알람 :' + ' ' + absenceUser;
 	
 	//leak_info.style.textAlign = 'left';
 }
@@ -690,6 +697,12 @@ function dongSummary(addressArray) {
 	cnt_absence = 0;
 	cnt_freeze = 0;
 	
+	
+	//초기 리포트 페이지를 숨김
+	$("#left_section_box_init").hide();
+	
+	console.log(addressArray);
+	
 	for (var i = 0; i < len; i++) {
 		address += addressArray[i] + ' ';
 	}
@@ -779,10 +792,42 @@ function dongSummary(addressArray) {
 	drawAbsence(cnt_absence, (siGoonAbsence / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역 평균 발생 횟수
 	drawFreeze(cnt_freeze, (siGoonFreeze / siGoonLen.length).toFixed(2),	addressArray[len - 2], addressArray[len - 1]);
 	
-	console.log(siGoonFreeze);
-	console.log(siGoonLen);
+	if(cnt_leak != 0 ) {
+		var text_leak = "누수 : " + cnt_leak + "명";
+		$("#check_leak").text(text_leak);
+		$('#checkBox_leak').prop('checked', true);
+	}
+	else{
+		$("#check_leak").text("누수 : 0명" );
+		$('#checkBox_leak').prop('checked', false);
+	}
+	
+	
+	if(cnt_freeze != 0 ) {
+		var text_freezed = "동파 : " + cnt_freeze + "명";
+		$("#check_freezed").text(text_freezed);
+		$('#checkBox_freezed').prop('checked', true);
+	}
+	else{
+		$("#check_freezed").text("동파 : 0명" );
+		$('#checkBox_freezed').prop('checked', false);
+	}
+	
+	
+	
+	if( cnt_absence != 0 ) {
+		var text_absence = "부재중 : " + cnt_absence + "명";
+		$("#check_absence").text(text_absence);
+		$('#checkBox_absence').prop('checked', true);
+	}
+	else{
+		$("#check_absence").text("부재중 : 0명" );
+		$('#checkBox_absence').prop('checked', false);
+	}
 	// 지도에 동에 해당하는 상세 주소 마커 띄우기 
 	getDetailAreaInformation(addressArray);
+	
+	
 }
 
 
@@ -877,6 +922,38 @@ function userSummary(addressArray) {
 	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len-2], addressArray[len-1]); // 누수횟수, 지역평균 누수횟수,
 	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),	addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수, 지역평균 횟수
 	drawFreeze(freeze, (cnt_freeze / len_detail).toFixed(2), addressArray[len - 2], addressArray[len - 1]);
+	
+	if(leak != 0 ) {
+		$("#check_leak").text("누수");
+		$('#checkBox_leak').prop('checked', true);
+	}
+	else{
+		$("#check_leak").text("누수");
+		$('#checkBox_leak').prop('checked', false);
+	}
+	
+	
+	if(freeze != 0 ) {
+		$("#check_freezed").text("동파");
+		$('#checkBox_freezed').prop('checked', true);
+	}
+	else{
+		$("#check_freezed").text("동파");
+		$('#checkBox_freezed').prop('checked', false);
+	}
+	
+	
+	
+	if( absence != 0 ) {
+		$("#check_absence").text("부재중");
+		$('#checkBox_absence').prop('checked', true);
+	}
+	else{
+		$("#check_absence").text("부재중");
+		$('#checkBox_absence').prop('checked', false);
+	}
+
+	
 }
 
 //전체 동들의 마커를 지도에 출력 
@@ -1219,6 +1296,9 @@ function showIcon ( ) {
 
 // 전체 보기 아이콘을 클릭했을때
 function entire_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (entire_flag == false) {
 		entire_flag = true;
@@ -1249,6 +1329,9 @@ function entire_clicked(id) {
 
 //누수 아이콘을 클릭했을때 
 function leak_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (leak_flag == false) {
 		leak_flag = true;
@@ -1277,6 +1360,9 @@ function leak_clicked(id) {
 
 // 동파 아이콘을 클릭했을때
 function freezed_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
@@ -1307,6 +1393,10 @@ function freezed_clicked(id) {
 
 // 부재중 알림 아이콘을 클릭했을때
 function absence_clicked(id) {
+	
+	//초기 리포트 페이지를 띄움.
+	$("#left_section_box_init").show();
+	
 	if (absence_flag == false  ) {
 		absence_flag = true;
 		
