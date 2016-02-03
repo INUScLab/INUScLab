@@ -61,16 +61,22 @@
 	<div class="info_icon"></div>
 	
 	<div class="info_graph" id="info_graph">
+		<div class="leak_icon" id="leak_icon">
+		</div>
 		<div class="leak_info" id="leak_info"></div>
 	</div>
 	
 	<div class="info_history" id="info_history">
+		<div class="freeze_icon" id="freeze_icon">
+		</div>
 		<div class="freeze_info" id="freeze_info"></div>
 	</div>
 	
 	<div class="info_service" id="info_service">
 		<div class="info_leak" id="info_leak">
 			<div class="leak_text" id="leak_text"></div>
+			<div class="leak_graph" id="leak_graph">
+			</div>
 		</div>
 		<div class="info_absence" id="info_absence">
 			<div class="absence_text" id="absence_text"></div>
