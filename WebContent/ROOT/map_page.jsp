@@ -103,7 +103,7 @@
 
 
 
-<div class="left_section_box2">
+<div class="left_section_box2" id="left_section_box2">
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
 		<div class="info_wrapper">

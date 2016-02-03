@@ -77,6 +77,7 @@ function initialize(x, y) {
 			
 			//초기 리포트 페이지를 띄움.
 			$("#left_section_box_init").show();
+			$("#left_section_box2").hide();
 			
 			//첫 로딩 & 모든 아이콘이 꺼졌을때
 //			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
@@ -700,6 +701,7 @@ function dongSummary(addressArray) {
 	
 	//초기 리포트 페이지를 숨김
 	$("#left_section_box_init").hide();
+	$("#left_section_box2").show();
 	
 	console.log(addressArray);
 	
@@ -1297,8 +1299,11 @@ function showIcon ( ) {
 // 전체 보기 아이콘을 클릭했을때
 function entire_clicked(id) {
 	
-	//초기 리포트 페이지를 띄움.
+	//초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
+	globalMap.setCenter(new google.maps.LatLng( 37.4562557 , 126.70520620000002 ));
+	globalMap.setOptions({ 'zoom' : 13 });
 
 	if (entire_flag == false) {
 		entire_flag = true;
@@ -1330,8 +1335,11 @@ function entire_clicked(id) {
 //누수 아이콘을 클릭했을때 
 function leak_clicked(id) {
 	
-	//초기 리포트 페이지를 띄움.
+	//초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
+	globalMap.setCenter(new google.maps.LatLng( 37.4562557 , 126.70520620000002 ));
+	globalMap.setOptions({ 'zoom' : 13 });
 
 	if (leak_flag == false) {
 		leak_flag = true;
@@ -1361,8 +1369,11 @@ function leak_clicked(id) {
 // 동파 아이콘을 클릭했을때
 function freezed_clicked(id) {
 	
-	//초기 리포트 페이지를 띄움.
+	//초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
+	globalMap.setCenter(new google.maps.LatLng( 37.4562557 , 126.70520620000002 ));
+	globalMap.setOptions({ 'zoom' : 13 });
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
@@ -1394,8 +1405,12 @@ function freezed_clicked(id) {
 // 부재중 알림 아이콘을 클릭했을때
 function absence_clicked(id) {
 	
-	//초기 리포트 페이지를 띄움.
+	//초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
+	$("#left_section_box2").hide();
+	globalMap.setCenter(new google.maps.LatLng( 37.4562557 , 126.70520620000002 ));
+	globalMap.setOptions({ 'zoom' : 13 });
+	
 	
 	if (absence_flag == false  ) {
 		absence_flag = true;
