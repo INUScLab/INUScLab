@@ -11,7 +11,12 @@ public class ProcessedData {
 	public ArrayList<ArrayList<String>> rank_absence;
 	public ArrayList<ArrayList<String>> rank_overused;
 	public ArrayList<ArrayList<String>> rank_freezed;
-	
+	public String avg_difference;
+	public String avg_leak;
+	public String avg_absence;
+	public String avg_overused;
+	public String avg_freezed;
+
 	public ArrayList<ArrayList<String>> getRank_difference() {
 		return rank_difference;
 	}
@@ -41,6 +46,36 @@ public class ProcessedData {
 	}
 	public void setRank_freezed(ArrayList<ArrayList<String>> rank_freezed) {
 		this.rank_freezed = rank_freezed;
+	}
+	public String getAvg_difference() {
+		return avg_difference;
+	}
+	public void setAvg_difference(String avg_difference) {
+		this.avg_difference = avg_difference;
+	}
+	public String getAvg_leak() {
+		return avg_leak;
+	}
+	public void setAvg_leak(String avg_leak) {
+		this.avg_leak = avg_leak;
+	}
+	public String getAvg_absence() {
+		return avg_absence;
+	}
+	public void setAvg_absence(String avg_absence) {
+		this.avg_absence = avg_absence;
+	}
+	public String getAvg_overused() {
+		return avg_overused;
+	}
+	public void setAvg_overused(String avg_overused) {
+		this.avg_overused = avg_overused;
+	}
+	public String getAvg_freezed() {
+		return avg_freezed;
+	}
+	public void setAvg_freezed(String avg_freezed) {
+		this.avg_freezed = avg_freezed;
 	}
 	
 }

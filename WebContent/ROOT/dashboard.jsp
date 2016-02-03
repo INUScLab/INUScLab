@@ -11,9 +11,9 @@
 	String guGun = request.getParameter("guGun");
 	String umDong = request.getParameter("umDong");
 	
-	System.out.println(si);
-	System.out.println(guGun);
-	System.out.println(umDong);
+	//System.out.println(si);
+	//System.out.println(guGun);
+	//System.out.println(umDong);
 %>
 
 <jsp:useBean id="pd" class="sclab.db.ProcessedData" />
@@ -27,7 +27,7 @@
 %>
 
 <script type="text/javascript">
-window.onload = function dateInput() {
+window.onload = function () {
 	var inputData = document.getElementById('startDate');
 	inputData.style.backgroundcolor = '#005147';
 	
@@ -57,8 +57,8 @@ window.onload = function dateInput() {
 }
 
 
-
-
+</script>
+<script type="text/javascript">
 
 function sendIt(){
 	var f = document.search_form;
@@ -82,18 +82,34 @@ function sendIt(){
         	<%}%>	  
         ]);  
         
+        var diff_summary_data = google.visualization.arrayToDataTable([
+                                                                       ['동','차이량','평균'],
+                                                                       ['<%=pd.getRank_difference().get(0).get(0)%>',<%=pd.getRank_difference().get(0).get(1)%>,<%=pd.getAvg_difference()%>]
+                                                                       ]);
+        
         var leak_data = google.visualization.arrayToDataTable([  
                                               			['동', '누수 횟수'],  
                                               			<%for (ArrayList<String> ab : pd.getRank_leak()) {%>  
                                                        		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                       	<%}%>	  
                                                       ]);
+        
+        var leak_summary_data = google.visualization.arrayToDataTable([
+                                                                       ['동','차이량','평균'],
+                                                                       ['<%=pd.getRank_leak().get(0).get(0)%>',<%=pd.getRank_leak().get(0).get(1)%>,<%=pd.getAvg_leak()%>]
+                                                                       ]);
+        
         var absence_data = google.visualization.arrayToDataTable([  
                                                      			['동', '부재중 횟수'],  
                                                      			<%for (ArrayList<String> ab : pd.getRank_absence()) {%>  
                                                               		['<%=ab.get(0)%>',<%=ab.get(1)%>],  
                                                              	<%}%>	  
                                                              ]); 
+        
+        var absence_summary_data = google.visualization.arrayToDataTable([
+                                                                          ['동','차이량','평균'],
+                                                                          ['<%=pd.getRank_absence().get(0).get(0)%>',<%=pd.getRank_absence().get(0).get(1)%>,<%=pd.getAvg_absence()%>]
+                                                                          ]);
                                                            
         var freezed_data = google.visualization.arrayToDataTable([  
                                                      			['동', '동파 횟수'],  
@@ -101,9 +117,14 @@ function sendIt(){
                                                               		['<%=ab.get(0)%>',<%=ab.get(1)%>],
 																<%}%>
 																	]);
+        
+        var freezed_summary_data = google.visualization.arrayToDataTable([
+                                                                       ['동','차이량','평균'],
+                                                                       ['<%=pd.getRank_freezed().get(0).get(0)%>',<%=pd.getRank_freezed().get(0).get(1)%>,<%=pd.getAvg_freezed()%>]
+                                                                       ]);
 
 		var diff_options = {
-			title : 'Water Consumption',
+			title : '사용량 예측량 차이',
 			//width : '100%',
 			//height : 143,
 
@@ -181,16 +202,23 @@ function sendIt(){
 					}
 				}
 		};
+		
 
-		var diff_chart = new google.visualization.ColumnChart(document
-				.getElementById('diff_info'));
-		var leak_chart = new google.visualization.ColumnChart(document
-				.getElementById('leak_info'));
-		var absence_chart = new google.visualization.ColumnChart(document
-				.getElementById('absence_info'));
-		var freezed_chart = new google.visualization.ColumnChart(document
-				.getElementById('freezed_info'));
+		var diff_summary_chart = new google.visualization.ColumnChart(document.getElementById('diff_summary_graph'));
+		var leak_summary_chart = new google.visualization.ColumnChart(document.getElementById('leak_summary_graph'));
+		var absence_summary_chart = new google.visualization.ColumnChart(document.getElementById('absence_summary_graph'));
+		var freezed_summary_chart = new google.visualization.ColumnChart(document.getElementById('freezed_summary_graph'));
 
+		var diff_chart = new google.visualization.ColumnChart(document.getElementById('diff_info'));
+		var leak_chart = new google.visualization.ColumnChart(document.getElementById('leak_info'));
+		var absence_chart = new google.visualization.ColumnChart(document.getElementById('absence_info'));
+		var freezed_chart = new google.visualization.ColumnChart(document.getElementById('freezed_info'));
+
+		diff_summary_chart.draw(diff_summary_data);
+		leak_summary_chart.draw(leak_summary_data);
+		absence_summary_chart.draw(absence_summary_data);
+		freezed_summary_chart.draw(freezed_summary_data);
+		
 		diff_chart.draw(diff_data, diff_options);
 		leak_chart.draw(leak_data, leak_options);
 		absence_chart.draw(absence_data, absence_options);
@@ -294,40 +322,38 @@ function sendIt(){
 					<!-- #1 -->
 					사용량 예측량 차이
 					<div class="summary_sub">
-						<%=pd.getRank_difference().get(0).get(0)%>
+						<div class="summary_sub_text"><%=pd.getRank_difference().get(0).get(0)%></div>
+						<div class="summary_sub_graph" id="diff_summary_graph"></div>
 					</div>
 				</div>
 				<div class="summary leak_summary">
 					<!-- #2 -->
-					누수
+					누수 횟수
 					<div class="summary_sub">
-						<%=pd.getRank_leak().get(0).get(0)%>
+						<div class="summary_sub_text"><%=pd.getRank_leak().get(0).get(0)%></div>
+						<div class="summary_sub_graph" id="leak_summary_graph"></div>
 					</div>
 				</div>
 			</div>
 			<div class="summary_wrap summary_wrap_right">
-				<div class="summary overused_summary">
-					<!-- #4 -->
-					과용
+				<div class="summary absence_summary">
+				<!-- #3 -->
+				부재중 횟수
 					<div class="summary_sub">
-						<%=pd.getRank_overused().get(0).get(0)%>
+						<div class="summary_sub_text"><%=pd.getRank_absence().get(0).get(0)%></div>
+						<div class="summary_sub_graph" id="absence_summary_graph"></div>
 					</div>
 				</div>
 				<div class="summary freezed_summary">
-					<!-- #5 -->
-					동파
+					<!-- #4 -->
+					동파 횟수
 					<div class="summary_sub">
-						<%=pd.getRank_freezed().get(0).get(0)%>
+						<div class="summary_sub_text"><%=pd.getRank_freezed().get(0).get(0)%></div>
+						<div class="summary_sub_graph" id="freezed_summary_graph"></div>
 					</div>
 				</div>
 			</div>
-			<div class="summary absence_summary">
-				<!-- #3 -->
-				부재
-				<div class="summary_sub">
-					<%=pd.getRank_absence().get(0).get(0)%>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 
