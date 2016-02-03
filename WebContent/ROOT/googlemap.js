@@ -960,28 +960,22 @@ function getDetailAreaInformation(addressArray) {
 	hideEntireDongMarkers();
 	hideDetailMarkers();
 
-	// 이벤트 등록.
-
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if (globalMap.getZoom() < 16) {
 		globalMap.setOptions({
 			'zoom' : 16
 		});
 	}
-
+	
 	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
 	for (var i = 0; i < userConsumptionList.length; i++) {
-		if (userConsumptionList[i].umDong == addressArray[2]) {
+		//누수 아이콘이 켜져있고 해당하는 동에 누수인 사람들이 있으면
+		if (leak_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].leak == 1) {
 
 			// Create Marker
-			if (userConsumptionList[i].overused == 0)
-				color = greenColor;
-			else
-				color = redColor;
-
 			var pinImage = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-							+ color, new google.maps.Size(21, 34),
+							+ redColor, new google.maps.Size(21, 34),
 					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
 			var pinShadow = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
@@ -1002,6 +996,64 @@ function getDetailAreaInformation(addressArray) {
 					});
 			detailMarkers.push(marker);
 		}
+		
+		//동파 아이콘이 켜져있고 해당하는 동에 동파인 사람들이 있으면
+		if ( freezed_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].freezed == 1) {
+			
+			// Create Marker
+			var pinImage = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+					+ redColor, new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+			var pinShadow = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+					new google.maps.Point(12, 35));
+			
+			var marker = new google.maps.Marker(
+					{
+						title : addressArray[0] + " " + addressArray[1] + " "
+						+ addressArray[2] + " "
+						+ userConsumptionList[i].detail,
+						position : new google.maps.LatLng(
+								userConsumptionList[i].lat,
+								userConsumptionList[i].lng),
+								draggable : false,
+								icon : pinImage,
+								shadow : pinShadow,
+					});
+			detailMarkers.push(marker);
+		}
+		
+		//부재중 알림 아이콘이 켜져있고 해당하는 동에 부재중인 사람들이 있으면
+		if ( absence_flag == true && userConsumptionList[i].umDong == addressArray[2] && userConsumptionList[i].absence == 1) {
+			
+			// Create Marker
+			var pinImage = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+					+ redColor, new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+			var pinShadow = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+					new google.maps.Point(12, 35));
+			
+			var marker = new google.maps.Marker(
+					{
+						title : addressArray[0] + " " + addressArray[1] + " "
+						+ addressArray[2] + " "
+						+ userConsumptionList[i].detail,
+						position : new google.maps.LatLng(
+								userConsumptionList[i].lat,
+								userConsumptionList[i].lng),
+								draggable : false,
+								icon : pinImage,
+								shadow : pinShadow,
+					});
+			detailMarkers.push(marker);
+		}
+		
+		
 	}
 	showDetailMarkers();
 
@@ -1097,11 +1149,15 @@ function codeAddress() {
 
 }
 
+var trueIcon = [ ];
 //Flag가 True인 아이콘을 출력.
 function showIcon ( ) {
 	
+	trueIcon = [ ];
+	
 	if( entire_flag ) {
 		showEntireDongMarkers();
+		trueIcon.push("entire");
 	}
 	else{
 		hideEntireDongMarkers();
@@ -1113,6 +1169,7 @@ function showIcon ( ) {
 	
 	if ( leak_flag ) {
 		showLeakDongMarkers();
+		trueIcon.push("leak");
 	}
 	else{
 		hideLeakDongMarkers();
@@ -1120,6 +1177,7 @@ function showIcon ( ) {
 	
 	if( absence_flag ) {
 		showAbsenceDongMarkers();
+		trueIcon.push("absence");
 	}
 	else{
 		hideAbsenceDongMarkers();
@@ -1127,6 +1185,7 @@ function showIcon ( ) {
 	
 	if( freezed_flag ) {
 		showFreezedDongMarkers();
+		trueIcon.push("freezed");
 	}
 	else{
 		hideFreezedDongMarkers();
