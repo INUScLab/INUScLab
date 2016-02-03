@@ -30,6 +30,20 @@
 	vertical-align : middle;
 }
 
+/* initialize */
+.left_section_box_init{
+	position: absolute;
+	top: 0.5%; left: 0;
+	width: 300px;
+	height: 99%;
+	background-color: #ffffff;
+	z-index:50;
+}
+
+.init_info{
+	height: 24%;
+}
+
 /*temp*/
 #main_content .left_section_box2 {
 	position: absolute;

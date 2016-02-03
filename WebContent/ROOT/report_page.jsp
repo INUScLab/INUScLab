@@ -142,11 +142,15 @@ function sendIt(){
 	</div>
 
 
-	<div class="report_graph_info report_info ">
+	<div class="report_info report_info_graph">
 		
 	</div>
 
 	<div class="report_info report_info_service">
+		<div class="report_
 		
+		 service_leak"></div><!-- 1 -->
+		<div class="service_freezed"></div><!-- 3 -->
+		<div class="service_absence"></div><!-- 2 -->
 	</div>
 </div>

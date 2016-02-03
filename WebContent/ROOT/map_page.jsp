@@ -56,10 +56,21 @@
 </div>
 <!--본문 Left (tree)-->
 
+<div class="left_section_box_init">
+
+	<div class="init_info init_all_info"></div>
+	<div class="init_info init_leak_info"></div>
+	<div class="init_info init_freezed_info"></div>
+	<div class="init_info init_absence"></div>
+</div>
+
+
+
+
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon"></div>
-	
+
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">
 			<img class="img_icon img_leak" id="img_leak"
@@ -67,7 +78,7 @@
 		</div>
 		<div class="leak_info" id="leak_info"></div>
 	</div>
-	
+
 	<div class="info_history" id="info_history">
 		<div class="freeze_icon" id="freeze_icon">
 			<img class="img_icon img_freezed " id="img_freezed"
@@ -75,7 +86,7 @@
 		</div>
 		<div class="freeze_info" id="freeze_info"></div>
 	</div>
-	
+
 	<div class="info_service" id="info_service">
 		<div class="info_leak" id="info_leak">
 			<div class="leak_text" id="leak_text"></div>
@@ -94,3 +105,4 @@
 		</div>
 	</div>
 </div>
+
