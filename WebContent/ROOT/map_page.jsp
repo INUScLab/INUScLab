@@ -56,6 +56,53 @@
 </div>
 <!--본문 Left (tree)-->
 
+<div class="left_section_box_init">
+
+	<div class="init_info init_all_info">
+		<div class="init_info_sub">
+			<img alt="전체 아이콘" src=""/>
+			<h2>[전체]</h2>
+		</div>
+		<ul>
+			<li>전체 동 개수 : </li>
+			<li>전체 사용자 수 : </li>
+		</ul>
+	</div>
+	<div class="init_info init_leak_info">
+		<div class="init_info_sub">
+			<img alt="누수 아이콘" src=""/>
+			<h2>[누수 경보]</h2>
+		</div>
+		<ul>
+			<li>누수 동 개수 : </li>
+			<li>누수 사용자 수 : </li>
+		</ul>
+	</div>
+	<div class="init_info init_freezed_info">
+		<div class="init_info_sub">
+			<img alt="동파 아이콘" src=""/>
+			<h2>[동파 경보]</h2>
+		</div>
+		<ul>
+			<li>동보 동 개수 : </li>
+			<li>동파 사용자 수 : </li>
+		</ul>
+	</div>
+	<div class="init_info init_absence">
+		<div class="init_info_sub">
+			<img alt="부재중 알람 아이콘" src=""/>
+			<h2>[부재중 알람]</h2>
+		</div>
+		<ul>
+			<li>부재중 알람 동 개수 : </li>
+			<li>부재중 알람 사용자 수 : </li>
+		</ul>
+	</div>
+</div>
+
+
+
+
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
@@ -70,18 +117,19 @@
 		</div>
 	</div>
 	
+	<div class="info_icon"></div>
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">
 		</div>
 		<div class="leak_info" id="leak_info"></div>
 	</div>
-	
+
 	<div class="info_history" id="info_history">
 		<div class="freeze_icon" id="freeze_icon">
 		</div>
 		<div class="freeze_info" id="freeze_info"></div>
 	</div>
-	
+
 	<div class="info_service" id="info_service">
 		<div class="info_leak" id="info_leak">
 			<div class="leak_text" id="leak_text"></div>
@@ -98,3 +146,4 @@
 		</div>
 	</div>
 </div>
+
