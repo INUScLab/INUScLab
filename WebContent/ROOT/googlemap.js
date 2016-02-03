@@ -78,15 +78,12 @@ function initialize(x, y) {
 			//첫 로딩 
 			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
 				showEntireDongMarkers();
-				console.log("?");
 			}
 			
 		}
 		// 줌을 확대했을때 map center와 일정한 거리 안에 들어오는 동은 전부 상세 주소 출력.
 		else if (globalMap.getZoom() == 16) {
-
 			// console.log('Zoom: ' + globalMap.getCenter());
-
 		}
 	});
 
@@ -210,8 +207,18 @@ function createEntireDongMarker() {
 		entireDongMarkers.push(marker);
 		
 	}
+	
 	showEntireDongMarkers();
-	getEntireMksInfo();
+	//생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
+	for (var i = 0; i <entireDongMarkers.length; i++) {
+		entireDongMarkers[i].addListener('click', function() {
+
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
 	
 }
 
@@ -288,7 +295,17 @@ function createLeakDongMarker() {
 			}
 		}
 	}
-	getLeakMksInfo();
+	
+	//생성한 누수 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
+	for (var i = 0; i <leakDongMarkers.length; i++) {
+		leakDongMarkers[i].addListener('click', function() {
+
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
 }
 
 // 동파인 사용자를 포함하는 동의 마커를 생성하는 함수
@@ -326,7 +343,17 @@ function createFreezedDongMakrer() {
 			}
 		}
 	}
-	getFreezedMksInfo();
+	
+	//생성한 동파 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
+	for (var i = 0; i < freezedDongMarkers.length; i++) {
+		freezedDongMarkers[i].addListener('click', function() {
+
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
 }
 
 // 부재중인 사용자를 포함하는 동의 마커를 생성하는 함수
@@ -364,7 +391,17 @@ function createAbsenceDongMarker() {
 			}
 		}
 	}
-	getAbsenceMksInfo();
+	
+	//생성한 부재중 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
+	for (var i = 0; i < absenceDongMarkers.length; i++) {
+		absenceDongMarkers[i].addListener('click', function() {
+
+			globalMap.setCenter(this.position);
+			var address = this.title;
+			var addressArray = address.split(' ');
+			dongSummary(addressArray) // 요약 리포트
+		});
+	}
 }
 
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
@@ -809,58 +846,6 @@ function userSummary(addressArray) {
 	drawFreeze(freeze, (cnt_freeze / len_detail).toFixed(2), addressArray[len - 2], addressArray[len - 1]);
 }
 
-//전체 동을 클릭했을때 
-function getEntireMksInfo() {
-	for (var i = 0; i <entireDongMarkers.length; i++) {
-		entireDongMarkers[i].addListener('click', function() {
-
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
-
-//누수인 동을 클릭했을때 
-function getLeakMksInfo() {
-	for (var i = 0; i < leakDongMarkers.length; i++) {
-		leakDongMarkers[i].addListener('click', function() {
-			
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
-
-//동파인 동을 클릭했을때 
-function getFreezedMksInfo() {
-	for (var i = 0; i < freezedDongMarkers.length; i++) {
-		freezedDongMarkers[i].addListener('click', function() {
-			
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
-
-//부재중인 동을 클릭했을때 
-function getAbsenceMksInfo() {
-	for (var i = 0; i < absenceDongMarkers.length; i++) {
-		absenceDongMarkers[i].addListener('click', function() {
-			
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
-
 //전체 동들의 마커를 지도에 출력 
 function showEntireDongMarkers () {
 	for (var i = 0 ; i < entireDongMarkers.length ; i ++ ) {
@@ -949,7 +934,7 @@ function hideDetailMarkers() {
 	detailMarkers = [];
 }
 
-// 동에 해당하는 사용자들의 마커를 생성하고 요약 리포트를 띄움 - 현재는 과용으로만 되어있음.
+// 동에 해당하는 사용자들의 마커를 생성하고 요약 리포트를 띄움 
 function getDetailAreaInformation(addressArray) {
 
 	var redColor = "FF0000";

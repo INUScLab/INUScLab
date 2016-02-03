@@ -88,31 +88,35 @@
 	margin-left: auto;
     margin-right: auto;
 	text-align: center;
-	padding: 15px;
+	padding: 0 15px 15px 15px;
 	border: 1px solid #d3d3d3;
 	border-radius:15px;
 }
 
-.summary_wrap{ width: 39.25%;}
+.summary_wrap{ width: 49%;}
 
 .summary_wrap_left{	float:left;	overflow:hidden;}
 .diff_summary {	width: 41.61%; float: left;}
 .leak_summary{ width: 41.61%; float: right; }
 
-.absence_summary {width: 16.33%;}
+
 
 .summary_wrap_right{ float: right; overflow: hidden;}
-.overused_summary { width: 41.61%; float: left;}
+.absence_summary {width: 41.61%; float: left;}
 .freezed_summary{ width: 41.61%; float: right;}
 
 .summary_sub{
 	border: 1px solid #fffff0;
-	height: 50px;
-	width: 75%;
+	/*height: 50px;*/
+	width: 90%;
 	margin: 10px auto 0 auto;
+	background-color: white;
 }
 
-
+.summary_sub_text{}
+.summary_sub_graph{
+	height: 100px;
+}
 
 
 /* info */

@@ -68,6 +68,7 @@ public class DongSummaryReportCtrl {
 			e.printStackTrace();
 		}
 
+		disconnect();
 		return dongSummuryReportList;
 	}
 

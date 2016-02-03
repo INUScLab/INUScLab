@@ -63,6 +63,8 @@ public class UserConsumptionCtrl {
 		} catch (SQLException e) {
 		}
 		
+		disconnect();
+		
 		return userConsumptionList;
 	}
 
