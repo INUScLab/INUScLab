@@ -58,7 +58,17 @@
 
 <div class="left_section_box2">
 	<div class="info_date" id="info_date"></div>
-	<div class="info_icon"></div>
+	<div class="info_icon">
+		<div class="info_wrapper">
+			<input type="checkbox" class="check_leak" >누수 
+		</div>
+		<div class="info_wrapper">
+			<input type="checkbox" class="check_freezed" >동파
+		</div>
+		<div class="info_wrapper">
+			<input type="checkbox" class="check_absence" >부재중 
+		</div>
+	</div>
 	
 	<div class="info_graph" id="info_graph">
 		<div class="leak_icon" id="leak_icon">

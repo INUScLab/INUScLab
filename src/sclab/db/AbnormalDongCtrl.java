@@ -104,6 +104,7 @@ public class AbnormalDongCtrl {
 				absenceDongList.add(umDong);
 			}
 			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -126,18 +127,13 @@ public class AbnormalDongCtrl {
 				freezedDongList.add(umDong);
 			}
 			rs.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		disconnect();
 		return freezedDongList;
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-		disconnect();
 	}
 
 }

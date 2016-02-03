@@ -297,6 +297,14 @@ html, body {
 	height:32px;
 }
 
+.info_wrapper{
+	float:left;
+	width:33.3%;
+	height:100%;
+	margin-left:-10px;
+	margin-top:5px;
+}
+
 /* Address Label */
 #address_label {
 	float:left;
