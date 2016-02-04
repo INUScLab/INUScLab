@@ -1,6 +1,5 @@
 var globalGeocoder;
 var globalMap;
-var geocoder = new google.maps.Geocoder();
 var searchMarker = new google.maps.Marker();
 var searchMarkers = [];
 var entireDongMarkers = [];
@@ -17,7 +16,7 @@ var entire_flag = true;
 var leak_flag = false;
 var freezed_flag = false;
 var absence_flag = false;
-var initial_flag = false;
+var incheon = "인천광역시";
 
 // 맵 초기화
 function initialize(x, y) {
@@ -81,7 +80,6 @@ function initialize(x, y) {
 			
 			//첫 로딩 & 모든 아이콘이 꺼졌을때
 //			if(absence_flag == false && leak_flag == false && freezed_flag == false && entire_flag == false ) {
-//				console.log("dd");
 //				showEntireDongMarkers();
 //				for (var i = 0; i <entireDongMarkers.length; i++) {
 //					entireDongMarkers[i].addListener('click', function() {
@@ -150,25 +148,6 @@ function initialize(x, y) {
 		}
 	});
 
-	var leakUser = 0;
-	var freezeUser = 0;
-	var absenceUser = 0;
-	
-	for(var i=0; userConsumptionList[i] != null; i++) {
-		if(userConsumptionList[i].leak == '1')
-			leakUser++;
-		if(userConsumptionList[i].freezed == '1')
-			freezeUser++;
-		if(userConsumptionList[i].absence == '1')
-			absenceUser++;
-	}
-	
-	
-//	document.getElementById('init_leak_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '누수 의심 동 :' + ' ' + leakDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '누수 의심 :' + ' ' + leakUser;
-//	document.getElementById('freeze_info').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '동파 의심 동 :' + ' ' + freezedDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '동파 의심 :' + ' ' + freezeUser;
-//	document.getElementById('absence_graph').innerHTML = '전체 동 :' + ' '+ entireDongMarkers.length +  "</p>" + '부재중 발생 동 :' + ' ' + absenceDongMarkers.length + "</p>" + '전체 사용자 : ' + ' ' + userConsumptionList.length + "</p>" + '부재중 알람 :' + ' ' + absenceUser;
-	
-	//leak_info.style.textAlign = 'left';
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
@@ -193,7 +172,7 @@ function createEntireDongMarker() {
 	var color="";
 	var abNormalColor = "FF0000";
 	var normalColor = "00FFBF";
-	var incheon = "인천광역시"
+	incheon = "인천광역시"
 	
 	for( var i = 0 ; i < guDongLatLngList.length ; i ++ ) {
 		if( abNormalDongList.indexOf(guDongLatLngList[i].umDong) == -1 ) {
@@ -249,7 +228,7 @@ function createEntireDongMarker() {
 function createOverUsedDongMarker() {
 
 	var redColor = "FF0000";
-	var incheon = "인천광역시";
+	incheon = "인천광역시";
 
 	for (var i = 0; i < overUsedDongList.length; i++) {
 
@@ -287,7 +266,7 @@ function createOverUsedDongMarker() {
 // 누수인 사용자를 포함하는 동의 마커를 생성하는 함수
 function createLeakDongMarker() {
 	var redColor = "FF0000";
-	var incheon = "인천광역시";
+	incheon = "인천광역시";
 
 	for (var i = 0; i < leakDongList.length; i++) {
 
@@ -340,7 +319,7 @@ function createLeakDongMarker() {
 // 동파인 사용자를 포함하는 동의 마커를 생성하는 함수
 function createFreezedDongMakrer() {
 	var redColor = "FF0000";
-	var incheon = "인천광역시";
+	incheon = "인천광역시";
 	
 	for (var i = 0; i < freezedDongList.length; i++) {
 		
@@ -394,7 +373,7 @@ function createFreezedDongMakrer() {
 // 부재중인 사용자를 포함하는 동의 마커를 생성하는 함수
 function createAbsenceDongMarker() {
 	var redColor = "FF0000";
-	var incheon = "인천광역시";
+	incheon = "인천광역시";
 	
 	for (var i = 0; i < absenceDongList.length; i++) {
 		
@@ -1186,7 +1165,7 @@ function codeAddress() {
 			new google.maps.Point(12, 35));
 
 	console.log("codeAddress");
-	geocoder.geocode({
+	globalGeocoder.geocode({
 		'address' : address
 	}, function(results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
@@ -1343,7 +1322,6 @@ function leak_clicked(id) {
 
 	if (leak_flag == false) {
 		leak_flag = true;
-		
 		entire_flag = false;
 		freezed_flag = false;
 		absence_flag = false;
@@ -1377,7 +1355,6 @@ function freezed_clicked(id) {
 
 	if (freezed_flag == false) {
 		freezed_flag = true;
-
 		entire_flag = false;
 		leak_flag = false;
 		absence_flag = false;
@@ -1414,7 +1391,6 @@ function absence_clicked(id) {
 	
 	if (absence_flag == false  ) {
 		absence_flag = true;
-		
 		entire_flag = false;
 		leak_flag = false;
 		freezed_flag = false;
