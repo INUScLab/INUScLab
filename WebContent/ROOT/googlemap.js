@@ -17,6 +17,7 @@ var leak_flag = false;
 var freezed_flag = false;
 var absence_flag = false;
 var incheon = "인천광역시";
+var infowindow;
 
 // 맵 초기화
 function initialize(x, y) {
@@ -58,27 +59,33 @@ function initialize(x, y) {
 	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
-	createEntireDongMarker();
+//	createEntireDongMarker();
 	createLeakDongMarker();
 	createFreezedDongMakrer();
 	createAbsenceDongMarker();
-	showIcon();
+	showAbsenceDongMarkers();
+	showFreezedDongMarkers();
+	showLeakDongMarkers();
+//	showIcon();
 
 	// Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
 		console.log(globalMap.getZoom());
 		if (globalMap.getZoom() < 16) {
 
-			// 상세 주소 마커 지우기.
-			hideDetailMarkers();
-
-			// FLAG가 켜진 동을 출력.
-			showIcon();
-
+			//infoWindow 닫기
+			infowindow.close();
+			
+			
+			//상세 주소 띄우기
+			showDetailMarkers();
+			
 			// 초기 리포트 페이지를 띄움.
-			$("#left_section_box_init").show();
-			$("#left_section_box2").hide();
-
+//			$("#left_section_box_init").show();
+//			$("#left_section_box2").hide();
+			
+			
+			
 			// 첫 로딩 & 모든 아이콘이 꺼졌을때
 			// if(absence_flag == false && leak_flag == false && freezed_flag ==
 			// false && entire_flag == false ) {
@@ -225,46 +232,27 @@ function createEntireDongMarker() {
 
 			dongSummary(addressArray) // 요약 리포트
 
-			// Ajax 통신
-			// $.ajax({
-			// type : "POST",
-			// url :
-			// "http://localhost:8080/INUScLab/ROOT/DongSummaryReport.jsp",
-			// data: {"dongName" : dongName },
-			// dataType : "json",
-			// error: function(XMLHttpRequest, textStatus, errorThrown) {
-			// alert("some error");
-			// },
-			// success : function (respnse) {
-			// console.log(response);
-			// //상세 주소만 띄우고 동 마커들은 숨김.
-			// }
-			// });
-			//			
-
-			// ajax 객체
-
 			// 서버 요청주소
-			var url = "DongSummaryReport.jsp";
-
-			// 서버요청시 데이터 전송하는 부분
-			// 데이터가 두개 이상인 경우는
-			// 식별자=값&식별자=값&.... 형태로 작성
-			var postString = "data=" + dongName;
-
-			// 응답이 돌아온다면 callback 함수 호출
-			// 이벤트 등록 부분
-			xmlReq.onreadystatechange = callBack;
-
-			// ajax 요청 형식 // true는 비동기
-			xmlReq.open("POST", url, true);
-
-			// 전송하는 데이터 안에 한글이 있는 경우 인코딩방식을 알려주어야 함.
-			xmlReq.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded; charset=euc-kr");
-
-			// ajax 요청
-			xmlReq.send(postString);
+//			var url = "DongSummaryReport.jsp";
+//
+//			// 서버요청시 데이터 전송하는 부분
+//			// 데이터가 두개 이상인 경우는
+//			// 식별자=값&식별자=값&.... 형태로 작성
+//			var postString = "data=" + dongName;
+//
+//			// 응답이 돌아온다면 callback 함수 호출
+//			// 이벤트 등록 부분
+//			xmlReq.onreadystatechange = callBack;
+//
+//			// ajax 요청 형식 // true는 비동기
+//			xmlReq.open("POST", url, true);
+//
+//			// 전송하는 데이터 안에 한글이 있는 경우 인코딩방식을 알려주어야 함.
+//			xmlReq.setRequestHeader("Content-Type",
+//					"application/x-www-form-urlencoded; charset=euc-kr");
+//
+//			// ajax 요청
+//			xmlReq.send(postString);
 
 		});
 	}
@@ -363,6 +351,7 @@ function createLeakDongMarker() {
 					shadow : pinShadow,
 				});
 
+				
 				leakDongMarkers.push(marker);
 			}
 		}
@@ -372,16 +361,26 @@ function createLeakDongMarker() {
 	for (var i = 0; i < leakDongMarkers.length; i++) {
 		leakDongMarkers[i].addListener('click', function() {
 
+			
+			//현재 동의 infowindow.
+			infowindow = new google.maps.InfoWindow({
+				content: this.title,
+				position:this.position
+			});
+			
+			infowindow.open(globalMap, leakDongMarkers[i]);
+			
 			// 상세 주소만 띄우고 동 마커들은 숨김.
 			hideEntireDongMarkers();
 			hideFreezedDongMarkers();
-			hideLeakDongMarkers();
+//			hideLeakDongMarkers();
 			hideAbsenceDongMarkers();
 
 			globalMap.setCenter(this.position);
 			var address = this.title;
 			var addressArray = address.split(' ');
 			dongSummary(addressArray) // 요약 리포트
+			
 		});
 	}
 }
@@ -426,9 +425,18 @@ function createFreezedDongMakrer() {
 	for (var i = 0; i < freezedDongMarkers.length; i++) {
 		freezedDongMarkers[i].addListener('click', function() {
 
+			//현재 동의 infowindow.
+			infowindow = new google.maps.InfoWindow({
+				content: this.title,
+				position:this.position
+			});
+			
+			infowindow.open(globalMap, leakDongMarkers[i]);
+
+			
 			// 상세 주소만 띄우고 동 마커들은 숨김.
 			hideEntireDongMarkers();
-			hideFreezedDongMarkers();
+//			hideFreezedDongMarkers();
 			hideLeakDongMarkers();
 			hideAbsenceDongMarkers();
 
@@ -480,11 +488,19 @@ function createAbsenceDongMarker() {
 	for (var i = 0; i < absenceDongMarkers.length; i++) {
 		absenceDongMarkers[i].addListener('click', function() {
 
+			//현재 동의 infowindow.
+			infowindow = new google.maps.InfoWindow({
+				content: this.title,
+				position:this.position
+			});
+			
+			infowindow.open(globalMap, leakDongMarkers[i]);
+			
 			// 상세 주소만 띄우고 동 마커들은 숨김.
 			hideEntireDongMarkers();
 			hideFreezedDongMarkers();
 			hideLeakDongMarkers();
-			hideAbsenceDongMarkers();
+//			hideAbsenceDongMarkers();
 
 			globalMap.setCenter(this.position);
 			var address = this.title;
@@ -1105,8 +1121,8 @@ function getDetailAreaInformation(addressArray) {
 	var color = "";
 
 	// 모든 마커를 지움.
-	hideEntireDongMarkers();
-	hideDetailMarkers();
+//	hideEntireDongMarkers(); 3.8 initialize() 에서 생성하지 않아서 숨길 필요 없음.
+	hideDetailMarkers(); //초기화
 
 	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
 	if (globalMap.getZoom() < 16) {
@@ -1117,75 +1133,23 @@ function getDetailAreaInformation(addressArray) {
 
 	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
 	for (var i = 0; i < userConsumptionList.length; i++) {
+		
 		// 누수 아이콘이 켜져있고 해당하는 동에 누수인 사람들이 있으면
-		if ((entire_flag == true || leak_flag == true)
-				&& userConsumptionList[i].umDong == addressArray[2]
-				&& userConsumptionList[i].leak == 1) {
+		if ((entire_flag == true || leak_flag == true) && userConsumptionList[i].umDong == addressArray[2] ) {
+			
+			//해당 동인 수용가 중에서 한가지라도 이상있는 수용가가 있으면 빨간색 마커 
+			if( ( userConsumptionList[i].leak == 1 || userConsumptionList[i].freezed == 1 || userConsumptionList[i].absence == 1 ) ) {
+				color = redColor;
+			}
+			//정상이면 초록초록
+			else{
+				color = greenColor;
+			}
 
 			// Create Marker
 			var pinImage = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-							+ redColor, new google.maps.Size(21, 34),
-					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
-			var pinShadow = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
-					new google.maps.Point(12, 35));
-
-			var marker = new google.maps.Marker(
-					{
-						title : addressArray[0] + " " + addressArray[1] + " "
-								+ addressArray[2] + " "
-								+ userConsumptionList[i].detail,
-						position : new google.maps.LatLng(
-								userConsumptionList[i].lat,
-								userConsumptionList[i].lng),
-						draggable : false,
-						icon : pinImage,
-						shadow : pinShadow,
-					});
-			detailMarkers.push(marker);
-		}
-
-		// 동파 아이콘이 켜져있고 해당하는 동에 동파인 사람들이 있으면
-		if ((entire_flag == true || freezed_flag == true)
-				&& userConsumptionList[i].umDong == addressArray[2]
-				&& userConsumptionList[i].freezed == 1) {
-
-			// Create Marker
-			var pinImage = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-							+ redColor, new google.maps.Size(21, 34),
-					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
-			var pinShadow = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
-					new google.maps.Point(12, 35));
-
-			var marker = new google.maps.Marker(
-					{
-						title : addressArray[0] + " " + addressArray[1] + " "
-								+ addressArray[2] + " "
-								+ userConsumptionList[i].detail,
-						position : new google.maps.LatLng(
-								userConsumptionList[i].lat,
-								userConsumptionList[i].lng),
-						draggable : false,
-						icon : pinImage,
-						shadow : pinShadow,
-					});
-			detailMarkers.push(marker);
-		}
-
-		// 부재중 알림 아이콘이 켜져있고 해당하는 동에 부재중인 사람들이 있으면
-		if ((entire_flag == true || absence_flag == true)
-				&& userConsumptionList[i].umDong == addressArray[2]
-				&& userConsumptionList[i].absence == 1) {
-
-			// Create Marker
-			var pinImage = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-							+ redColor, new google.maps.Size(21, 34),
+							+ color, new google.maps.Size(21, 34),
 					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
 			var pinShadow = new google.maps.MarkerImage(
 					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
@@ -1208,6 +1172,8 @@ function getDetailAreaInformation(addressArray) {
 		}
 
 	}
+	
+	//동에 해당하는 모든 마커를 만들고 나서 출력.
 	showDetailMarkers();
 
 	// 사용자를 클릭했을때 이벤트
