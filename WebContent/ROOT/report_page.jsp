@@ -46,13 +46,13 @@
 </script>
 <div class="searchBy">
 	<div id="tab_searchByTime" class="tab_searchBy">
-		<a href="#">시간대별 겸색</a>
+		<a href="#">시간대별 검색</a>
 	</div>
 	<div id="tab_searchByDay" class="tab_searchBy">
-		<a href="#">일별 겸색</a>
+		<a href="#">일별 검색</a>
 	</div>
 	<div id="tab_searchByMonth" class="tab_searchBy">
-		<a href="#">월별 겸색</a>
+		<a href="#">월별 검색</a>
 	</div>
 </div>
 <!-- 시간대별  -->
@@ -80,7 +80,7 @@
 
 
 	<div class="data_view">
-		<table cellspacing="0">
+		<table cellspacing="0" border="1">
 			<tr border="1">
 				<td width="100px">수용가번호</td>
 				<td width="200px">수용가명</td>
@@ -168,7 +168,7 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table>
+		<table cellspacing="0" border="1">
 			<tr>
 				<td width="100">수용가번호</td>
 				<td width="200">수용가명</td>
@@ -244,7 +244,7 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table>
+		<table cellspacing="0" border="1">
 			<tr>
 				<td width="100">수용가번호</td>
 				<td width="200">수용가명</td>
