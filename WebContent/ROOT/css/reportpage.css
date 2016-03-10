@@ -63,6 +63,38 @@
 .report_service_absence { float: left; }
 .report_service_freezed { float: right;}
 
+/*new*/
+
+.tab_visible {
+	display: block;
+}
+
+.tab_nonvisible {
+	display: none;
+}
+
+.searchBy {
+	overflow: hidden;
+}
+
+.tab_searchBy {
+	float: left;
+	padding: 0 10px 0 10px;
+}
+
+.searchBy_searchbox {
+	width: auto;
+}
+
+
+
+/*new*/
+
+
+
+
+
+
 
 /* footer*/
 #footer {
