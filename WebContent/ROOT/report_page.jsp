@@ -43,6 +43,7 @@
 		});
 
 	});
+	
 </script>
 <div class="searchBy">
 	<div id="tab_searchByTime" class="tab_searchBy">
@@ -58,14 +59,14 @@
 <!-- 시간대별  -->
 <div id="searchByTime">
 	<div class="searchBy_searchbox">
-		<form action="new_report_page.jsp">
+		<form action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td>수용가 번호</td>
 					<td align="left"><input type="text" /></td>
 					<td>수용가 명</td>
 					<td  align="left"><input type="text" /></td>
-					<td rowspan="2"><input type="submit" /></td>
+					<td rowspan="2"><input type="submit" value="검색"/></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -121,14 +122,14 @@
 <!-- 일별 -->
 <div id="searchByDay">
 	<div class="searchBy_searchbox">
-		<form action="new_report_page.jsp">
+		<form  action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0"  width="100%">
 				<tr>
 					<td>수용가 번호</td>
 					<td align="left"><input type="text" /></td>
 					<td>수용가 명</td>
 					<td align="left"><input type="text" /></td>
-					<td rowspan="2"><input type="submit" /></td>
+					<td rowspan="2"><input type="submit" value="검색"/></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -211,14 +212,14 @@
 <!-- 월별 -->
 <div id="searchByMonth">
 	<div class="searchBy_searchbox">
-		<form action="new_report_page.jsp">
+		<form  action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0"  width="100%">
 				<tr>
 					<td>수용가 번호</td>
 					<td align="left"><input type="text" /></td>
 					<td>수용가 명</td>
 					<td align="left"><input type="text" /></td>
-					<td rowspan="2"><input type="submit" /></td>
+					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>

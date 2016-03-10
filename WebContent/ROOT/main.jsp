@@ -173,8 +173,8 @@
 						</li>
 					</ul>
 					<ul class="main_logo_list">
-						<img src="http://placehold.it/50x40" class="logo_istec">
-						<img src="http://placehold.it/60x40" class="logo_sclab">
+						<img src="img/istec.jpg" class="logo_istec">
+						<img src="img/sclab.jpg" class="logo_sclab">
 						<img src="img/inu.jpg" class="logo_inu">
 					</ul>
 				</nav>

@@ -17,7 +17,8 @@
         response.sendRedirect("main.jsp");
      }
      else{
-        response.sendRedirect("login.html");  
+		out.println("<script>alert('로그인에 실패했습니다.');</script>");
+		out.println("<script>document.location.href='login.jsp';</script>");
      }
    %>
 
