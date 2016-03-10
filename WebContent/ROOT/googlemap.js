@@ -76,6 +76,8 @@ function initialize(x, y) {
 			//infoWindow 닫기
 			infowindow.close();
 			
+			//현재 켜진 아이콘의 동 마커들을 출력.
+//			showIcon();
 			
 			//상세 주소 띄우기
 			showDetailMarkers();
@@ -219,6 +221,8 @@ function createEntireDongMarker() {
 	for (var i = 0; i < entireDongMarkers.length; i++) {
 		entireDongMarkers[i].addListener('click', function() {
 
+			this.setMap(null);
+			
 			var address = this.title;
 			var addressArray = address.split(' ');
 			var guName = address.split(' ')[1];
@@ -361,6 +365,9 @@ function createLeakDongMarker() {
 	for (var i = 0; i < leakDongMarkers.length; i++) {
 		leakDongMarkers[i].addListener('click', function() {
 
+			//현재 마커 숨김.
+			this.setMap(null);
+			console.log("hide marker");
 			
 			//현재 동의 infowindow.
 			infowindow = new google.maps.InfoWindow({
@@ -425,6 +432,9 @@ function createFreezedDongMakrer() {
 	for (var i = 0; i < freezedDongMarkers.length; i++) {
 		freezedDongMarkers[i].addListener('click', function() {
 
+			this.setMap(null);
+			console.log("hide marker");
+			
 			//현재 동의 infowindow.
 			infowindow = new google.maps.InfoWindow({
 				content: this.title,
@@ -488,6 +498,9 @@ function createAbsenceDongMarker() {
 	for (var i = 0; i < absenceDongMarkers.length; i++) {
 		absenceDongMarkers[i].addListener('click', function() {
 
+			this.setMap(null);
+			console.log("hide marker");
+			
 			//현재 동의 infowindow.
 			infowindow = new google.maps.InfoWindow({
 				content: this.title,
@@ -1350,7 +1363,11 @@ function entire_clicked(id) {
 	showIcon();
 }
 
-// 누수 아이콘을 클릭했을때
+/* 누수 아이콘을 클릭했을때
+ * 누수 플래그가 true가 되고 나머지 플래그는 false가 됨. 
+ * 수용가 마커들은 숨김.
+ */
+
 function leak_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
@@ -1387,7 +1404,7 @@ function leak_clicked(id) {
 
 // 동파 아이콘을 클릭했을때
 function freezed_clicked(id) {
-
+	
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
 	$("#left_section_box2").hide();
