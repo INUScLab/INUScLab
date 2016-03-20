@@ -12,10 +12,10 @@ public class DetailDataCtrl {
 	Connection conn;
 	PreparedStatement pstmt;
 	
-	public String sido;
-	public String sigoon;
-	public String umdong;
 	public String code;
+	public String detail;
+	public String number;
+	public String meter_num;
 	public String startday;
 	public String endday;
 	
@@ -29,110 +29,59 @@ public class DetailDataCtrl {
 		dbconnector.disconnect();
 	}
 	
-	void setParameters(String sido, String sigoon, String umdong, String code, String startday, String endday){
-		this.sido = sido;
-		this.sigoon = sigoon;
-		this.umdong = umdong;
+	void setParameters(String code, String detail, String number, String meter_num, String year, String month){
 		this.code = code;
-		this.startday = startday;
-		this.endday = endday;
+		this.detail = detail;
+		this.number = number;
+		this.meter_num = meter_num;
+		this.startday = year + month + "01";
+		this.endday = year + month + "31";
 	}
 	
-	// 기간동안의 사용량, 누수 횟수, 부재중 횟수, 동파 횟수 반환
-	String getValue(String column) {
-
-		String data = null;
-		String sql = null;
-		
-		if(sigoon.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"';";
-		}
-		
-		else if (umdong.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\" sigoon=\"" + sigoon + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"';";
-		}
-		else if (code.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\" sigoon=\"" + sigoon + "\" umdong=\"" + umdong + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"';";
-		}
-		else{
-			sql = "select " + column +" from CONSUMPTION where code = " + code + " and date between '" + startday + "' and '" + endday +"';";
-		}
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()){
-				data = rs.getString(column);
-			}
-			
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
-	
-	// 기간동안의 사용량 평균, 누수 횟수 평균, 부재중 횟수 평균, 동파 횟수 평균 반환
-	String getAvgValue(String column) {
-
-		String data = null;
-		String sql = null;
-		
-		if(sigoon.equals("전체")){
-			sql = "select avg(value) from (select " + column +" as value from (select code,sido from USER) u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by sido)alias;";
-		}
-		else if (umdong.equals("전체")){
-			sql = "select avg(value) from (select " + column +" as value from (select code,sigoon from USER where sido=\"" + sido + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by sigoon)alias;";
-		}
-		else if (code.equals("전체")){
-			sql = "select avg(value) from (select " + column +" as value from (select code,umdong from USER where sido=\"" + sido + "\" and sigoon=\"" + sigoon + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by umdong)alias;";
-		}
-		else{
-			sql ="select avg(value) from (select " + column +" as value from (select code from USER where sido=\"" + sido + "\" and sigoon=\"" + sigoon + "\" and umdong=\"" + umdong + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by u.code)alias;";
-		}
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()){
-				data = rs.getString("avg(value)");
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
-	
-	// 기간동안의 각각의 사용량
-	ArrayList<String> getValueDays(String column) {
+	// 기본적인 정보 반환
+	ArrayList<String> getInfo() {
 
 		ArrayList<String> datas = new ArrayList<String>();
 		String sql = null;
 		
-		if(sigoon.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by date;";
-		}
-		
-		else if (umdong.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\" sigoon=\"" + sigoon + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by date;";
-		}
-		else if (code.equals("전체")){
-			sql = "select " + column +" from (select code,sigoon from USER where sido=\"" + sido + "\" sigoon=\"" + sigoon + "\" umdong=\"" + umdong + "\") u inner join CONSUMPTION c on c.code = u.code where date between '" + startday + "' and '" + endday +"' group by date;";
-		}
-		else{
-			sql = "select " + column +" from CONSUMPTION where code = " + code + " and date between '" + startday + "' and '" + endday +"' group by date;";
-		}
+		sql = "select u.code, u.detail, u.number, u.meter_num, u.meter_type, sum(consumed) from USER u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "')";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				datas.add(rs.getString(column));
+				datas.add(rs.getString("u.code"));
+				datas.add(rs.getString("u.detail"));
+				datas.add(rs.getString("u.number"));
+				datas.add(rs.getString("u.meter_num"));
+				datas.add(rs.getString("u.meter_type"));
+				datas.add(rs.getString("sum(consumed)"));
 			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return datas;
+	}
+	
+	// 기간동안의 각각의 사용량
+	ArrayList<String> getConsumedDays() {
+
+		ArrayList<String> datas = new ArrayList<String>();
+		String sql = null;
+		
+		sql = "select consumed from USER u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "')";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				datas.add(rs.getString("consumed"));
+			}
+	
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,26 +90,22 @@ public class DetailDataCtrl {
 	}
 	
 	// 모든 작업은 여기서 한다.
-	public DetailData returnDatas(String sido, String sigoon, String umdong, String code, String startday, String endday){
+	public DetailData returnDatas(String code, String detail, String number, String meter_num, String year, String month){
 		
-		setParameters(sido, sigoon, umdong, code, startday, endday);
+		setParameters(code, detail, number, meter_num, year, month);
 		
 		DetailData dd = new DetailData();
 		
-		// 기간 동안 사용량
-		dd.setConsumed_days(getValueDays("sum(consumed)"));
+		// 기본 정보
+		ArrayList<String> info_array = getInfo();
+		dd.setCode(info_array.get(0));
+		dd.setDetail(info_array.get(1));
+		dd.setNumber(info_array.get(2));
+		dd.setMeter_num(info_array.get(3));
+		dd.setMeter_type(info_array.get(4));
+		dd.setTotal_consumed(info_array.get(5));
 		
-		// 사용량, 누수 횟수, 부재중 횟수, 동파 횟수
-		dd.setConsumed(getValue("sum(consumed)"));
-		dd.setLeak(getValue("sum(leak)"));
-		dd.setAbsence(getValue("sum(absence)"));
-		dd.setFreezed(getValue("sum(freezed)"));
-		
-		// 사용량 평균, 누수 횟수 평균, 부재중 횟수 평균, 동파 횟수 평균
-		dd.setAvg_consumed(getAvgValue("sum(consumed)"));
-		dd.setAvg_leak(getAvgValue("sum(leak)"));
-		dd.setAvg_absence(getAvgValue("sum(absence)"));
-		dd.setAvg_freezed(getAvgValue("sum(freezed)"));
+		dd.setConsumed_days(getConsumedDays());
 
 		// DB연결 해제
 		disconnect();
