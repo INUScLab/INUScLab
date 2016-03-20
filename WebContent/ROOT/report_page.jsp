@@ -1,9 +1,24 @@
+<%@page import="java.io.Console"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
 
+<jsp:useBean id="dd" class="sclab.db.DetailData" />
+<jsp:useBean id="ddctrl" class="sclab.db.DetailDataCtrl" />
+
+<%
+	String consumerNum = request.getParameter("consumerNum");
+	String consumerName = request.getParameter("consumerName");
+	String meterNum = request.getParameter("meterNum");
+	String Date = request.getParameter("Date");
+
+	dd = ddctrl.returnDatas("1", null, null, null, "15", "02");
+%>
+<script>
+	consol.log(<%=Date%>)
+</script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -43,7 +58,6 @@
 		});
 
 	});
-	
 </script>
 <div class="searchBy">
 	<div id="tab_searchByTime" class="tab_searchBy">
@@ -63,16 +77,16 @@
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td>수용가 번호</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="consumerNum" /></td>
 					<td>수용가 명</td>
-					<td  align="left"><input type="text" /></td>
-					<td rowspan="2"><input type="submit" value="검색"/></td>
+					<td align="left"><input type="text" name="consumerName" /></td>
+					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
-					<td  align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="meterNum" /></td>
 					<td>검 색 일</td>
-					<td  align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="date" /></td>
 				</tr>
 
 			</table>
@@ -122,18 +136,18 @@
 <!-- 일별 -->
 <div id="searchByDay">
 	<div class="searchBy_searchbox">
-		<form  action="main.jsp?MENU_NUM=1" method="post">
-			<table border="1" cellspacing="0"  width="100%">
+		<form action="main.jsp?MENU_NUM=1" method="post">
+			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td>수용가 번호</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="consumerNum" /></td>
 					<td>수용가 명</td>
-					<td align="left"><input type="text" /></td>
-					<td rowspan="2"><input type="submit" value="검색"/></td>
+					<td align="left"><input type="text" name="consumerName" /></td>
+					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="meterNum" /></td>
 					<td>검 색 월</td>
 					<td align="left"><select id="optYear">
 							<option value="2008">2008</option>
@@ -170,33 +184,48 @@
 	</div>
 	<div class="data_view">
 		<table cellspacing="0" border="1">
-			<tr>
-				<td width="100">수용가번호</td>
-				<td width="200">수용가명</td>
-				<td width="200">지시부번호</td>
-				<td width="200">미터번호</td>
-				<td width="200">미터타입</td>
-				<td width="200">검침일</td>
-				<td width="200">사용량</td>
+			<tr height="50px">
+				<td width="100px">수용가번호</td>
+				<td width="200px">수용가명</td>
+				<td width="200px">지시부번호</td>
+				<td width="200px">미터번호</td>
+				<td width="200px">미터타입</td>
+				<td width="200px">검침월</td>
+				<td width="200px">사용량</td>
 				<%
 					for (int time = 1; time <= 30; time++) {
 				%>
-				<td width="100"><%=time%>일</td>
+				<td width="100px"><%=time%>일</td>
 				<%
 					}
 				%>
 			</tr>
 			<%
-				for (int row = 1; row <= 24; row++) {
+				for (int row = 1; row <= 1; row++) {
 			%>
 			<tr>
+				<td><%=dd.getCode()%></td>
+				<td><%=dd.getDetail()%></td>
+				<td><%=dd.getNumber()%></td>
+				<td><%=dd.getMeter_num()%></td>
+				<td><%=dd.getMeter_type()%></td>
+				<td><%=Date %>
+				<td><%=dd.getTotal_consumed()%></td>
+
 				<%
+					for (String a : dd.getConsumed_days()) {
+				%>
+				<td><%=a%></td>
+				<%
+					}
+				%>
+				<%-- <%
 					for (int col = 0; col < 37; col++) {
 				%>
 				<td></td>
 				<%
 					}
-				%>
+				%> --%>
 				<%
 					}
 				%>
@@ -212,18 +241,18 @@
 <!-- 월별 -->
 <div id="searchByMonth">
 	<div class="searchBy_searchbox">
-		<form  action="main.jsp?MENU_NUM=1" method="post">
-			<table border="1" cellspacing="0"  width="100%">
+		<form action="main.jsp?MENU_NUM=1" method="post">
+			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td>수용가 번호</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="consumerNum" /></td>
 					<td>수용가 명</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="consumerName" /></td>
 					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
-					<td align="left"><input type="text" /></td>
+					<td align="left"><input type="text" name="meterNum" /></td>
 					<td>검 색 년 도</td>
 					<td align="left"><select id="optYear">
 							<option value="2008">2008</option>

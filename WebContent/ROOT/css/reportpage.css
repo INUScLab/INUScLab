@@ -89,6 +89,9 @@
 	width: auto;
 }
 
+.data_view {
+	overflow-x: scroll;
+}
 
 
 
