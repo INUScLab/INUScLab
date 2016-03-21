@@ -87,6 +87,16 @@
 						$('#report_umDong_select').change(function(e) {
 											var optionSelected = $("option:selected", this);
 											var textSelected = optionSelected.text();
+											
+											var umDong_select = document.getElementById("umDong_select");
+											for (var i = 0; i < DongSummaryReportList.length; i++) {
+												if (DongSummaryReportList[i].guGun == textSelected) {
+													var option = document.createElement("option");
+													option.text = DongSummaryReportList[i].umDong;
+													console.log(option.text);
+													umDong_select.add(option);
+												}
+											}
 										});
 						/* 주소 검색 기능 */
 
@@ -116,7 +126,7 @@
 							<option value="전체">시</option>
 							<option value="인천광역시">인천광역시</option>
 						</select>
-						<select name="guGun" id="report_guGun_select">
+						<select name="guGun" id="report_guGun_select2">
 							<option value="전체">구/군</option>
 							<option value="강화군">강화군</option>
 							<option value="계양구">계양구</option>
@@ -129,7 +139,7 @@
 							<option value="웅진군">웅진군</option>
 							<option value="중구">중구</option>
 						</select>
-						<select name="umDong" id="report_umDong_select">
+						<select name="umDong" id="report_umDong_select2">
 							<option value="전체">읍/면/동</option>
 						</select>
 					</td>
@@ -146,8 +156,8 @@
 				<tr>
 					<td>미터 번호</td>
 					<td align="left"><input type="text" name="meterNum" /></td>
-					<td colspan="3">검 색 일</td>
-					<td align="left"><input type="text" name="date" /></td>
+					<td>검 색 일</td>
+					<td align="left" colspan="3"><input type="text" name="date" /></td>
 				</tr>
 
 			</table>
