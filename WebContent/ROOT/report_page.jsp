@@ -1,3 +1,5 @@
+<%@page import="sclab.db.DetailData"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.io.Console"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
@@ -18,19 +20,34 @@
 	String meterNum = request.getParameter("meterNum");
 	String dateYear = request.getParameter("dateYear");
 	String dateMonth = request.getParameter("dateMonth");
+	
+	/* out.print(si);
+	out.print(guGun);
+	out.print(umDong);
+	out.print(consumerNum);
+	out.print(consumerName);
+	out.print(telNumber);
+	out.print(meterNum);
+	out.print(dateYear);
+	out.print(dateMonth); */
+	
 
-	if (dateYear == null) {
+	if (si == null) {
 		dateYear="2015";
 		dateMonth="02";
+		si="인천광역시";
+		guGun = "부평구";
+		umDong = "전체";
 	}
 	
-	dd = ddctrl.returnDatas("1", consumerName, telNumber, meterNum, dateYear, dateMonth);
+	ArrayList<DetailData> array_list = ddctrl.returnDatas(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,dateYear,dateMonth);
+	//ArrayList<DetailData> array_list = ddctrl.returnDatas("인천광역시","부평구","전체",consumerNum,consumerName,telNumber,meterNum,"2015","02");
 %>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* tab 기능 */
-		$("#searchByDay").addClass("tab_nonvisible");
+		$("#searchByTime").addClass("tab_nonvisible");
 		$("#searchByMonth").addClass("tab_nonvisible");
 
 		$("#tab_searchByTime").click(function() {
@@ -292,41 +309,32 @@
 				<%
 					for (int time = 1; time <= 30; time++) {
 				%>
-				<td width="100px"><%=time%>일</td>
+				<td width="100px"><%=time %>일</td>
 				<%
 					}
 				%>
 			</tr>
-			<%
-				for (int row = 1; row <= 1; row++) {
-			%>
-			<tr>
-				<td><%=dd.getCode()%></td>
-				<td><%=dd.getDetail()%></td>
-				<td><%=dd.getNumber()%></td>
-				<td><%=dd.getMeter_num()%></td>
-				<td><%=dd.getMeter_type()%></td>
-				<td><%=dateYear%>-<%=dateMonth%></td>
-				<td><%=dd.getTotal_consumed()%></td>
-
 				<%
-					for (String a : dd.getConsumed_days()) {
+					for(int i=0 ; i < array_list.size(); i++) {
 				%>
-				<td><%=a%></td>
+			  <tr>
+				<td><%=array_list.get(i).getCode()%></td>
+				<td><%=array_list.get(i).getDetail()%></td>
+				<td><%=array_list.get(i).getNumber()%></td>
+				<td><%=array_list.get(i).getMeter_num()%></td>
+				<td><%=array_list.get(i).getMeter_type()%></td>
+				<td><%=array_list.get(i).getTotal_consumed()%></td>
 				<%
+				for(String  a : array_list.get(i).getConsumed_days()) {
+				%>
+				<td><%=a %></td>
+			 	<%
+				}
+			 	%>
+			  </tr>
+			 <%
 					}
-				%>
-				<%-- <%
-					for (int col = 0; col < 37; col++) {
-				%>
-				<td></td>
-				<%
-					}
-				%> --%>
-				<%
-					}
-				%>
-			</tr>
+			 %>
 		</table>
 	</div>
 </div>

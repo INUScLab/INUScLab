@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList"%>
+<%-- <%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -151,3 +151,4 @@ function sendIt(){
 		<jsp:include page="report_graph_history.jsp" flush="false" />
 	</div>
 </div>
+ --%>

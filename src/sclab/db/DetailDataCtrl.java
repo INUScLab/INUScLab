@@ -12,12 +12,16 @@ public class DetailDataCtrl {
 	Connection conn;
 	PreparedStatement pstmt;
 	
+	public String sido;
+	public String sigoon;
+	public String umdong;
 	public String code;
 	public String detail;
 	public String number;
 	public String meter_num;
 	public String startday;
 	public String endday;
+	public boolean allnull;
 	
 	public DetailDataCtrl(){
 		dbconnector = new DbConnector();
@@ -29,59 +33,71 @@ public class DetailDataCtrl {
 		dbconnector.disconnect();
 	}
 	
-	void setParameters(String code, String detail, String number, String meter_num, String year, String month){
+	void setParameters(String sido, String sigoon, String umdong, String code, String detail, String number, String meter_num, String year, String month){
+		
+		if(sido == null || sido.equals("전체")){
+	         this.sido = "%"; this.sigoon = "%"; this.umdong = "%";
+	      }
+	      else if (sigoon == null || sigoon.equals("전체")){
+	         this.sido = sido; this.sigoon = "%"; this.umdong = "%";
+	      }
+	      else if (umdong == null || umdong.equals("전체")){
+	         this.sido = sido; this.sigoon = sigoon; this.umdong = "%";
+	      }
+	      else{
+	         this.sido = sido; this.sigoon = sigoon; this.umdong = umdong;
+	      }
+		
 		this.code = code;
 		this.detail = detail;
 		this.number = number;
 		this.meter_num = meter_num;
-		this.startday = year + month + "01";
-		this.endday = year + month + "31";
-	}
-	
-	// 기본적인 정보 반환
-	ArrayList<String> getInfo() {
 
-		ArrayList<String> datas = new ArrayList<String>();
-		String sql = null;
-		
-		sql = "select u.code, u.detail, u.number, u.meter_num, u.meter_type, sum(consumed) from USER u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "')";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()){
-				datas.add(rs.getString("u.code"));
-				datas.add(rs.getString("u.detail"));
-				datas.add(rs.getString("u.number"));
-				datas.add(rs.getString("u.meter_num"));
-				datas.add(rs.getString("u.meter_type"));
-				datas.add(rs.getString("sum(consumed)"));
-			}
-			
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(code == null && detail == null && number == null && meter_num == null){
+			this.allnull = true;
 		}
-		return datas;
+		else{
+			this.allnull = false;
+		}
+		
+		if(month != null){
+			this.startday = year + month + "01";
+			this.endday = year + month + "31";
+		}
+		else{
+			this.startday = year + "0101";
+			this.endday = year + "1231";
+		}
 	}
 	
-	// 기간동안의 각각의 사용량
-	ArrayList<String> getConsumedDays() {
+	// 검색한 정보 반환
+	ArrayList<DetailData> getInfo() {
 
-		ArrayList<String> datas = new ArrayList<String>();
+		ArrayList<DetailData> datas = new ArrayList<DetailData>();
 		String sql = null;
 		
-		sql = "select consumed from USER u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "')";
+		sql = "select u.code, u.detail, u.number, u.meter_num, u.meter_type, sum(consumed), group_concat(consumed) from (select * from USER where sido like \"" + sido + "\" and sigoon like \"" + sigoon + "\" and umdong like \"" + umdong + "\") u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail=" + detail + " or u.number= " + number + " or u.meter_num=" + meter_num + " or " + allnull + ") group by u.code";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				datas.add(rs.getString("consumed"));
+				DetailData temp = new DetailData();
+				temp.setCode(rs.getString("u.code"));
+				temp.setDetail(rs.getString("u.detail"));
+				temp.setNumber(rs.getString("u.number"));
+				temp.setMeter_num(rs.getString("u.meter_num"));
+				temp.setMeter_type(rs.getString("u.meter_type"));
+				temp.setTotal_consumed(rs.getString("sum(consumed)"));
+				
+				String[] str = new String(rs.getString("group_concat(consumed)")).split(",");
+				
+				temp.setConsumed_days(str);
+				
+				datas.add(temp);
 			}
-	
+			
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,26 +106,16 @@ public class DetailDataCtrl {
 	}
 	
 	// 모든 작업은 여기서 한다.
-	public DetailData returnDatas(String code, String detail, String number, String meter_num, String year, String month){
+	public ArrayList<DetailData> returnDatas(String sido, String sigoon, String umdong, String code, String detail, String number, String meter_num, String year, String month){
 		
-		setParameters(code, detail, number, meter_num, year, month);
-		
-		DetailData dd = new DetailData();
+		setParameters(sido, sigoon, umdong, code, detail, number, meter_num, year, month);
 		
 		// 기본 정보
-		ArrayList<String> info_array = getInfo();
-		dd.setCode(info_array.get(0));
-		dd.setDetail(info_array.get(1));
-		dd.setNumber(info_array.get(2));
-		dd.setMeter_num(info_array.get(3));
-		dd.setMeter_type(info_array.get(4));
-		dd.setTotal_consumed(info_array.get(5));
-		
-		dd.setConsumed_days(getConsumedDays());
+		ArrayList<DetailData> info_array = getInfo();
 
 		// DB연결 해제
 		disconnect();
 		
-		return dd;
+		return info_array;
 	}
 }

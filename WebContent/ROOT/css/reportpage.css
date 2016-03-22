@@ -90,7 +90,9 @@
 }
 
 .data_view {
-	overflow-x: scroll;
+	height: 700px;
+	overflow: auto;
+	
 }
 
 

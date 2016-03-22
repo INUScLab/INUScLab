@@ -1,7 +1,5 @@
 package sclab.db;
 
-import java.util.ArrayList;
-
 public class DetailData {
 
 	public String code; // 수용가 번호
@@ -11,7 +9,7 @@ public class DetailData {
 	public String meter_type; // 미터 타입
 	
 	public String total_consumed; // 총 사용량
-	public ArrayList<String> consumed_days; // 기간 동안 사용량
+	public String[] consumed_days; // 기간 동안 사용량
 	
 	public String getCode() {
 		return code;
@@ -49,10 +47,10 @@ public class DetailData {
 	public void setTotal_consumed(String total_consumed) {
 		this.total_consumed = total_consumed;
 	}
-	public ArrayList<String> getConsumed_days() {
+	public String[] getConsumed_days() {
 		return consumed_days;
 	}
-	public void setConsumed_days(ArrayList<String> consumed_days) {
+	public void setConsumed_days(String[] consumed_days) {
 		this.consumed_days = consumed_days;
 	}
 	
