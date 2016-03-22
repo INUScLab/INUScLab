@@ -20,60 +20,56 @@
 	String meterNum = request.getParameter("meterNum");
 	String dateYear = request.getParameter("dateYear");
 	String dateMonth = request.getParameter("dateMonth");
-	
-	/* out.print(si);
-	out.print(guGun);
-	out.print(umDong);
-	out.print(consumerNum);
-	out.print(consumerName);
-	out.print(telNumber);
-	out.print(meterNum);
-	out.print(dateYear);
-	out.print(dateMonth); */
+
 	
 
-	if (si == null) {
-		dateYear="2015";
-		dateMonth="02";
-		si="인천광역시";
-		guGun = "부평구";
-		umDong = "전체";
-	}
+	if (dateYear == null || dateYear.equals("")) dateYear = "2015";
+	if (dateMonth == null || dateMonth.equals("")) dateMonth = "02";
+	if (si == null || si.equals("")) si = "인천광역시";
+	if (guGun == null || guGun.equals("")) guGun = "부평구";
+	if (umDong == null || umDong.equals("")) umDong = "전체";	
+	if (consumerNum != null) if(consumerNum.equals("")) consumerNum = null;	
+	if (consumerName != null) if(consumerName.equals("")) consumerName = null;	
+	if (telNumber != null) if(telNumber.equals("")) telNumber = null;	
+	if (meterNum != null) if(meterNum.equals("")) meterNum = null;
 	
-	ArrayList<DetailData> array_list = ddctrl.returnDatas(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,dateYear,dateMonth);
+	ArrayList<DetailData> array_list = ddctrl.returnDatas(si, guGun, umDong, consumerNum, consumerName,
+			telNumber, meterNum, dateYear, dateMonth);
 	//ArrayList<DetailData> array_list = ddctrl.returnDatas("인천광역시","부평구","전체",consumerNum,consumerName,telNumber,meterNum,"2015","02");
 %>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		/* tab 기능 */
-		$("#searchByTime").addClass("tab_nonvisible");
-		$("#searchByMonth").addClass("tab_nonvisible");
+	$(document)
+			.ready(
+					function() {
+						/* tab 기능 */
+						$("#searchByTime").addClass("tab_nonvisible");
+						$("#searchByMonth").addClass("tab_nonvisible");
 
-		$("#tab_searchByTime").click(function() {
-			$("#searchByTime").removeClass("tab_nonvisible")
-			$("#searchByMonth").removeClass("tab_visible");
-			$("#searchByDay").removeClass("tab_visible");
+						$("#tab_searchByTime").click(function() {
+							$("#searchByTime").removeClass("tab_nonvisible")
+							$("#searchByMonth").removeClass("tab_visible");
+							$("#searchByDay").removeClass("tab_visible");
 
-			$("#searchByTime").addClass("tab_visible");
+							$("#searchByTime").addClass("tab_visible");
 
-			$("#searchByDay").addClass("tab_nonvisible");
-			$("#searchByMonth").addClass("tab_nonvisible");
-		});
+							$("#searchByDay").addClass("tab_nonvisible");
+							$("#searchByMonth").addClass("tab_nonvisible");
+						});
 
-		$("#tab_searchByDay").click(function() {
-			$("#searchByDay").removeClass("tab_nonvisible");
-			$("#searchByTime").removeClass("tab_visible")
-			$("#searchByMonth").removeClass("tab_visible")
+						$("#tab_searchByDay").click(function() {
+							$("#searchByDay").removeClass("tab_nonvisible");
+							$("#searchByTime").removeClass("tab_visible")
+							$("#searchByMonth").removeClass("tab_visible")
 
-			$("#searchByDay").addClass("tab_visible");
+							$("#searchByDay").addClass("tab_visible");
 
-			$("#searchByTime").addClass("tab_nonvisible");
-			$("#searchByMonth").addClass("tab_nonvisible");
-		});
+							$("#searchByTime").addClass("tab_nonvisible");
+							$("#searchByMonth").addClass("tab_nonvisible");
+						});
 
-		$("#tab_searchByMonth").click(function() {
-			$("#searchByMonth").removeClass("tab_nonvisible");
+						$("#tab_searchByMonth").click(function() {
+							$("#searchByMonth").removeClass("tab_nonvisible");
 							$("#searchByTime").removeClass("tab_visible");
 							$("#searchByDay").removeClass("tab_visible");
 
@@ -87,28 +83,41 @@
 						$('#report_guGun_select')
 								.change(
 										function(e) {
-											$('#report_umDong_select').html('').append("<option value=''>읍/면/동</option>");
-											var optionSelected = $("option:selected", this);
-											var textSelected = optionSelected.text();
+											$('#report_umDong_select')
+													.html('')
+													.append(
+															"<option value=''>읍/면/동</option>");
+											var optionSelected = $(
+													"option:selected", this);
+											var textSelected = optionSelected
+													.text();
 
-											var umDong_select = document.getElementById("report_umDong_select");
+											var umDong_select = document
+													.getElementById("report_umDong_select");
 											for (var i = 0; i < DongSummaryReportList.length; i++) {
 												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document.createElement("option");
+													var option = document
+															.createElement("option");
 													option.text = DongSummaryReportList[i].umDong;
 													umDong_select.add(option);
 												}
 											}
 										});
 
-						$('#report_umDong_select').change(function(e) {
-											var optionSelected = $("option:selected", this);
-											var textSelected = optionSelected.text();
-											
-											var umDong_select = document.getElementById("umDong_select");
+						$('#report_umDong_select')
+								.change(
+										function(e) {
+											var optionSelected = $(
+													"option:selected", this);
+											var textSelected = optionSelected
+													.text();
+
+											var umDong_select = document
+													.getElementById("umDong_select");
 											for (var i = 0; i < DongSummaryReportList.length; i++) {
 												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document.createElement("option");
+													var option = document
+															.createElement("option");
 													option.text = DongSummaryReportList[i].umDong;
 													console.log(option.text);
 													umDong_select.add(option);
@@ -138,12 +147,10 @@
 		<form action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
-					<td colspan="7">
-						<select name="si" id="si_select">
+					<td colspan="7"><select name="si" id="si_select">
 							<option value="전체">시</option>
 							<option value="인천광역시">인천광역시</option>
-						</select>
-						<select name="guGun" id="report_guGun_select2">
+					</select> <select name="guGun" id="report_guGun_select2">
 							<option value="전체">구/군</option>
 							<option value="강화군">강화군</option>
 							<option value="계양구">계양구</option>
@@ -155,11 +162,9 @@
 							<option value="연수구">연수구</option>
 							<option value="웅진군">웅진군</option>
 							<option value="중구">중구</option>
-						</select>
-						<select name="umDong" id="report_umDong_select2">
+					</select> <select name="umDong" id="report_umDong_select2">
 							<option value="전체">읍/면/동</option>
-						</select>
-					</td>
+					</select></td>
 				</tr>
 				<tr>
 					<td>수용가 번호</td>
@@ -167,7 +172,7 @@
 					<td>수용가 명</td>
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
-					<td align="left"><input type="text" name="telNumber"/></td>
+					<td align="left"><input type="text" name="telNumber" /></td>
 					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
@@ -227,12 +232,10 @@
 		<form action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
-					<td colspan="7">
-						<select name="si" id="si_select">
+					<td colspan="7"><select name="si" id="si_select">
 							<option value="전체">시</option>
 							<option value="인천광역시">인천광역시</option>
-						</select>
-						<select name="guGun" id="report_guGun_select">
+					</select> <select name="guGun" id="report_guGun_select">
 							<option value="전체">구/군</option>
 							<option value="강화군">강화군</option>
 							<option value="계양구">계양구</option>
@@ -244,11 +247,9 @@
 							<option value="연수구">연수구</option>
 							<option value="웅진군">웅진군</option>
 							<option value="중구">중구</option>
-						</select>
-						<select name="umDong" id="report_umDong_select">
+					</select> <select name="umDong" id="report_umDong_select">
 							<option value="전체">읍/면/동</option>
-						</select>
-					</td>
+					</select></td>
 				</tr>
 				<tr>
 					<td>수용가 번호</td>
@@ -256,14 +257,15 @@
 					<td>수용가 명</td>
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
-					<td align="left"><input type="text" name="telNumber"/></td>
+					<td align="left"><input type="text" name="telNumber" /></td>
 					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
 					<td align="left"><input type="text" name="meterNum" /></td>
 					<td>검 색 월</td>
-					<td align="left" colspan="3"><select id="optYear" name="dateYear">
+					<td align="left" colspan="3"><select id="optYear"
+						name="dateYear">
 							<option value="2008">2008</option>
 							<option value="2009">2009</option>
 							<option value="2010">2010</option>
@@ -309,15 +311,16 @@
 				<%
 					for (int time = 1; time <= 30; time++) {
 				%>
-				<td width="100px"><%=time %>일</td>
+				<td width="100px"><%=time%>일</td>
 				<%
 					}
 				%>
 			</tr>
-				<%
-					for(int i=0 ; i < array_list.size(); i++) {
-				%>
-			  <tr>
+			<%
+			/* out.print("<script>console.log("+ array_list.size() + ");</script>"); */
+				for (int i = 0; i < array_list.size(); i++) {
+			%>
+			<tr>
 				<td><%=array_list.get(i).getCode()%></td>
 				<td><%=array_list.get(i).getDetail()%></td>
 				<td><%=array_list.get(i).getNumber()%></td>
@@ -325,16 +328,16 @@
 				<td><%=array_list.get(i).getMeter_type()%></td>
 				<td><%=array_list.get(i).getTotal_consumed()%></td>
 				<%
-				for(String  a : array_list.get(i).getConsumed_days()) {
+					for (String a : array_list.get(i).getConsumed_days()) {
 				%>
-				<td><%=a %></td>
-			 	<%
-				}
-			 	%>
-			  </tr>
-			 <%
+				<td><%=a%></td>
+				<%
 					}
-			 %>
+				%>
+			</tr>
+			<%
+				}
+			%>
 		</table>
 	</div>
 </div>
@@ -349,12 +352,10 @@
 		<form action="main.jsp?MENU_NUM=1" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
-					<td colspan="7">
-						<select name="si" id="si_select">
+					<td colspan="7"><select name="si" id="si_select">
 							<option value="전체">시</option>
 							<option value="인천광역시">인천광역시</option>
-						</select>
-						<select name="guGun" id="report_guGun_select">
+					</select> <select name="guGun" id="report_guGun_select">
 							<option value="전체">구/군</option>
 							<option value="강화군">강화군</option>
 							<option value="계양구">계양구</option>
@@ -366,11 +367,9 @@
 							<option value="연수구">연수구</option>
 							<option value="웅진군">웅진군</option>
 							<option value="중구">중구</option>
-						</select>
-						<select name="umDong" id="report_umDong_select">
+					</select> <select name="umDong" id="report_umDong_select">
 							<option value="전체">읍/면/동</option>
-						</select>
-					</td>
+					</select></td>
 				</tr>
 				<tr>
 					<td>수용가 번호</td>
@@ -378,7 +377,7 @@
 					<td>수용가 명</td>
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
-					<td align="left"><input type="text" name="telNumber"/></td>
+					<td align="left"><input type="text" name="telNumber" /></td>
 					<td rowspan="2"><input type="submit" value="검색" /></td>
 				</tr>
 				<tr>
@@ -433,9 +432,9 @@
 				<%
 					}
 				%>
-			<%
-				}
-			%>
+				<%
+					}
+				%>
 			</tr>
 		</table>
 	</div>
