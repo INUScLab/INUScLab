@@ -14,19 +14,14 @@ public class DongInfo {
 	int count_breakage;
 	
 	public DongInfo() {
+		super();
 	}
 	
 	
-
-	public double getLat() {
-		return lat;
-	}
-
-	
-
 	public DongInfo(String gu, String dong, double lat, double lng,
 			int count_leak, int count_absence, int count_freezed,
 			int count_reverse, int count_fat, int count_breakage) {
+		super();
 		this.gu = gu;
 		this.dong = dong;
 		this.lat = lat;
@@ -39,7 +34,9 @@ public class DongInfo {
 		this.count_breakage = count_breakage;
 	}
 
-
+	public double getLat() {
+		return lat;
+	}
 
 	public void setLat(double lat) {
 		this.lat = lat;

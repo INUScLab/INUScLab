@@ -32,21 +32,18 @@
 <jsp:useBean id="UserSummaryReport" class="sclab.db.UserSummaryReport" />
 <jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
 <jsp:useBean id="UserSummaryReportCtrl" class="sclab.db.UserSummaryReportCtrl" />
+<jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
+<jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
 
 
 <%
-	ArrayList<String> overUsedDongList = abnormalDongCtrl.getOverUsedDongList();
-	ArrayList<String> normalUsedDongList = abnormalDongCtrl.getNormalDongList();
-	ArrayList<String> leakDongList = abnormalDongCtrl.getLeakDongList();
-	ArrayList<String> absenceDongList = abnormalDongCtrl.getAbsenceDongList();
-	ArrayList<String> freezedDongList = abnormalDongCtrl.getFreezeDongList();
-	ArrayList<UserConsumption> userConsumptionList = UserConsumptionCtrl.getUSerConsumption();
-	ArrayList<GuDongLatLng> guDongLatLngList = GuDongLatLngCtrl.getGuDongLatLngList();
-	ArrayList<DongSummaryReport> DongSummaryReportList = DongSummaryReportCtrl.getDongSummaryReportList();
-	ArrayList<UserSummaryReport> UserSummaryReportList = UserSummaryReportCtrl.getUserSummaryReportList();
+	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
+
 %>
 
 <script type="text/javascript">	
+
+	var dongInfoList = new Array();
 	var overUsedDongList = new Array();
 	var normalUsedDongList = new Array();
 	var leakDongList = new Array();
@@ -57,81 +54,20 @@
 	var DongSummaryReportList = new Array();
 	var UserSummaryReportList = new Array();
 	
-	<% for (int i=0; i<overUsedDongList.size(); i++) { %>
-	overUsedDongList[<%= i %>] = "<%= overUsedDongList.get(i) %>"; 
-	<% } %>
-	
-	<% for (int i=0; i<normalUsedDongList.size(); i++) { %>
-	normalUsedDongList[<%= i %>] = "<%= normalUsedDongList.get(i) %>"; 
-	<% } %>
-	
-	<% for (int i=0; i<leakDongList.size(); i++) { %>
-	leakDongList[<%= i %>] = "<%= leakDongList.get(i) %>"; 
-	<% } %>
-	
-	<% for (int i=0; i<absenceDongList.size(); i++) { %>
-	absenceDongList[<%= i %>] = "<%= absenceDongList.get(i) %>"; 
-	<% } %>
-	
-	<% for (int i=0; i<freezedDongList.size(); i++) { %>
-	freezedDongList[<%= i %>] = "<%= freezedDongList.get(i) %>"; 
-	<% } %>
-	
-	<% for (int i=0; i<userConsumptionList.size(); i++) { %>
-	userConsumptionList.push( {
-		siGoon:"<%= userConsumptionList.get(i).getSiGoon() %>",
-		umDong:"<%= userConsumptionList.get(i).getUmDong() %>",
-		detail:"<%= userConsumptionList.get(i).getDetail() %>",
-		lat:"<%= userConsumptionList.get(i).getLat() %>",
-		lng:"<%= userConsumptionList.get(i).getLng() %>",
-		consumed:"<%= userConsumptionList.get(i).getConsumed() %>",
-		predicted:"<%= userConsumptionList.get(i).getPredicted() %>",
-		leak:"<%= userConsumptionList.get(i).getLeak() %>",
-		absence:"<%= userConsumptionList.get(i).getAbsence() %>",
-		overused:"<%= userConsumptionList.get(i).getOverused() %>",
-		freezed:"<%= userConsumptionList.get(i).getFreezed() %>",
-	});
-	<% } %>
-	
-	<% for (int i=0; i<guDongLatLngList.size(); i++) { %>
-	guDongLatLngList.push( {
-		guGun:"<%= guDongLatLngList.get(i).getGuGun() %>",
-		umDong:"<%= guDongLatLngList.get(i).getUmDong() %>",
-		lat:"<%= guDongLatLngList.get(i).getLat() %>",
-		lng:"<%= guDongLatLngList.get(i).getLng() %>",
-	});
-	<% } %>
-	
-	<% for (int i=0; i < DongSummaryReportList.size(); i++) { %>
-	DongSummaryReportList.push( {
-		guGun:"<%= DongSummaryReportList.get(i).getGuGun() %>",
-		umDong:"<%= DongSummaryReportList.get(i).getUmDong() %>",
-		monthAverage:"<%= DongSummaryReportList.get(i).getMonthAverage() %>",
-		latelyLeak:"<%= DongSummaryReportList.get(i).getLatelyLeak() %>",
-		day1:"<%= DongSummaryReportList.get(i).getDay1() %>",
-		day2:"<%= DongSummaryReportList.get(i).getDay2() %>",
-		day3:"<%= DongSummaryReportList.get(i).getDay3() %>",
-		day4:"<%= DongSummaryReportList.get(i).getDay4() %>",
-		day5:"<%= DongSummaryReportList.get(i).getDay5() %>",
-		day6:"<%= DongSummaryReportList.get(i).getDay6() %>",
-		day7:"<%= DongSummaryReportList.get(i).getDay7() %>",
-	});
-	<% } %>
-	
-	<% for (int i=0; i < UserSummaryReportList.size(); i++) { %>
-	UserSummaryReportList.push({
-		guGun:"<%= UserSummaryReportList.get(i).getGuGun() %>",
-		umDong:"<%= UserSummaryReportList.get(i).getUmDong() %>",
-		detail:"<%= UserSummaryReportList.get(i).getDetail() %>",
-		monthAverage:"<%= UserSummaryReportList.get(i).getMonthAverage() %>",
-		latelyLeak:"<%= UserSummaryReportList.get(i).getLatelyLeak() %>",
-		day1:"<%= UserSummaryReportList.get(i).getDay1() %>",
-		day2:"<%= UserSummaryReportList.get(i).getDay2() %>",
-		day3:"<%= UserSummaryReportList.get(i).getDay3() %>",
-		day4:"<%= UserSummaryReportList.get(i).getDay4() %>",
-		day5:"<%= UserSummaryReportList.get(i).getDay5() %>",
-		day6:"<%= UserSummaryReportList.get(i).getDay6() %>",
-		day7:"<%= UserSummaryReportList.get(i).getDay7() %>",
+	<% for (int i=0; i<dongInfoList.size(); i++) { %>
+	dongInfoList.push( {
+		gu:"<%= dongInfoList.get(i).getGu() %>",
+		dong:"<%= dongInfoList.get(i).getDong() %>",
+		detail:"<%= dongInfoList.get(i).getLat() %>",
+		lat:"<%= dongInfoList.get(i).getLng() %>",
+		lng:"<%= dongInfoList.get(i).getLng() %>",
+		leak:"<%= dongInfoList.get(i).getCount_leak() %>",
+		absence:"<%= dongInfoList.get(i).getCount_absence() %>",
+		freezed:"<%= dongInfoList.get(i).getCount_freezed() %>",
+		reverse:"<%= dongInfoList.get(i).getCount_reverse() %>",
+		fat:"<%= dongInfoList.get(i).getCount_fat() %>",
+		breakage:"<%= dongInfoList.get(i).getCount_breakage() %>",
+		
 	});
 	<% } %>
 </script>

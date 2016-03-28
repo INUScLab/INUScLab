@@ -22,7 +22,7 @@ public class DongInfoCtrl {
 		dbconnector.disconnect();
 	}
 	
-	public ArrayList<DongInfo> getDongSummaryReportList ( ) {
+	public ArrayList<DongInfo> getDongInfoList ( ) {
 
 		ArrayList<DongInfo> dongInfoList  = new ArrayList<DongInfo> () ;
 		
@@ -66,5 +66,7 @@ public class DongInfoCtrl {
 		disconnect();
 		return dongInfoList;
 	}
+	
+	
 }
 
