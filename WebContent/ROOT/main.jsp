@@ -9,7 +9,8 @@
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <link rel="stylesheet" type="text/css" href="css/reportpage.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard_page.css">
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJHzLkYApb-mrj0mz7d8zakkvBuE0IZTE"></script>
+
 <script type="text/javascript" src='https://www.google.com/jsapi?autoload={
 	"modules":[{
 		"name":"visualization",
@@ -24,12 +25,9 @@
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
-
-
 <%
 	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
 %>
-
 <script type="text/javascript">	
 
 	var dongInfoList = new Array();
@@ -39,7 +37,7 @@
 		gu:"<%= dongInfoList.get(i).getGu() %>",
 		dong:"<%= dongInfoList.get(i).getDong() %>",
 		detail:"<%= dongInfoList.get(i).getLat() %>",
-		lat:"<%= dongInfoList.get(i).getLng() %>",
+		lat:"<%= dongInfoList.get(i).getLat() %>",
 		lng:"<%= dongInfoList.get(i).getLng() %>",
 		leak:"<%= dongInfoList.get(i).getCount_leak() %>",
 		absence:"<%= dongInfoList.get(i).getCount_absence() %>",

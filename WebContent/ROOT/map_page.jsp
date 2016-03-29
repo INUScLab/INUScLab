@@ -55,6 +55,7 @@
 	<div id="color-interpolation" class="color-interpolation"></div>
 </div>
 <!--본문 Left (tree)-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
 <div class="left_section_box_init" id="left_section_box_init" >
 

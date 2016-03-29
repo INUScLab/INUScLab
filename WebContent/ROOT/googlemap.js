@@ -43,17 +43,11 @@ function initialize(x, y) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 
-	var marker = new google.maps.Marker({
-	    position: latlng,
-	    map: globalMap,
-	    title: 'Hello World!'
-	  });
-	
-	
-	marker.setMap(globalMap);
-	
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"),
 			myOptions);
+	
+	//Create Entire Markers And Show all sign of abnormal dongs.
+	createDongMarkers();
 
 	// Search Box
 	var input = document.getElementById('pac-input');
@@ -65,9 +59,6 @@ function initialize(x, y) {
 	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
-
-	//Create Entire Markers And Show all sign of abnormal dongs.
-	createDongMarkers();
 
 	// Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
@@ -81,7 +72,7 @@ function initialize(x, y) {
 //			showIcon();
 			
 			//상세 주소 띄우기
-			showDetailMarkers();
+//			showDetailMarkers();
 			
 			// 초기 리포트 페이지를 띄움.
 //			$("#left_section_box_init").show();
@@ -113,7 +104,7 @@ function initialize(x, y) {
 	});
 
 	// autoComplete Event
-	var autocomplete = new google.maps.places.Autocomplete(input);
+//	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addDomListener(window, 'load', initialize);
 
 	/* jQuery for SELECT BOX */
@@ -174,33 +165,33 @@ function createDongMarkers( ) {
 		if ( dongInfoList[i].count_leak != 0 || dongInfoList[i].count_absence != 0 || dongInfoList[i].count_freezed != 0 ||
 				dongInfoList[i].count_reverse != 0 || dongInfoList[i].count_fat != 0 || dongInfoList[i].count_breakage != 0 ) {
 
-				var pinImage = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-								+ redColor, new google.maps.Size(21, 34),
-						new google.maps.Point(0, 0), new google.maps.Point(10,
-								34));
-				var pinShadow = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-						new google.maps.Size(40, 37), new google.maps.Point(0,
-								0), new google.maps.Point(12, 35));
+			var latlng = new google.maps.LatLng(dongInfoList[i].lat , dongInfoList[i].lng);
+			
+			var pinImage = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+							+ redColor, new google.maps.Size(21, 34),
+					new google.maps.Point(0, 0), new google.maps.Point(10,
+							34));
+			var pinShadow = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+					new google.maps.Size(40, 37), new google.maps.Point(0,
+							0), new google.maps.Point(12, 35));
 
-				// Craete marker
-				var marker = new google.maps.Marker({
-					title : incheon + " " + dongInfoList[i].gu + " "
-							+ dongInfoList[i].dong,
-					position : new google.maps.LatLng(dongInfoList[i].lat,
-							dongInfoList[i].lng),
-					draggable : false,
-					icon : pinImage,
-					shadow : pinShadow,
-				});
+			// Craete marker
+			var marker = new google.maps.Marker({
+				title : incheon + " " + dongInfoList[i].gu + " "
+						+ dongInfoList[i].dong,
+				position : latlng,
+				draggable : false,
+				icon : pinImage,
+				shadow : pinShadow,
+				map:globalMap
+			});
 
-				dongMarkers.push(marker);
+			dongMarkers.push(marker);
 		}
 	}
-
-	
-	 showDongMarkers();
+	showDongMarkers();
 	// 생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].addListener('click', function() {
