@@ -22,37 +22,17 @@
 
 <script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
-<jsp:useBean id="User" class="sclab.db.User" />
-<jsp:useBean id="abnormalDongCtrl" class="sclab.db.AbnormalDongCtrl" />
-<jsp:useBean id="UserConsumption" class="sclab.db.UserConsumption" />
-<jsp:useBean id="UserConsumptionCtrl" class="sclab.db.UserConsumptionCtrl" />
-<jsp:useBean id="GuDongLatLng" class="sclab.db.GuDongLatLng" />
-<jsp:useBean id="GuDongLatLngCtrl" class="sclab.db.GuDongLatLngCtrl" />
-<jsp:useBean id="DongSummaryReport" class="sclab.db.DongSummaryReport" />
-<jsp:useBean id="UserSummaryReport" class="sclab.db.UserSummaryReport" />
-<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
-<jsp:useBean id="UserSummaryReportCtrl" class="sclab.db.UserSummaryReportCtrl" />
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
 
 
 <%
 	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
-
 %>
 
 <script type="text/javascript">	
 
 	var dongInfoList = new Array();
-	var overUsedDongList = new Array();
-	var normalUsedDongList = new Array();
-	var leakDongList = new Array();
-	var absenceDongList = new Array();
-	var freezedDongList = new Array();
-	var userConsumptionList = new Array();
-	var guDongLatLngList = new Array();
-	var DongSummaryReportList = new Array();
-	var UserSummaryReportList = new Array();
 	
 	<% for (int i=0; i<dongInfoList.size(); i++) { %>
 	dongInfoList.push( {

@@ -4,10 +4,6 @@ var searchMarker = new google.maps.Marker();
 var searchMarkers = [];
 var dongMarkers = [];
 var entireDongMarkers = [];
-var overUsedDongMarkers = [];
-var leakDongMarkers = [];
-var freezedDongMarkers = [];
-var absenceDongMarkers = [];
 var detailMarkers = [];
 var cons_sum = 0;
 var cnt_leak = 0;
@@ -47,6 +43,15 @@ function initialize(x, y) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 
+	var marker = new google.maps.Marker({
+	    position: latlng,
+	    map: globalMap,
+	    title: 'Hello World!'
+	  });
+	
+	
+	marker.setMap(globalMap);
+	
 	globalMap = new google.maps.Map(document.getElementById("map_canvas"),
 			myOptions);
 
@@ -60,14 +65,9 @@ function initialize(x, y) {
 	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
-//	createEntireDongMarker();
-	createLeakDongMarker();
-	createFreezedDongMakrer();
-	createAbsenceDongMarker();
-	showAbsenceDongMarkers();
-	showFreezedDongMarkers();
-	showLeakDongMarkers();
-//	showIcon();
+
+	//Create Entire Markers And Show all sign of abnormal dongs.
+	createDongMarkers();
 
 	// Zoom Changed Event
 	globalMap.addListener('zoom_changed', function() {
@@ -164,60 +164,43 @@ function initialize(x, y) {
 
 xmlReq = new XMLHttpRequest(); // IE 7.0 이상
 // 전체 사용자들 가운데 누수/동파/부재중에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
-function createEntireDongMarker() {
+function createDongMarkers( ) {
 
-	// remove duplicate element
-	Array.prototype.unique = function() {
-		var a = this.concat();
-		for (var i = 0; i < a.length; ++i) {
-			for (var j = i + 1; j < a.length; ++j) {
-				if (a[i] === a[j])
-					a.splice(j--, 1);
-			}
+	var redColor = "FF0000";
+	incheon = "인천광역시";
+
+	for (var i = 0; i < dongInfoList.length; i++) {
+
+		if ( dongInfoList[i].count_leak != 0 || dongInfoList[i].count_absence != 0 || dongInfoList[i].count_freezed != 0 ||
+				dongInfoList[i].count_reverse != 0 || dongInfoList[i].count_fat != 0 || dongInfoList[i].count_breakage != 0 ) {
+
+				var pinImage = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+								+ redColor, new google.maps.Size(21, 34),
+						new google.maps.Point(0, 0), new google.maps.Point(10,
+								34));
+				var pinShadow = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+						new google.maps.Size(40, 37), new google.maps.Point(0,
+								0), new google.maps.Point(12, 35));
+
+				// Craete marker
+				var marker = new google.maps.Marker({
+					title : incheon + " " + dongInfoList[i].gu + " "
+							+ dongInfoList[i].dong,
+					position : new google.maps.LatLng(dongInfoList[i].lat,
+							dongInfoList[i].lng),
+					draggable : false,
+					icon : pinImage,
+					shadow : pinShadow,
+				});
+
+				dongMarkers.push(marker);
 		}
-
-		return a;
-	};
-
-	var abNormalDongList = leakDongList.concat(freezedDongList);
-	abNormalDongList = abNormalDongList.concat(absenceDongList).unique();
-
-	var color = "";
-	var abNormalColor = "FF0000";
-	var normalColor = "00FFBF";
-	incheon = "인천광역시"
-
-	for (var i = 0; i < guDongLatLngList.length; i++) {
-		if (abNormalDongList.indexOf(guDongLatLngList[i].umDong) == -1) {
-			color = normalColor;
-		} else {
-			color = abNormalColor;
-		}
-		var pinImage = new google.maps.MarkerImage(
-				"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-						+ color, new google.maps.Size(21, 34),
-				new google.maps.Point(0, 0), new google.maps.Point(10, 34));
-		var pinShadow = new google.maps.MarkerImage(
-				"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-				new google.maps.Size(40, 37), new google.maps.Point(0, 0),
-				new google.maps.Point(12, 35));
-
-		// Craete marker
-		var marker = new google.maps.Marker({
-			title : incheon + " " + guDongLatLngList[i].guGun + " "
-					+ guDongLatLngList[i].umDong,
-			position : new google.maps.LatLng(guDongLatLngList[i].lat,
-					guDongLatLngList[i].lng),
-			draggable : false,
-			icon : pinImage,
-			shadow : pinShadow,
-		});
-
-		dongMarkers.push(marker);
-
 	}
 
-	// showEntireDongMarkers();
+	
+	 showDongMarkers();
 	// 생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].addListener('click', function() {
@@ -229,10 +212,10 @@ function createEntireDongMarker() {
 			var guName = address.split(' ')[1];
 			var dongName = address.split(' ')[2];
 
-			hideEntireDongMarkers();
-			hideFreezedDongMarkers();
-			hideLeakDongMarkers();
-			hideAbsenceDongMarkers();
+//			hideEntireDongMarkers();
+//			hideFreezedDongMarkers();
+//			hideLeakDongMarkers();
+//			hideAbsenceDongMarkers();
 			globalMap.setCenter(this.position);
 
 			dongSummary(addressArray) // 요약 리포트
@@ -284,50 +267,9 @@ function callBack() {
 		} else {
 			alert("처리 불가!");
 		}
+		
 	}
 }
-
-// 과용한 사용자를 포함하는 동의 마커를 생성하는 함수
-function createDongMarkers() {
-
-	var redColor = "FF0000";
-	incheon = "인천광역시";
-
-	for (var i = 0; i < dongInfoList.length; i++) {
-
-			if ( dongInfoList[j].count_leak != 0 || dongInfoList[j].count_absence != 0 || dongInfoList[j].count_freezed != 0 ||
-					dongInfoList[j].count_reverse != 0 || dongInfoList[j].count_fat != 0 || dongInfoList[j].count_breakage != 0 ) {
-
-				var pinImage = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-								+ redColor, new google.maps.Size(21, 34),
-						new google.maps.Point(0, 0), new google.maps.Point(10,
-								34));
-				var pinShadow = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-						new google.maps.Size(40, 37), new google.maps.Point(0,
-								0), new google.maps.Point(12, 35));
-
-				// Craete marker
-				var marker = new google.maps.Marker({
-					title : incheon + " " + dongInfoList[j].gu + " "
-							+ dongInfoList[j].dong,
-					position : new google.maps.LatLng(dongInfoList[j].lat,
-							dongInfoList[j].lng),
-					draggable : false,
-					icon : pinImage,
-					shadow : pinShadow,
-				});
-
-				dongMarkers.push(marker);
-		}
-	}
-}
-
-// 누수인 사용자를 포함하는 동의 마커를 생성하는 함수
-
-
-
 
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
 function drawColumn(cons, pred, week, region) {
@@ -844,38 +786,12 @@ function userSummary(addressArray) {
 
 }
 
+
 // 전체 동들의 마커를 지도에 출력
-function showEntireDongMarkers() {
-	for (var i = 0; i < entireDongMarkers.length; i++) {
-		entireDongMarkers[i].setMap(globalMap);
-	}
-}
-
-// 누수된 동들의 마커를 지도에 출력
-function showLeakDongMarkers() {
-	for (var i = 0; i < leakDongMarkers.length; i++) {
-		leakDongMarkers[i].setMap(globalMap);
-	}
-}
-
-// 동파된 동들의 마커를 지도에 출력
-function showFreezedDongMarkers() {
-	for (var i = 0; i < freezedDongMarkers.length; i++) {
-		freezedDongMarkers[i].setMap(globalMap);
-	}
-}
-
-// 부재중인 동들의 마커를 지도에 출력
-function showAbsenceDongMarkers() {
-	for (var i = 0; i < absenceDongMarkers.length; i++) {
-		absenceDongMarkers[i].setMap(globalMap);
-	}
-}
-
-// 과용된 동들의 마커를 지도에 출력
-function showoverUsedDongMarkers() {
-	for (var i = 0; i < overUsedDongMarkers.length; i++) {
-		overUsedDongMarkers[i].setMap(globalMap);
+function showDongMarkers() {
+	for (var i = 0; i < dongMarkers.length; i++) {
+		dongMarkers[i].setMap(globalMap);
+		console.log('test')
 	}
 }
 
@@ -884,34 +800,6 @@ function hideEntireDongMarkers() {
 
 	for (var i = 0; i < entireDongMarkers.length; i++) {
 		entireDongMarkers[i].setMap(null);
-	}
-}
-
-// 과용된 동들의 마커를 지도에서 숨김
-function hideoverUsedDongMarkers() {
-	for (var i = 0; i < overUsedDongMarkers.length; i++) {
-		overUsedDongMarkers[i].setMap(null);
-	}
-}
-
-// 누수된 동들의 마커를 지도에서 숨김
-function hideLeakDongMarkers() {
-	for (var i = 0; i < leakDongMarkers.length; i++) {
-		leakDongMarkers[i].setMap(null);
-	}
-}
-
-// 동파된 동들의 마커를 지도에서 숨김
-function hideFreezedDongMarkers() {
-	for (var i = 0; i < freezedDongMarkers.length; i++) {
-		freezedDongMarkers[i].setMap(null);
-	}
-}
-
-// 부재중인 동들의 마커를 지도에서 숨김
-function hideAbsenceDongMarkers() {
-	for (var i = 0; i < absenceDongMarkers.length; i++) {
-		absenceDongMarkers[i].setMap(null);
 	}
 }
 
