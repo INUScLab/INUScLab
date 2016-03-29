@@ -2,6 +2,7 @@ var globalGeocoder;
 var globalMap;
 var searchMarker = new google.maps.Marker();
 var searchMarkers = [];
+var dongMarkers = [];
 var entireDongMarkers = [];
 var overUsedDongMarkers = [];
 var leakDongMarkers = [];
@@ -212,14 +213,14 @@ function createEntireDongMarker() {
 			shadow : pinShadow,
 		});
 
-		entireDongMarkers.push(marker);
+		dongMarkers.push(marker);
 
 	}
 
 	// showEntireDongMarkers();
 	// 생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
-	for (var i = 0; i < entireDongMarkers.length; i++) {
-		entireDongMarkers[i].addListener('click', function() {
+	for (var i = 0; i < dongMarkers.length; i++) {
+		dongMarkers[i].addListener('click', function() {
 
 			this.setMap(null);
 			
@@ -287,15 +288,15 @@ function callBack() {
 }
 
 // 과용한 사용자를 포함하는 동의 마커를 생성하는 함수
-function createOverUsedDongMarker() {
+function createDongMarkers() {
 
 	var redColor = "FF0000";
 	incheon = "인천광역시";
 
-	for (var i = 0; i < overUsedDongList.length; i++) {
+	for (var i = 0; i < dongInfoList.length; i++) {
 
-		for (var j = 0; j < guDongLatLngList.length; j++) {
-			if (overUsedDongList[i] == guDongLatLngList[j].umDong) {
+			if ( dongInfoList[j].count_leak != 0 || dongInfoList[j].count_absence != 0 || dongInfoList[j].count_freezed != 0 ||
+					dongInfoList[j].count_reverse != 0 || dongInfoList[j].count_fat != 0 || dongInfoList[j].count_breakage != 0 ) {
 
 				var pinImage = new google.maps.MarkerImage(
 						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
@@ -309,219 +310,24 @@ function createOverUsedDongMarker() {
 
 				// Craete marker
 				var marker = new google.maps.Marker({
-					title : incheon + " " + guDongLatLngList[j].guGun + " "
-							+ guDongLatLngList[j].umDong,
-					position : new google.maps.LatLng(guDongLatLngList[j].lat,
-							guDongLatLngList[j].lng),
+					title : incheon + " " + dongInfoList[j].gu + " "
+							+ dongInfoList[j].dong,
+					position : new google.maps.LatLng(dongInfoList[j].lat,
+							dongInfoList[j].lng),
 					draggable : false,
 					icon : pinImage,
 					shadow : pinShadow,
 				});
 
-				overUsedDongMarkers.push(marker);
-			}
+				dongMarkers.push(marker);
 		}
-
 	}
 }
 
 // 누수인 사용자를 포함하는 동의 마커를 생성하는 함수
-function createLeakDongMarker() {
-	var redColor = "FF0000";
-	incheon = "인천광역시";
 
-	for (var i = 0; i < leakDongList.length; i++) {
 
-		for (var j = 0; j < guDongLatLngList.length; j++) {
-			if (guDongLatLngList[j].umDong == leakDongList[i]) {
-				var pinImage = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-								+ redColor, new google.maps.Size(21, 34),
-						new google.maps.Point(0, 0), new google.maps.Point(10,
-								34));
-				var pinShadow = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-						new google.maps.Size(40, 37), new google.maps.Point(0,
-								0), new google.maps.Point(12, 35));
 
-				// Craete marker
-				var marker = new google.maps.Marker({
-					title : incheon + " " + guDongLatLngList[j].guGun + " "
-							+ guDongLatLngList[j].umDong,
-					position : new google.maps.LatLng(guDongLatLngList[j].lat,
-							guDongLatLngList[j].lng),
-					draggable : false,
-					icon : pinImage,
-					shadow : pinShadow,
-				});
-
-				
-				leakDongMarkers.push(marker);
-			}
-		}
-	}
-
-	// 생성한 누수 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
-	for (var i = 0; i < leakDongMarkers.length; i++) {
-		leakDongMarkers[i].addListener('click', function() {
-
-			//현재 마커 숨김.
-			this.setMap(null);
-			console.log("hide marker");
-			
-			//현재 동의 infowindow.
-			infowindow = new google.maps.InfoWindow({
-				content: this.title,
-				position:this.position
-			});
-			
-			infowindow.open(globalMap, leakDongMarkers[i]);
-			
-			// 상세 주소만 띄우고 동 마커들은 숨김.
-			hideEntireDongMarkers();
-			hideFreezedDongMarkers();
-//			hideLeakDongMarkers();
-			hideAbsenceDongMarkers();
-
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-			
-		});
-	}
-}
-
-// 동파인 사용자를 포함하는 동의 마커를 생성하는 함수
-function createFreezedDongMakrer() {
-	var redColor = "FF0000";
-	incheon = "인천광역시";
-
-	for (var i = 0; i < freezedDongList.length; i++) {
-
-		for (var j = 0; j < guDongLatLngList.length; j++) {
-			if (freezedDongList[i] == guDongLatLngList[j].umDong) {
-
-				var pinImage = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-								+ redColor, new google.maps.Size(21, 34),
-						new google.maps.Point(0, 0), new google.maps.Point(10,
-								34));
-				var pinShadow = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-						new google.maps.Size(40, 37), new google.maps.Point(0,
-								0), new google.maps.Point(12, 35));
-
-				// Craete marker
-				var marker = new google.maps.Marker({
-					title : incheon + " " + guDongLatLngList[j].guGun + " "
-							+ guDongLatLngList[j].umDong,
-					position : new google.maps.LatLng(guDongLatLngList[j].lat,
-							guDongLatLngList[j].lng),
-					draggable : false,
-					icon : pinImage,
-					shadow : pinShadow,
-				});
-
-				freezedDongMarkers.push(marker);
-			}
-		}
-	}
-
-	// 생성한 동파 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
-	for (var i = 0; i < freezedDongMarkers.length; i++) {
-		freezedDongMarkers[i].addListener('click', function() {
-
-			this.setMap(null);
-			console.log("hide marker");
-			
-			//현재 동의 infowindow.
-			infowindow = new google.maps.InfoWindow({
-				content: this.title,
-				position:this.position
-			});
-			
-			infowindow.open(globalMap, leakDongMarkers[i]);
-
-			
-			// 상세 주소만 띄우고 동 마커들은 숨김.
-			hideEntireDongMarkers();
-//			hideFreezedDongMarkers();
-			hideLeakDongMarkers();
-			hideAbsenceDongMarkers();
-
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
-
-// 부재중인 사용자를 포함하는 동의 마커를 생성하는 함수
-function createAbsenceDongMarker() {
-	var redColor = "FF0000";
-	incheon = "인천광역시";
-
-	for (var i = 0; i < absenceDongList.length; i++) {
-
-		for (var j = 0; j < guDongLatLngList.length; j++) {
-			if (absenceDongList[i] == guDongLatLngList[j].umDong) {
-
-				var pinImage = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-								+ redColor, new google.maps.Size(21, 34),
-						new google.maps.Point(0, 0), new google.maps.Point(10,
-								34));
-				var pinShadow = new google.maps.MarkerImage(
-						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-						new google.maps.Size(40, 37), new google.maps.Point(0,
-								0), new google.maps.Point(12, 35));
-
-				// Craete marker
-				var marker = new google.maps.Marker({
-					title : incheon + " " + guDongLatLngList[j].guGun + " "
-							+ guDongLatLngList[j].umDong,
-					position : new google.maps.LatLng(guDongLatLngList[j].lat,
-							guDongLatLngList[j].lng),
-					draggable : false,
-					icon : pinImage,
-					shadow : pinShadow,
-				});
-
-				absenceDongMarkers.push(marker);
-			}
-		}
-	}
-
-	// 생성한 부재중 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
-	for (var i = 0; i < absenceDongMarkers.length; i++) {
-		absenceDongMarkers[i].addListener('click', function() {
-
-			this.setMap(null);
-			console.log("hide marker");
-			
-			//현재 동의 infowindow.
-			infowindow = new google.maps.InfoWindow({
-				content: this.title,
-				position:this.position
-			});
-			
-			infowindow.open(globalMap, leakDongMarkers[i]);
-			
-			// 상세 주소만 띄우고 동 마커들은 숨김.
-			hideEntireDongMarkers();
-			hideFreezedDongMarkers();
-			hideLeakDongMarkers();
-//			hideAbsenceDongMarkers();
-
-			globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-			dongSummary(addressArray) // 요약 리포트
-		});
-	}
-}
 
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
 function drawColumn(cons, pred, week, region) {
