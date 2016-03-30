@@ -114,23 +114,23 @@ function initialize(x, y) {
 				var textSelected = optionSelected.text();
 
 				for (var i = 0; i < guDongLatLngList.length; i++) {
-					if (guDongLatLngList[i].umDong == textSelected) {
+					if (dongInfoList[i].dong == textSelected) {
 
 						// 초기 리포트hide
 
 						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
 						var addressArray = [];
 						addressArray[0] = "인천광역시";
-						addressArray[1] = guDongLatLngList[i].guGun;
-						addressArray[2] = guDongLatLngList[i].umDong;
+						addressArray[1] = dongInfoList[i].guGun;
+						addressArray[2] = dongInfoList[i].umDong;
 						dongSummary(addressArray);
 
 						globalMap.setOptions({
 							'zoom' : 16
 						});
 						globalMap.setCenter(new google.maps.LatLng(
-								guDongLatLngList[i].lat,
-								guDongLatLngList[i].lng));
+								dongInfoList[i].lat,
+								dongInfoList[i].lng));
 					}
 				}
 			});
@@ -192,46 +192,44 @@ function createDongMarkers( ) {
 		}
 	}
 	showDongMarkers();
+	
 	// 생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].addListener('click', function() {
 
 			this.setMap(null);
 			
+			globalMap.setCenter(this.position);
+
 			var address = this.title;
 			var addressArray = address.split(' ');
 			var guName = address.split(' ')[1];
 			var dongName = address.split(' ')[2];
 
-//			hideEntireDongMarkers();
-//			hideFreezedDongMarkers();
-//			hideLeakDongMarkers();
-//			hideAbsenceDongMarkers();
-			globalMap.setCenter(this.position);
 
-			dongSummary(addressArray) // 요약 리포트
+//			dongSummary(addressArray) // 요약 리포트
 
 			// 서버 요청주소
-//			var url = "DongSummaryReport.jsp";
-//
-//			// 서버요청시 데이터 전송하는 부분
-//			// 데이터가 두개 이상인 경우는
-//			// 식별자=값&식별자=값&.... 형태로 작성
-//			var postString = "data=" + dongName;
-//
-//			// 응답이 돌아온다면 callback 함수 호출
-//			// 이벤트 등록 부분
-//			xmlReq.onreadystatechange = callBack;
-//
-//			// ajax 요청 형식 // true는 비동기
-//			xmlReq.open("POST", url, true);
-//
-//			// 전송하는 데이터 안에 한글이 있는 경우 인코딩방식을 알려주어야 함.
-//			xmlReq.setRequestHeader("Content-Type",
-//					"application/x-www-form-urlencoded; charset=euc-kr");
-//
-//			// ajax 요청
-//			xmlReq.send(postString);
+			var url = "DongSummaryReport.jsp";
+
+			// 서버요청시 데이터 전송하는 부분
+			// 데이터가 두개 이상인 경우는
+			// 식별자=값&식별자=값&.... 형태로 작성
+			var postString = "dong=" + dongName;
+
+			// 응답이 돌아온다면 callback 함수 호출
+			// 이벤트 등록 부분
+			xmlReq.onreadystatechange = callBack;
+
+			// ajax 요청 형식 // true는 비동기
+			xmlReq.open("POST", url, true);
+
+			// 전송하는 데이터 안에 한글이 있는 경우 인코딩방식을 알려주어야 함.
+			xmlReq.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded; charset=euc-kr");
+
+			// ajax 요청
+			xmlReq.send(postString);
 
 		});
 	}
@@ -262,6 +260,11 @@ function callBack() {
 	}
 }
 
+/*
+ * 사용량/예측량/일주일 평균/지역 평균
+ * 일주일간 히스토리 , 일주일 평균 사용량
+ * 부가서비별 최근 한달간 발생 횟수/날짜.
+ */
 // 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
 function drawColumn(cons, pred, week, region) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {

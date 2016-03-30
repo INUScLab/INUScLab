@@ -23,11 +23,10 @@ public class DongSummaryReportCtrl {
 		dbconnector.disconnect();
 	}
 
-	
-
-	public ArrayList<DongSummaryReport> getDongSummaryReportList ( ) {
+	public ArrayList<DongSummaryReport> getDongSummaryReportList ( String dongName ) {
 
 		ArrayList<DongSummaryReport> dongSummuryReportList  = new ArrayList<DongSummaryReport> () ;
+		
 		
 		String guGun;
 		String umDong;
@@ -72,4 +71,7 @@ public class DongSummaryReportCtrl {
 		return dongSummuryReportList;
 	}
 
+	//사용량,예측량,지역 평균 사용량 
+	//일주일 히스토리
+	//부가서비스 별 회
 }

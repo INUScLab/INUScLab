@@ -7,9 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:useBean id="DongSummaryReport" class="sclab.db.DongSummaryReport" />
+<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
 
 	<%
-		String result = (String) request.getParameter("data");
+		String result = (String) request.getParameter("dong");
 		out.write(result);
 	%>
 
