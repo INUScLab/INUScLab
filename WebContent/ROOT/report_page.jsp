@@ -7,8 +7,8 @@
 	String cp = request.getContextPath();
 %>
 
-<jsp:useBean id="dd" class="sclab.db.DetailData" />
 <jsp:useBean id="ddctrl" class="sclab.db.DetailDataCtrl" />
+<jsp:useBean id="ddctrl2" class="sclab.db.DetailDataCtrl" />
 
 <%
 	String si = request.getParameter("si");
@@ -36,45 +36,37 @@
 	ArrayList<DetailData> array_list = ddctrl.returnDatas(si, guGun, umDong, consumerNum, consumerName,
 			telNumber, meterNum, dateYear, dateMonth);
 	//ArrayList<DetailData> array_list = ddctrl.returnDatas("인천광역시","부평구","전체",consumerNum,consumerName,telNumber,meterNum,"2015","02");
+	ArrayList<DetailData> monthly_array_list = ddctrl2.returnDatas2(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,dateYear);
 %>
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						/* tab 기능 */
-						$("#searchByTime").addClass("tab_nonvisible");
+	$(document).ready(function() {
 						$("#searchByMonth").addClass("tab_nonvisible");
-
-						$("#tab_searchByTime").click(function() {
-							$("#searchByTime").removeClass("tab_nonvisible")
-							$("#searchByMonth").removeClass("tab_visible");
-							$("#searchByDay").removeClass("tab_visible");
-
-							$("#searchByTime").addClass("tab_visible");
-
+						
+						/* $("#form_monthly_search").click(function() {
+							$("#searchByMonth").addClass("tab_visible");
 							$("#searchByDay").addClass("tab_nonvisible");
-							$("#searchByMonth").addClass("tab_nonvisible");
 						});
-
+						
+						$("#form_daily_search").click(function() {
+							$("#searchByMonth").addClass("tab_nonvisible");
+							$("#searchByDay").addClass("tab_visible");
+						}); */
+						
+						/* tab 기능 */
 						$("#tab_searchByDay").click(function() {
 							$("#searchByDay").removeClass("tab_nonvisible");
-							$("#searchByTime").removeClass("tab_visible")
-							$("#searchByMonth").removeClass("tab_visible")
+							$("#searchByMonth").removeClass("tab_visible");
 
 							$("#searchByDay").addClass("tab_visible");
-
-							$("#searchByTime").addClass("tab_nonvisible");
 							$("#searchByMonth").addClass("tab_nonvisible");
 						});
 
 						$("#tab_searchByMonth").click(function() {
 							$("#searchByMonth").removeClass("tab_nonvisible");
-							$("#searchByTime").removeClass("tab_visible");
 							$("#searchByDay").removeClass("tab_visible");
 
 							$("#searchByMonth").addClass("tab_visible");
-							$("#searchByTime").addClass("tab_nonvisible");
 							$("#searchByDay").addClass("tab_nonvisible");
 						});
 						/* tab 기능 */
@@ -131,9 +123,6 @@
 
 
 <div class="searchBy">
-	<div id="tab_searchByTime" class="tab_searchBy">
-		<a href="#">시간대별 검색</a>
-	</div>
 	<div id="tab_searchByDay" class="tab_searchBy">
 		<a href="#">일별 검색</a>
 	</div>
@@ -141,90 +130,6 @@
 		<a href="#">월별 검색</a>
 	</div>
 </div>
-<!-- 시간대별  -->
-<div id="searchByTime">
-	<div class="searchBy_searchbox">
-		<form action="main.jsp?MENU_NUM=1" method="post">
-			<table border="1" cellspacing="0" width="100%">
-				<tr>
-					<td colspan="7"><select name="si" id="si_select">
-							<option value="전체">시</option>
-							<option value="인천광역시">인천광역시</option>
-					</select> <select name="guGun" id="report_guGun_select2">
-							<option value="전체">구/군</option>
-							<option value="강화군">강화군</option>
-							<option value="계양구">계양구</option>
-							<option value="남구">남구</option>
-							<option value="남동구">남동구</option>
-							<option value="동구">동구</option>
-							<option value="부평구">부평구</option>
-							<option value="서구">서구</option>
-							<option value="연수구">연수구</option>
-							<option value="웅진군">웅진군</option>
-							<option value="중구">중구</option>
-					</select> <select name="umDong" id="report_umDong_select2">
-							<option value="전체">읍/면/동</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>수용가 번호</td>
-					<td align="left"><input type="text" name="consumerNum" /></td>
-					<td>수용가 명</td>
-					<td align="left"><input type="text" name="consumerName" /></td>
-					<td>지시부 번호</td>
-					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" /></td>
-				</tr>
-				<tr>
-					<td>미터 번호</td>
-					<td align="left"><input type="text" name="meterNum" /></td>
-					<td>검 색 일</td>
-					<td align="left" colspan="3"><input type="text" name="date" /></td>
-				</tr>
-
-			</table>
-		</form>
-	</div>
-
-
-	<div class="data_view">
-		<table cellspacing="0" border="1">
-			<tr border="1">
-				<td width="100px">수용가번호</td>
-				<td width="200px">수용가명</td>
-				<td width="200px">지시부번호</td>
-				<td width="200px">미터번호</td>
-				<td width="200px">미터타입</td>
-				<td width="200px">검침일</td>
-				<td width="200px">사용량</td>
-				<%
-					for (int time = 1; time <= 24; time++) {
-				%>
-				<td width="100px"><%=time%>시</td>
-				<%
-					}
-				%>
-			</tr>
-			<%
-				for (int row = 1; row <= 24; row++) {
-			%>
-			<tr>
-				<%
-					for (int col = 0; col < 31; col++) {
-				%>
-				<td></td>
-				<%
-					}
-				%>
-				<%
-					}
-				%>
-			</tr>
-
-		</table>
-	</div>
-</div>
-
 
 <!-- 일별 -->
 <div id="searchByDay">
@@ -258,7 +163,7 @@
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
 					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" /></td>
+					<td rowspan="2"><input type="submit" value="검색" id="form_daily_search"/></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -309,15 +214,15 @@
 				<td width="200px">검침월</td>
 				<td width="200px">사용량</td>
 				<%
-					for (int time = 1; time <= 30; time++) {
+				for (int day = 1; day<=30; day++){
 				%>
-				<td width="100px"><%=time%>일</td>
+				<td width="100px"><%=day %>일</td>
 				<%
 					}
 				%>
 			</tr>
 			<%
-			/* out.print("<script>console.log("+ array_list.size() + ");</script>"); */
+				/* out.print("<script>console.log("+ array_list.size() + ");</script>"); */
 				for (int i = 0; i < array_list.size(); i++) {
 			%>
 			<tr>
@@ -326,6 +231,7 @@
 				<td><%=array_list.get(i).getNumber()%></td>
 				<td><%=array_list.get(i).getMeter_num()%></td>
 				<td><%=array_list.get(i).getMeter_type()%></td>
+				<td><%=dateYear %>-<%=dateMonth %></td>
 				<td><%=array_list.get(i).getTotal_consumed()%></td>
 				<%
 					for (String a : array_list.get(i).getConsumed_days()) {
@@ -378,7 +284,7 @@
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
 					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" /></td>
+					<td rowspan="2"><input type="submit" value="검색" id="form_montyly_search"/></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -392,8 +298,8 @@
 							<option value="2012">2012</option>
 							<option value="2013">2013</option>
 							<option value="2014">2014</option>
-							<option value="2015">2015</option>
-							<option value="2016" selected="selected">2016</option>
+							<option value="2015" selected="selected">2015</option>
+							<option value="2016">2016</option>
 							<option value="2017">2017</option>
 							<option value="2018">2018</option>
 
@@ -411,31 +317,38 @@
 				<td width="200">지시부번호</td>
 				<td width="200">미터번호</td>
 				<td width="200">미터타입</td>
-				<td width="200">검침일</td>
+				<td width="200">검침월</td>
 				<td width="200">사용량</td>
 				<%
-					for (int time = 1; time <= 24; time++) {
+					for (int time = 1; time <= 12; time++) {
 				%>
-				<td width="100px"><%=time%>시</td>
+				<td width="100px"><%=time%>월</td>
 				<%
 					}
 				%>
 			</tr>
 			<%
-				for (int row = 1; row <= 24; row++) {
-			%>
-			<tr>
+				for(int i=0 ; i < monthly_array_list.size(); i++) {
+			  %>
+			  <tr>
+				<td><%=monthly_array_list.get(i).getCode()%></td>
+				<td><%=monthly_array_list.get(i).getDetail()%></td>
+				<td><%=monthly_array_list.get(i).getNumber()%></td>
+				<td><%=monthly_array_list.get(i).getMeter_num()%></td>
+				<td><%=monthly_array_list.get(i).getMeter_type()%></td>
+				<td><%=dateYear %></td>
+				<td><%=monthly_array_list.get(i).getTotal_consumed()%></td>
 				<%
-					for (int col = 0; col < 31; col++) {
+				for(String  a : monthly_array_list.get(i).getConsumed_days()) {
 				%>
-				<td></td>
-				<%
-					}
-				%>
-				<%
-					}
-				%>
-			</tr>
+				<td><%=a %></td>
+			 	<%
+				}
+			 	%>
+			  </tr>
+			  <%
+			  }
+			  %>
 		</table>
 	</div>
 </div>
