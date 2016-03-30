@@ -41,14 +41,14 @@
 }
 
 .init_info{
-	height: 24%;
+	height: 14%;
 	border: thin solid black;
 	margin-bottom: 1%;
 }
 
 .init_info_sub {
-	margin-top: 5%;
-	margin-bottom: 10px;
+	/* margin-top: 5%;
+	margin-bottom: 10px; */
 	overflow: hidden;
 }
 

@@ -99,6 +99,36 @@
 			<li>부재중 알람 사용자 수 : 4명</li>
 		</ul>
 	</div>
+	<div class="init_info init_reverse">
+		<div class="init_info_sub">
+			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<h2>[역류]</h2>
+		</div>
+		<ul id="init_reverse_text">
+			<li>역류 동 개수 : 221동 </li>
+			<li>역류 사용자 수 : 1000명 </li>
+		</ul>
+	</div>
+	<div class="init_info init_fat">
+		<div class="init_info_sub">
+			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<h2>[비만관]</h2>
+		</div>
+		<ul id="init_fat_text">
+			<li>비만관 동 개수 : 221동 </li>
+			<li>비만관 사용자 수 : 1000명 </li>
+		</ul>
+	</div>
+	<div class="init_info init_breakage">
+		<div class="init_info_sub">
+			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<h2>[파손]</h2>
+		</div>
+		<ul id="init_breakage_text">
+			<li>파손 동 개수 : 221동 </li>
+			<li>파손 사용자 수 : 1000명 </li>
+		</ul>
+	</div>
 </div>
 
 
