@@ -16,50 +16,50 @@
 	%>
 
 
-	<div class="left_section_box_init" id="left_section_box_init">
-
-		<div class="init_info init_all_info">
-			<div class="init_info_sub">
-				<img alt="전체 아이콘" src="./img/combine.png" />
-				<h2>[전체]</h2>
-			</div>
-			<ul id="init_entire_text">
-				<li>전체 동 개수 : 221동</li>
-				<li>전체 사용자 수 : 1000명</li>
-			</ul>
+<div class="left_section_box2" id="left_section_box2">
+	<div class="info_date" id="info_date"></div>
+	<div class="info_icon">
+		<div class="info_wrapper">
+			<input type="checkbox"  id="checkBox_leak" class="checkBox" >
+			<div id ="check_leak" class="checkbox_text"></div>
 		</div>
-		<div class="init_info init_leak_info">
-			<div class="init_info_sub">
-				<img alt="누수 아이콘" src="./img/leak.png" />
-				<h2>[누수 경보]</h2>
-			</div>
-			<ul id="init_leak_text">
-				<li>누수 동 개수 : 5동</li>
-				<li>누수 사용자 수 : 5개</li>
-			</ul>
+		<div class="info_wrapper">
+			<input type="checkbox" id="checkBox_freezed" class="checkBox" >
+			<div id="check_freezed" class="checkbox_text"></div>
 		</div>
-		<div class="init_info init_freezed_info">
-			<div class="init_info_sub">
-				<img alt="동파 아이콘" src="./img/freezed.png" />
-				<h2>[동파 경보]</h2>
-			</div>
-			<ul id="init_freezed_text">
-				<li>동파 동 개수 : 6동</li>
-				<li>동파 사용자 수 : 6명</li>
-			</ul>
-		</div>
-		<div class="init_info init_absence">
-			<div class="init_info_sub">
-				<img alt="부재중 알람 아이콘" src="./img/absence.png" />
-				<h2>[부재중 알람]</h2>
-			</div>
-			<ul id="init_absence_text">
-				<li>부재중 알람 동 개수 : 4동</li>
-				<li>부재중 알람 사용자 수 : 4명</li>
-			</ul>
+		<div class="info_wrapper">
+			<input type="checkbox"  id="checkBox_absence" class="checkBox" > 
+			<div id="check_absence" class="checkbox_text"></div>
 		</div>
 	</div>
+	<div class="info_graph" id="info_graph">
+		<div class="leak_icon" id="leak_icon">
+		</div>
+		<div class="leak_info" id="leak_info"></div>
+	</div>
 
+	<div class="info_history" id="info_history">
+		<div class="freeze_icon" id="freeze_icon">
+		</div>
+		<div class="freeze_info" id="freeze_info"></div>
+	</div>
+
+	<div class="info_service" id="info_service">
+		<div class="info_leak" id="info_leak">
+			<div class="leak_text" id="leak_text"></div>
+			<div class="leak_graph" id="leak_graph">
+			</div>
+		</div>
+		<div class="info_absence" id="info_absence">
+			<div class="absence_text" id="absence_text"></div>
+			<div class="absence_graph" id="absence_graph"></div>
+		</div>
+		<div class="info_freezed" id="info_freezed">
+			<div class="freeze_text" id="freeze_text"></div>
+			<div class="freeze_graph" id="freeze_graph"></div>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>

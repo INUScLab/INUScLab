@@ -50,6 +50,19 @@
 			<img class="img_icon img_absence" id="img_absence"
 				onclick="absence_clicked('img_absence')">
 		</div>
+		
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class="img_icon img_reverse" id="img_reverse"
+				onclick="reverse_clicked('img_reverse')">
+		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class="img_icon img_fat" id="img_fat"
+				onclick="fat_clicked('img_fat')">
+		</div>
+		<div class="icon" onMouseOver="this.style.cursor='pointer'">
+			<img class="img_icon img_breakage" id="img_breakage"
+				onclick="breakage_clicked('img_breakage')">
+		</div>
 	</div>
 	<div id="map_canvas" style="width: 100%; height: 95%;"></div>
 	<div id="color-interpolation" class="color-interpolation"></div>
@@ -101,7 +114,7 @@
 	</div>
 	<div class="init_info init_reverse">
 		<div class="init_info_sub">
-			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<img alt="전체 아이콘" src="./img/reverse.png"/>
 			<h2>[역류]</h2>
 		</div>
 		<ul id="init_reverse_text">
@@ -111,7 +124,7 @@
 	</div>
 	<div class="init_info init_fat">
 		<div class="init_info_sub">
-			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<img alt="전체 아이콘" src="./img/fat.png"/>
 			<h2>[비만관]</h2>
 		</div>
 		<ul id="init_fat_text">
@@ -121,7 +134,7 @@
 	</div>
 	<div class="init_info init_breakage">
 		<div class="init_info_sub">
-			<img alt="전체 아이콘" src="./img/combine.png"/>
+			<img alt="전체 아이콘" src="./img/breakage.png"/>
 			<h2>[파손]</h2>
 		</div>
 		<ul id="init_breakage_text">

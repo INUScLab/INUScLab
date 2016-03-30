@@ -378,7 +378,6 @@ html, body {
 	overflow:hidden;
 	width:50px;
 	height:30px;
-	padding:5px;
 	border-color:solid 1px #FFFFFF;
 }
 .img_icon{
@@ -407,6 +406,23 @@ html, body {
 	background-image: url("../img/absence.png");
 	background-size:100% 100%;
 }
+
+.img_reverse {
+	background-image: url("../img/reverse.png");
+	background-size:100% 100%;
+}
+
+.img_fat {
+	background-image: url("../img/fat.png");
+	background-size:100% 100%;
+}
+
+.img_breakage {
+	background-image: url("../img/breakage.png");
+	background-size:100% 100%;
+}
+
+
 
 .selected {
 	background-color: yellow;
