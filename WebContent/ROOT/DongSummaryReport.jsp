@@ -11,11 +11,16 @@
 <jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
 
 	<%
-		String result = (String) request.getParameter("dong");
-		out.write(result);
+		String address = (String) request.getParameter("address");
+		
+		
 	%>
 
 
+<<script type="text/javascript"> 
+
+
+</script>
 <div class="left_section_box2" id="left_section_box2">
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
