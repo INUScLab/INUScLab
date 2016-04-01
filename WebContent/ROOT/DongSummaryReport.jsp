@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" import="sclab.db.*, java.util.*" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%@page import="sclab.db.SummaryReportCtrl"%>
+<%@page import="sclab.db.SummaryReport"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,21 +9,53 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="DongSummaryReport" class="sclab.db.DongSummaryReport" />
-<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
+<jsp:useBean id="DongSummaryReport" class="sclab.db.SummaryReport" />
+<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.SummaryReportCtrl" />
 
 	<%
 		String address = (String) request.getParameter("address");
-		
-		
+		SummaryReportCtrl summaryReportCtrl = new SummaryReportCtrl();
+		ArrayList<SummaryReport> summaryReportList = summaryReportCtrl.getSummaryReportList(address);
 	%>
 
 
 <<script type="text/javascript"> 
+var summaryReportList = new Array();
 
+<% for (int i=0; i < summaryReportList.size(); i++) { %>
+summaryReportList.push( {
+	gu:"<%= summaryReportList.get(i).getGuGun() %>",
+	dong:"<%= summaryReportList.get(i).getUmDong() %>",
+	detail:"<%= summaryReportList.get(i).getDetail() %>",
+	lat:"<%= summaryReportList.get(i).getLat() %>",
+	lng:"<%= summaryReportList.get(i).getLng() %>",
+	
+	leak:"<%= summaryReportList.get(i).getLeak() %>",
+	absence:"<%= summaryReportList.get(i).getAbsence() %>",
+	freezed:"<%= summaryReportList.get(i).getFreezed() %>",
+	reverse:"<%= summaryReportList.get(i).getReverse() %>",
+	fat:"<%= summaryReportList.get(i).getFat() %>",
+	breakage:"<%= summaryReportList.get(i).getBreakage()%>",
+
+	latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
+	latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
+	latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
+	latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
+	latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
+	latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
+	
+	day1:"<%= summaryReportList.get(i).getDay1()%>",
+	day2:"<%= summaryReportList.get(i).getDay2()%>",
+	day3:"<%= summaryReportList.get(i).getDay3()%>",
+	day4:"<%= summaryReportList.get(i).getDay4()%>",
+	day5:"<%= summaryReportList.get(i).getDay5()%>",
+	day6:"<%= summaryReportList.get(i).getDay6()%>",
+	day7:"<%= summaryReportList.get(i).getDay7()%>",
+});
+<% } %>
 
 </script>
-<div class="left_section_box2" id="left_section_box2">
+<div class="left_section_box2" id="left_section_box2"> 
 	<div class="info_date" id="info_date"></div>
 	<div class="info_icon">
 		<div class="info_wrapper">

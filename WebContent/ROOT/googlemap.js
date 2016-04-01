@@ -250,9 +250,9 @@ function callBack() {
 			// 정상적인 응답을 화면에 출력하는 함수 호출
 			console.log("Success!");
 			var result = xmlReq.responseText;
-			var msg = document.getElementById("left_section_box2");
-			msg.innerHTML = result;
 			console.log(result);
+			var msg = document.getElementById("left_section_box2");
+//			msg.innerHTML = result;
 		} else {
 			alert("처리 불가!");
 		}
