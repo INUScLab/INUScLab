@@ -215,7 +215,7 @@ function createDongMarkers( ) {
 			// 서버요청시 데이터 전송하는 부분
 			// 데이터가 두개 이상인 경우는
 			// 식별자=값&식별자=값&.... 형태로 작성
-			var postString = "dong=" + dongName;
+			var postString = "address=" + address;
 
 			// 응답이 돌아온다면 callback 함수 호출
 			// 이벤트 등록 부분

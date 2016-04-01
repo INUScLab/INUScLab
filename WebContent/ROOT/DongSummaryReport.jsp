@@ -11,7 +11,7 @@
 <jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
 
 	<%
-		String dong = (String) request.getParameter("dong");
+		String address = (String) request.getParameter("address");
 		
 		
 	%>
@@ -19,24 +19,7 @@
 
 <<script type="text/javascript"> 
 
-var dongInfoList = new Array();
 
-<% for (int i=0; i<dongInfoList.size(); i++) { %>
-dongInfoList.push( {
-	gu:"<%= dongInfoList.get(i).getGu() %>",
-	dong:"<%= dongInfoList.get(i).getDong() %>",
-	detail:"<%= dongInfoList.get(i).getLat() %>",
-	lat:"<%= dongInfoList.get(i).getLat() %>",
-	lng:"<%= dongInfoList.get(i).getLng() %>",
-	leak:"<%= dongInfoList.get(i).getCount_leak() %>",
-	absence:"<%= dongInfoList.get(i).getCount_absence() %>",
-	freezed:"<%= dongInfoList.get(i).getCount_freezed() %>",
-	reverse:"<%= dongInfoList.get(i).getCount_reverse() %>",
-	fat:"<%= dongInfoList.get(i).getCount_fat() %>",
-	breakage:"<%= dongInfoList.get(i).getCount_breakage() %>",
-	
-});
-<% } %>
 </script>
 <div class="left_section_box2" id="left_section_box2">
 	<div class="info_date" id="info_date"></div>
