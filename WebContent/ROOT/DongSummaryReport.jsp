@@ -1,28 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" import="sclab.db.*, java.util.*" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%@page import="sclab.db.SummaryReportCtrl"%>
+<%@page import="sclab.db.SummaryReport"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-<jsp:useBean id="DongSummaryReport" class="sclab.db.DongSummaryReport" />
-<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.DongSummaryReportCtrl" />
+<body onload="dongSummary()">
+<jsp:useBean id="DongSummaryReport" class="sclab.db.SummaryReport" />
+<jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.SummaryReportCtrl" />
 
 	<%
+		// 클릭한 동 주소를 넘겨받아서 다시 DB에 요약리포트에 필요한 정보를 요청함.
 		String address = (String) request.getParameter("address");
-		
-		
+		SummaryReportCtrl summaryReportCtrl = new SummaryReportCtrl();
+		ArrayList<SummaryReport> summaryReportList = summaryReportCtrl.getSummaryReportList();
+		String gu = summaryReportList.get(0).getGuGun();
 	%>
 
 
-<<script type="text/javascript"> 
 
 
-</script>
-<div class="left_section_box2" id="left_section_box2">
-	<div class="info_date" id="info_date"></div>
+<div class="left_section_box_report" id="left_section_box_report"> 
+	<div class="info_date" id="info_date"><%=gu%></div>
 	<div class="info_icon">
 		<div class="info_wrapper">
 			<input type="checkbox"  id="checkBox_leak" class="checkBox" >

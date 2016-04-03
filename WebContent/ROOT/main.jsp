@@ -25,8 +25,12 @@
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
+<jsp:useBean id="SummaryReport" class="sclab.db.SummaryReport" />
+<jsp:useBean id="SummaryReportCtrl" class="sclab.db.SummaryReportCtrl" />
 <%
 	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
+	ArrayList<SummaryReport> summaryReportList = SummaryReportCtrl.getSummaryReportList();
+
 %>
 <script type="text/javascript">	
 
@@ -45,9 +49,43 @@
 		reverse:"<%= dongInfoList.get(i).getCount_reverse() %>",
 		fat:"<%= dongInfoList.get(i).getCount_fat() %>",
 		breakage:"<%= dongInfoList.get(i).getCount_breakage() %>",
-		
 	});
 	<% } %>
+	
+	var summaryReportList = new Array();
+
+	<% for (int i=0; i < summaryReportList.size(); i++) { %>
+	summaryReportList.push( {
+		gu:"<%= summaryReportList.get(i).getGuGun() %>",
+		dong:"<%= summaryReportList.get(i).getUmDong() %>",
+		detail:"<%= summaryReportList.get(i).getDetail() %>",
+		lat:"<%= summaryReportList.get(i).getLat() %>",
+		lng:"<%= summaryReportList.get(i).getLng() %>",
+		
+		leak:"<%= summaryReportList.get(i).getLeak() %>",
+		absence:"<%= summaryReportList.get(i).getAbsence() %>",
+		freezed:"<%= summaryReportList.get(i).getFreezed() %>",
+		reverse:"<%= summaryReportList.get(i).getReverse() %>",
+		fat:"<%= summaryReportList.get(i).getFat() %>",
+		breakage:"<%= summaryReportList.get(i).getBreakage()%>",
+
+		latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
+		latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
+		latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
+		latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
+		latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
+		latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
+		
+		day1:"<%= summaryReportList.get(i).getDay1()%>",
+		day2:"<%= summaryReportList.get(i).getDay2()%>",
+		day3:"<%= summaryReportList.get(i).getDay3()%>",
+		day4:"<%= summaryReportList.get(i).getDay4()%>",
+		day5:"<%= summaryReportList.get(i).getDay5()%>",
+		day6:"<%= summaryReportList.get(i).getDay6()%>",
+		day7:"<%= summaryReportList.get(i).getDay7()%>",
+	});
+	<% } %>
+	
 </script>
 </head>
 <!--body-->

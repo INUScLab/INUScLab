@@ -1,6 +1,6 @@
 package sclab.db;
 
-public class DongSummaryReport {
+public class SummaryReport {
 	
 	String guGun;
 	String umDong;
@@ -34,13 +34,13 @@ public class DongSummaryReport {
 	double day7;
 	
 	
-	public DongSummaryReport() {
+	public SummaryReport() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public DongSummaryReport(String guGun, String umDong, String detail,
+	public SummaryReport(String guGun, String umDong, String detail,
 			double lat, double lng, double consumed, double predicted,
 			int leak, int absence, int freezed, int reverse, int fat,
 			int breakage, String latelyLeak, String latelyAbsence,

@@ -76,7 +76,7 @@ function initialize(x, y) {
 			
 			// 초기 리포트 페이지를 띄움.
 //			$("#left_section_box_init").show();
-//			$("#left_section_box2").hide();
+//			$("#left_section_box_report").hide();
 			
 			
 			
@@ -250,9 +250,15 @@ function callBack() {
 			// 정상적인 응답을 화면에 출력하는 함수 호출
 			console.log("Success!");
 			var result = xmlReq.responseText;
-			var msg = document.getElementById("left_section_box2");
-			msg.innerHTML = result;
 			console.log(result);
+			var msg = document.getElementById("left_section_box_report");
+			
+			// 초기 리포트 페이지를 숨김
+			$("#left_section_box_init").hide();
+			$("#left_section_box_report").show();
+			
+			msg.innerHTML = result;
+			
 		} else {
 			alert("처리 불가!");
 		}
@@ -260,400 +266,7 @@ function callBack() {
 	}
 }
 
-/*
- * 사용량/예측량/일주일 평균/지역 평균
- * 일주일간 히스토리 , 일주일 평균 사용량
- * 부가서비별 최근 한달간 발생 횟수/날짜.
- */
-// 요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
-function drawColumn(cons, pred, week, region) {
-	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-		role : "style"
-	} ], [ '사용량', cons, '#b87333' ], // RGB value
-	[ '예측량', pred, 'silver' ], // English color name
-	[ '일주일 평균', week, '#b87333' ], [ '지역 평균', region, '#b87333' ] ]);
 
-	var view = new google.visualization.DataView(data);
-	view.setColumns([ 0, 1, {
-		calc : "stringify",
-		sourceColumn : 1,
-		type : "string",
-		role : "annotation"
-	}, 2 ]);
-
-	var options = {
-		fontSize : 11,
-		bar : {
-			groupWidth : "80%"
-		},
-		legend : {
-			position : "none"
-		},
-		vAxis : {
-			minValue : 0,
-			viewWindow : {
-				min : 0
-			}
-		}
-	};
-
-	chart = new google.visualization.ColumnChart(document
-			.getElementById("info_graph"));
-
-	chart.draw(view, options);
-}
-
-// 부가서비스 누수 column 그래프
-function drawLeak(cons, pred, upperName, Name) {
-	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-		role : "style"
-	} ], [ Name, cons, '#b87333' ], // RGB value
-	[ upperName + '평균', pred, 'silver' ] // English color name
-	]);
-
-	var view = new google.visualization.DataView(data);
-	view.setColumns([ 0, 1, {
-		calc : "stringify",
-		sourceColumn : 1,
-		type : "string",
-		role : "annotation"
-	}, 2 ]);
-
-	var options = {
-		title : "누수횟수",
-		titleTextStyle : {
-			color : "black",
-			fontSize : 11
-		},
-		fontSize : 11,
-		bar : {
-			groupWidth : "50%"
-		},
-		legend : {
-			position : "none"
-		},
-		vAxis : {
-			minValue : 0,
-			viewWindow : {
-				min : 0
-			}
-		}
-	};
-
-	chart = new google.visualization.ColumnChart(document
-			.getElementById("leak_graph"));
-
-	chart.draw(view, options);
-}
-
-// 부가서비스 부재중 알람 column 그래프
-function drawAbsence(cons, pred, upperName, Name) {
-	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-		role : "style"
-	} ], [ Name, cons, '#b87333' ], // RGB value
-	[ upperName + '평균', pred, 'silver' ] // English color name
-	]);
-
-	var view = new google.visualization.DataView(data);
-	view.setColumns([ 0, 1, {
-		calc : "stringify",
-		sourceColumn : 1,
-		type : "string",
-		role : "annotation"
-	}, 2 ]);
-
-	var options = {
-		title : "부재중 알람 횟수",
-		titleTextStyle : {
-			color : "black",
-			fontSize : 11
-		},
-		fontSize : 11,
-		bar : {
-			groupWidth : "50%"
-		},
-		legend : {
-			position : "none"
-		},
-		vAxis : {
-			minValue : 0,
-			viewWindow : {
-				min : 0
-			}
-		}
-	};
-	chart = new google.visualization.ColumnChart(document
-			.getElementById("absence_graph"));
-	chart.draw(view, options);
-}
-
-// 부가서비스 동파 column 그래프
-function drawFreeze(cons, pred, upperName, Name) {
-	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
-		role : "style"
-	} ], [ Name, cons, '#b87333' ], // RGB value
-	[ upperName + '평균', pred, 'silver' ] // English color name
-	]);
-
-	var view = new google.visualization.DataView(data);
-	view.setColumns([ 0, 1, {
-		calc : "stringify",
-		sourceColumn : 1,
-		type : "string",
-		role : "annotation"
-	}, 2 ]);
-
-	var options = {
-		title : "동파 횟수",
-		titleTextStyle : {
-			color : "black",
-			fontSize : 11
-		},
-		fontSize : 11,
-		bar : {
-			groupWidth : "50%"
-		},
-		legend : {
-			position : "none"
-		},
-		vAxis : {
-			minValue : 0,
-			viewWindow : {
-				min : 0
-			}
-		}
-	};
-	chart = new google.visualization.ColumnChart(document
-			.getElementById("freeze_graph"));
-	chart.draw(view, options);
-}
-
-// 일주일간 히스토리 꺾은선 그래프 그리는 함수
-function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
-
-	var data = new google.visualization.DataTable();
-	data.addColumn('date', 'Time of Day');
-	data.addColumn('number', 'Consumption');
-	data.addColumn('number', 'Average');
-
-	data.addRows([ [ new Date(2015, 1, 22), day1, avg ],
-			[ new Date(2015, 1, 23), day2, avg ],
-			[ new Date(2015, 1, 24), day3, avg ],
-			[ new Date(2015, 1, 25), day4, avg ],
-			[ new Date(2015, 1, 26), day5, avg ],
-			[ new Date(2015, 1, 27), day6, avg ],
-			[ new Date(2015, 1, 28), day7, avg ], ]);
-
-	var options = {
-		title : "일주일 간 history",
-
-		titleTextStyle : {
-			color : "black",
-			fontSize : 15
-		},
-		hAxis : {
-			format : 'yy-MM-dd'
-		// gridlines: {count: 15}
-		},
-		vAxis : {
-			gridlines : {
-				color : 'none'
-			},
-		},
-		legend : {
-			position : "bottom"
-		},
-		series : {
-			1 : {
-				lineDashStyle : [ 5, 5 ]
-			}
-		}
-	};
-
-	var chart = new google.visualization.LineChart(document
-			.getElementById('info_history'));
-
-	chart.draw(data, options);
-}
-
-// 배열 내 중복된 값 제거하는 함수
-function removeArrayDuplicate(array) {
-	var a = {};
-
-	for (var i = 0; i < array.length; i++) {
-		if (typeof a[array[i]] == "undefined")
-			a[array[i]] = 1;
-	}
-	array.length = 0;
-	for ( var i in a)
-		array[array.length] = i;
-	return array;
-}
-
-// 동 요약 리포트
-function dongSummary(addressArray) {
-
-	var len = addressArray.length;
-	var siGoonSum = 0;
-	var siGoonLen = [];
-	var pred_sum = 0;
-	var weeks_sum = 0;
-	var day1 = 0;
-	var day2 = 0;
-	var day3 = 0;
-	var day4 = 0;
-	var day5 = 0;
-	var day6 = 0;
-	var day7 = 0;
-	var leak_date = "";
-	var monthAvg = 0;
-	var absence_date = "null";
-	var freeze_date = "null";
-	var address = "";
-	var siGoonLeak = 0;
-	var siGoonAbsence = 0;
-	var siGoonFreeze = 0;
-	cons_sum = 0;
-	cnt_leak = 0;
-	cnt_absence = 0;
-	cnt_freeze = 0;
-
-	// 초기 리포트 페이지를 숨김
-	$("#left_section_box_init").hide();
-	$("#left_section_box2").show();
-
-	for (var i = 0; i < len; i++) {
-		address += addressArray[i] + ' ';
-	}
-
-	for (var j = 0; DongSummaryReportList[j]; j++) {
-		// 히스토리
-		if (addressArray[len - 1] == DongSummaryReportList[j].umDong) {
-			day1 = Number(DongSummaryReportList[j].day1);
-			day2 = Number(DongSummaryReportList[j].day2);
-			day3 = Number(DongSummaryReportList[j].day3);
-			day4 = Number(DongSummaryReportList[j].day4);
-			day5 = Number(DongSummaryReportList[j].day5);
-			day6 = Number(DongSummaryReportList[j].day6);
-			day7 = Number(DongSummaryReportList[j].day7);
-			leak_date = DongSummaryReportList[j].latelyLeak;
-			monthAvg = Number(DongSummaryReportList[j].monthAverage);
-			;
-		}
-	}
-
-	// 동 사용량 예측량
-	for (var j = 0; userConsumptionList[j] != null; j++) {
-		if (addressArray[len - 2] == userConsumptionList[j].siGoon) {
-			siGoonSum += Number(userConsumptionList[j].consumed);
-			siGoonLen.push(userConsumptionList[j].umDong);
-			if (userConsumptionList[j].leak == '1') {
-				siGoonLeak++;
-			}
-			if (userConsumptionList[j].absence == '1') {
-				siGoonAbsence++;
-			}
-			if (userConsumptionList[j].freezed == '1') {
-				siGoonFreeze++;
-			}
-		}
-		if (addressArray[len - 1] == userConsumptionList[j].umDong) {
-			cons_sum += Number(userConsumptionList[j].consumed);
-			pred_sum += Number(userConsumptionList[j].predicted);
-
-			// 누수인 사람
-			if (userConsumptionList[j].leak == '1')
-				cnt_leak++;
-			// 부재중 알람
-			if (userConsumptionList[j].absence == '1')
-				cnt_absence++;
-			// 동파
-			if (userConsumptionList[j].freezed == '1')
-				cnt_freeze++;
-		}
-	}
-	siGoonLen = removeArrayDuplicate(siGoonLen);// 중복제거
-	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 + day7;
-
-	// 요약 report 주소칸
-	document.getElementById('info_date').innerHTML = address; // 주소 출력
-	info_date.style.fontSize = "100%"; // 주소 출력 폰트 사이즈
-
-	leak_text.style.fontSize = "80%";
-	absence_text.style.fontSize = "80%";
-	freeze_text.style.fontSize = "80%";
-
-	if (leak_date != "null")
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
-				+ leak_date;
-	else
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
-
-	if (absence_date != "null")
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
-				+ absence_date;
-	else
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
-
-	if (freeze_date != "null")
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 :' + ' '
-				+ freeze_date;
-	else
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 : 없음';
-
-	// 요약 report 사용량,예측량,평균
-	drawColumn(Math.round(cons_sum), Math.round(pred_sum), Math
-			.round(weeks_sum / 7), Math.round(siGoonSum / siGoonLen.length)); // column
-																				// 그래프그리기
-																				// (사용량,
-																				// 예측량
-																				// ,
-																				// 일주일
-																				// 평균,
-																				// 지역평균)
-
-	// 요약 report history 그래프 그리기
-	drawHistory(day7, day6, day5, day4, day3, day2, day1, monthAvg);
-
-	// 요약 report 부가서비스
-	drawLeak(cnt_leak, (siGoonLeak / siGoonLen.length).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]);
-	drawAbsence(cnt_absence, (siGoonAbsence / siGoonLen.length).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]); // 동 부재중 발생 횟수, 지역
-															// 평균 발생 횟수
-	drawFreeze(cnt_freeze, (siGoonFreeze / siGoonLen.length).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]);
-
-	if (cnt_leak != 0) {
-		var text_leak = "누수 : " + cnt_leak + "명";
-		$("#check_leak").text(text_leak);
-		$('#checkBox_leak').prop('checked', true);
-	} else {
-		$("#check_leak").text("누수 : 0명");
-		$('#checkBox_leak').prop('checked', false);
-	}
-
-	if (cnt_freeze != 0) {
-		var text_freezed = "동파 : " + cnt_freeze + "명";
-		$("#check_freezed").text(text_freezed);
-		$('#checkBox_freezed').prop('checked', true);
-	} else {
-		$("#check_freezed").text("동파 : 0명");
-		$('#checkBox_freezed').prop('checked', false);
-	}
-
-	if (cnt_absence != 0) {
-		var text_absence = "부재중 : " + cnt_absence + "명";
-		$("#check_absence").text(text_absence);
-		$('#checkBox_absence').prop('checked', true);
-	} else {
-		$("#check_absence").text("부재중 : 0명");
-		$('#checkBox_absence').prop('checked', false);
-	}
-	// 지도에 동에 해당하는 상세 주소 마커 띄우기
-	getDetailAreaInformation(addressArray);
-
-}
 
 // 사용자 요약 리포트
 function userSummary(addressArray) {
@@ -1018,7 +631,7 @@ function entire_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
-	$("#left_section_box2").hide();
+	$("#left_section_box_report").hide();
 	globalMap.setCenter(new google.maps.LatLng(37.4562557, 126.70520620000002));
 	globalMap.setOptions({
 		'zoom' : 13
@@ -1060,7 +673,7 @@ function leak_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
-	$("#left_section_box2").hide();
+	$("#left_section_box_report").hide();
 	globalMap.setCenter(new google.maps.LatLng(37.4562557, 126.70520620000002));
 	globalMap.setOptions({
 		'zoom' : 13
@@ -1095,7 +708,7 @@ function freezed_clicked(id) {
 	
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
-	$("#left_section_box2").hide();
+	$("#left_section_box_report").hide();
 	globalMap.setCenter(new google.maps.LatLng(37.4562557, 126.70520620000002));
 	globalMap.setOptions({
 		'zoom' : 13
@@ -1130,7 +743,7 @@ function absence_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.
 	$("#left_section_box_init").show();
-	$("#left_section_box2").hide();
+	$("#left_section_box_report").hide();
 	globalMap.setCenter(new google.maps.LatLng(37.4562557, 126.70520620000002));
 	globalMap.setOptions({
 		'zoom' : 13
