@@ -83,37 +83,54 @@
 
 .left_section_box_report .info_date {
 	width: 100%;
-	height: 40px;
+	height: 4%;
 	border: thin solid black;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 }
 
-.left_section_box_report .info_icon {
+.left_section_box_report .service_count {
 	width: 100%;
-	height: 40px;
+	height: 8%;
 	border: thin solid black;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
+}
+.left_section_box_report .checkBox {
+	float:left;
+	margin-left:7%;
+	margin-top:8%;
+}
+.info_wrapper{
+	float:left;
+	width:33.3%;
+	height:100%
+	margin-top:5px;
 }
 
+.checkbox_text{
+	float:left;
+	text-align:left;
+	margin-top:5%;
+	margin-left:5%;
+}
 .left_section_box_report .info_graph {
 	width: 100%;
 	height: 25%;
 	border: thin solid black;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 }
 
 .left_section_box_report .info_history {
 	width: 100%;
 	height: 25%;
 	border: thin solid black;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 }
 
 .left_section_box_report .info_service {
 	width: 100%;
 	height: 37%;
 	border: thin solid black;
-	margin-bottom: 5px;
+	margin-bottom: 2px;
 }
 
 .left_section_box_report .info_service .info_leak {
@@ -338,21 +355,6 @@ html, body {
 	height:32px;
 }
 
-.info_wrapper{
-	float:left;
-	width:33.3%;
-	height:100%;
-	margin-top:5px;
-}
-
-.checkbox_text{
-	float:right;
-	width:80px;
-	font-size:14px;
-	text-align:left;
-	margin-top:2px;
-
-}
 
 /* Address Label */
 #address_label {

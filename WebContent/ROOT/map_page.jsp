@@ -147,18 +147,30 @@
 
 <div class="left_section_box_report" id="left_section_box_report"> 
 	<div class="info_date" id="info_date"></div>
-	<div class="info_icon">
+	<div class="service_count">
 		<div class="info_wrapper">
-			<input type="checkbox"  id="checkBox_leak" class="checkBox" >
+			<input type="checkbox"  id="checkBox_leak" class="checkBox" value="누수 : ">
 			<div id ="check_leak" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox" id="checkBox_freezed" class="checkBox" >
+			<input type="checkbox" id="checkBox_freezed" class="checkBox" value="부재중 : ">
 			<div id="check_freezed" class="checkbox_text"></div>
 		</div>
 		<div class="info_wrapper">
-			<input type="checkbox"  id="checkBox_absence" class="checkBox" > 
+			<input type="checkbox"  id="checkBox_absence" class="checkBox" value="동파 : " >
 			<div id="check_absence" class="checkbox_text"></div>
+		</div>
+		<div class="info_wrapper">
+			<input type="checkbox"  id="checkBox_reverse" class="checkBox" value="역류 : ">
+			<div id="check_reverse" class="checkbox_text"></div>
+		</div>
+		<div class="info_wrapper">
+			<input type="checkbox"  id="checkBox_fat" class="checkBox" value="비만관 : ">
+			<div id="check_fat" class="checkbox_text"></div>
+		</div>
+		<div class="info_wrapper">
+			<input type="checkbox"  id="checkBox_breakage" class="checkBox" value="파손 : " >
+			<div id="check_breakage" class="checkbox_text"></div>
 		</div>
 	</div>
 	<div class="info_graph" id="info_graph">
