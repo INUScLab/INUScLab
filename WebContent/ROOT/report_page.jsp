@@ -1,3 +1,5 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
 <%@page import="sclab.db.DetailData"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.io.Console"%>
@@ -20,8 +22,6 @@
 	String meterNum = request.getParameter("meterNum");
 	String dateYear = request.getParameter("dateYear");
 	String dateMonth = request.getParameter("dateMonth");
-
-	
 
 	if (dateYear == null || dateYear.equals("")) dateYear = "2015";
 	if (dateMonth == null || dateMonth.equals("")) dateMonth = "02";
@@ -214,7 +214,7 @@
 				<td width="200px">검침월</td>
 				<td width="200px">사용량</td>
 				<%
-				for (int day = 1; day<=30; day++){
+				for (int day = 1; day<=31; day++){
 				%>
 				<td width="100px"><%=day %>일</td>
 				<%
@@ -238,8 +238,14 @@
 				%>
 				<td><%=a%></td>
 				<%
-					}
+				}
+				
+				for(int j=31-array_list.get(i).getConsumed_days().length; j >0; j--) {
 				%>
+				<td>0.00</td>
+				<%
+				}					
+			 	%>
 			</tr>
 			<%
 				}
@@ -344,8 +350,14 @@
 				<td><%=a %></td>
 			 	<%
 				}
+				
+				for(int j=12-monthly_array_list.get(i).getConsumed_days().length; j >0; j--) {
+				%>
+				<td>0.00</td>
+				<%
+				}					
 			 	%>
-			  </tr>
+				</tr>
 			  <%
 			  }
 			  %>
