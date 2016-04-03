@@ -158,11 +158,13 @@ function createDongMarkers( ) {
 
 	var redColor = "FF0000";
 	incheon = "인천광역시";
+	var count = 0;
+	
 
 	for (var i = 0; i < dongInfoList.length; i++) {
 
-		if ( dongInfoList[i].count_leak != 0 || dongInfoList[i].count_absence != 0 || dongInfoList[i].count_freezed != 0 ||
-				dongInfoList[i].count_reverse != 0 || dongInfoList[i].count_fat != 0 || dongInfoList[i].count_breakage != 0 ) {
+		if ( dongInfoList[i].leak != 0 || dongInfoList[i].absence != 0 || dongInfoList[i].freezed != 0 ||
+				dongInfoList[i].reverse != 0 || dongInfoList[i].fat != 0 || dongInfoList[i].breakage != 0 ) {
 
 			var latlng = new google.maps.LatLng(dongInfoList[i].lat , dongInfoList[i].lng);
 			
@@ -186,11 +188,11 @@ function createDongMarkers( ) {
 				shadow : pinShadow,
 				map:globalMap
 			});
-
 			dongMarkers.push(marker);
+			marker.set(globalMap);
 		}
 	}
-	showDongMarkers();
+//	showDongMarkers();
 	
 	// 생성한 전체 동들의 마커에 대한 요약리포트를 생성하는 이벤트 생성.
 	for (var i = 0; i < dongMarkers.length; i++) {
@@ -422,20 +424,6 @@ function drawHistory(day1, day2, day3, day4, day5, day6, day7, avg) {
 	chart.draw(data, options);
 }
 
-// 배열 내 중복된 값 제거하는 함수
-function removeArrayDuplicate(array) {
-	var a = {};
-
-	for (var i = 0; i < array.length; i++) {
-		if (typeof a[array[i]] == "undefined")
-			a[array[i]] = 1;
-	}
-	array.length = 0;
-	for ( var i in a)
-		array[array.length] = i;
-	return array;
-}
-
 // 동 요약 리포트
 /*
  * 2016.4.3 수정 : summaryReport데이터에서 요약리포트 만드는것으로 바꿈.(욱현)
@@ -484,19 +472,6 @@ function dongSummary(addressArray) {
 		address += addressArray[i] + ' ';
 	}
 
-	
-	/*
-	 *1.전체 수용가의 개수 만큼 반복한다.
-	 *	1.1 구 이름과 동 이름과 일치하는지 확인한다.
-	 *		1.1.1 사용량을 더한다.
-	 *		1.1.2 예측량을 더한다.
-	 *		1.1.3 이전 일주일치 사용량을 각각 더한다.
-	 *	1.2 일주일치 사용량을 누적하여 더한다.
-	 *2. 요약 리포트 사용량,예측량, 일주일 평균, 지역평균 그래프를 그린다.
-	 *3. 일주일치 histosry그래프를 그린다.
-	 *4.  
-	 */ 
-	
 	//클릭한 동에 해당하는 수용가의 수만큼 반복한다.
 	for (var j = 0; summaryReportList[j]; j++) {
 		if (gu == summaryReportList[j].gu ) {
@@ -553,6 +528,8 @@ function dongSummary(addressArray) {
 	document.getElementById('info_date').innerHTML = address; // 주소 출력
 	info_date.style.fontSize = "90%"; // 주소 출력 폰트 사이즈
 	
+	$(".checkBox").prop('checked', false) ;
+	
 	//2.부가서비스별 발생 횟수.
 	document.getElementById('check_leak').innerHTML = "누수 : " + count_leak + "명";
 	check_leak.style.fontSize = "80%";
@@ -593,10 +570,10 @@ function dongSummary(addressArray) {
 	//일주일치 사용량 합 구하기.
 	sum_weeklyConsumption += sum_day1 + sum_day2 + sum_day3 + sum_day4 + sum_day5 + sum_day6 + sum_day7;
 	
-	// 요약 report 사용량,예측량, 일주일 평균 , 지역 평균 그래프 그리기.
+	//3.요약 report 사용량,예측량, 일주일 평균 , 지역 평균 그래프 그리기.
 	drawColumn(Math.round(sum_consumed), Math.round(sum_predicted), Math.round(sum_weeklyConsumption/7) , Math.round(sum_consumed_gu / dongCount) ); 
 
-	// 요약 report history 그래프 그리기.
+	//4.요약 report history 그래프 그리기.
 	drawHistory(sum_day7 , sum_day6 , sum_day5 , sum_day4 , sum_day3 , sum_day2 , sum_day1 , sum_weeklyConsumption/7 );
 	
 
@@ -604,23 +581,23 @@ function dongSummary(addressArray) {
 	absence_text.style.fontSize = "80%";
 	freeze_text.style.fontSize = "80%";
 
-	if (leak_date != "null")
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
-				+ leak_date;
-	else
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
-
-	if (absence_date != "null")
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
-				+ absence_date;
-	else
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
-
-	if (freeze_date != "null")
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 :' + ' '
-				+ freeze_date;
-	else
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 : 없음';
+//	if (leak_date != "null")
+//		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
+//				+ leak_date;
+//	else
+//		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
+//
+//	if (absence_date != "null")
+//		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
+//				+ absence_date;
+//	else
+//		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
+//
+//	if (freeze_date != "null")
+//		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 :' + ' '
+//				+ freeze_date;
+//	else
+//		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 : 없음';
 
 
 	
@@ -797,7 +774,6 @@ function userSummary(addressArray) {
 function showDongMarkers() {
 	for (var i = 0; i < dongMarkers.length; i++) {
 		dongMarkers[i].setMap(globalMap);
-		console.log('test')
 	}
 }
 
