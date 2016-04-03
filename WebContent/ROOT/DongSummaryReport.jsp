@@ -8,55 +8,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body onload="dongSummary()">
 <jsp:useBean id="DongSummaryReport" class="sclab.db.SummaryReport" />
 <jsp:useBean id="DongSummaryReportCtrl" class="sclab.db.SummaryReportCtrl" />
 
 	<%
+		// 클릭한 동 주소를 넘겨받아서 다시 DB에 요약리포트에 필요한 정보를 요청함.
 		String address = (String) request.getParameter("address");
 		SummaryReportCtrl summaryReportCtrl = new SummaryReportCtrl();
-		ArrayList<SummaryReport> summaryReportList = summaryReportCtrl.getSummaryReportList(address);
+		ArrayList<SummaryReport> summaryReportList = summaryReportCtrl.getSummaryReportList();
+		String gu = summaryReportList.get(0).getGuGun();
 	%>
 
 
-<<script type="text/javascript"> 
-var summaryReportList = new Array();
 
-<% for (int i=0; i < summaryReportList.size(); i++) { %>
-summaryReportList.push( {
-	gu:"<%= summaryReportList.get(i).getGuGun() %>",
-	dong:"<%= summaryReportList.get(i).getUmDong() %>",
-	detail:"<%= summaryReportList.get(i).getDetail() %>",
-	lat:"<%= summaryReportList.get(i).getLat() %>",
-	lng:"<%= summaryReportList.get(i).getLng() %>",
-	
-	leak:"<%= summaryReportList.get(i).getLeak() %>",
-	absence:"<%= summaryReportList.get(i).getAbsence() %>",
-	freezed:"<%= summaryReportList.get(i).getFreezed() %>",
-	reverse:"<%= summaryReportList.get(i).getReverse() %>",
-	fat:"<%= summaryReportList.get(i).getFat() %>",
-	breakage:"<%= summaryReportList.get(i).getBreakage()%>",
 
-	latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
-	latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
-	latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
-	latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
-	latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
-	latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
-	
-	day1:"<%= summaryReportList.get(i).getDay1()%>",
-	day2:"<%= summaryReportList.get(i).getDay2()%>",
-	day3:"<%= summaryReportList.get(i).getDay3()%>",
-	day4:"<%= summaryReportList.get(i).getDay4()%>",
-	day5:"<%= summaryReportList.get(i).getDay5()%>",
-	day6:"<%= summaryReportList.get(i).getDay6()%>",
-	day7:"<%= summaryReportList.get(i).getDay7()%>",
-});
-<% } %>
-
-</script>
-<div class="left_section_box2" id="left_section_box2"> 
-	<div class="info_date" id="info_date"></div>
+<div class="left_section_box_report" id="left_section_box_report"> 
+	<div class="info_date" id="info_date"><%=gu%></div>
 	<div class="info_icon">
 		<div class="info_wrapper">
 			<input type="checkbox"  id="checkBox_leak" class="checkBox" >
