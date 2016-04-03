@@ -20,8 +20,6 @@
 	}'>
 </script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-
-<script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
@@ -30,7 +28,6 @@
 <%
 	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
 	ArrayList<SummaryReport> summaryReportList = SummaryReportCtrl.getSummaryReportList();
-
 %>
 <script type="text/javascript">	
 
