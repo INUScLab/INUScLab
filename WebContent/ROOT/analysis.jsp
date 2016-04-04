@@ -105,66 +105,7 @@
 
 <!-- 일별 -->
 <div id="searchByDay">
-	<div class="searchBy_searchbox">
-		<form action="main.jsp?MENU_NUM=1" method="post">
-			<table border="1" cellspacing="0" width="100%">
-				<tr>
-					<td colspan="7"><select name="si" id="si_select">
-							<option value="전체">시</option>
-							<option value="인천광역시">인천광역시</option>
-					</select> <select name="guGun" id="analysis_guGun_select">
-							<option value="전체">구/군</option>
-							<option value="강화군">강화군</option>
-							<option value="계양구">계양구</option>
-							<option value="남구">남구</option>
-							<option value="남동구">남동구</option>
-							<option value="동구">동구</option>
-							<option value="부평구">부평구</option>
-							<option value="서구">서구</option>
-							<option value="연수구">연수구</option>
-							<option value="웅진군">웅진군</option>
-							<option value="중구">중구</option>
-					</select> <select name="umDong" id="analysis_umDong_select">
-							<option value="전체">읍/면/동</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td>수용가 번호</td>
-					<td align="left"><input type="text" name="consumerNum" /></td>
-					<td>수용가 명</td>
-					<td align="left"><input type="text" name="consumerName" /></td>
-					<td>지시부 번호</td>
-					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" id="form_daily_search"/></td>
-				</tr>
-				<tr>
-					<td>미터 번호</td>
-					<td align="left"><input type="text" name="meterNum" /></td>
-					<td>검 색 월</td>
-					<td align="left" colspan="3">
-						<input type="text" name=""/>~<input type="text" name=""/>
-					</td>
-				</tr>
-
-			</table>
-		</form>
-	</div>
-	<div class="data_view">
-		<table cellspacing="0" border="1">
-			<tr height="50px">
-				<td width="100px">수용가번호</td>
-				<td width="200px">수용가명</td>
-				<td width="200px">지시부번호</td>
-				<td width="200px">미터번호</td>
-				<td width="200px">미터타입</td>
-				<td width="200px">검침기간</td>
-				<td width="200px">총사용량</td>
-				<td width="200px">일수</td>
-				<td width="200px">일 평균 사용량</td>
-			</tr>
-			
-		</table>
-	</div>
+	<jsp:include page="analysis_day.jsp"/>
 </div>
 
 <!-- 월별 -->
