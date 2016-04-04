@@ -8,17 +8,35 @@
 <jsp:useBean id="adctrl" class="sclab.db.AnalysisDataCtrl"/>
 
 <%
+String si = request.getParameter("si");
+String guGun = request.getParameter("guGun");
+String umDong = request.getParameter("umDong");
+String consumerNum = request.getParameter("consumerNum");
+String consumerName = request.getParameter("consumerName");
+String telNumber = request.getParameter("telNumber");
+String meterNum = request.getParameter("meterNum");
+String sdate = request.getParameter("sdate");
+String edate = request.getParameter("edate");
+
+if (sdate == null || sdate.equals("")) sdate = "";
+if (edate == null || edate.equals("")) edate = "";
+if (si == null || si.equals("")) si = "인천광역시";
+if (guGun == null || guGun.equals("")) guGun = "전체";
+if (umDong == null || umDong.equals("")) umDong = "전체";	
+if (consumerNum != null) if(consumerNum.equals("")) consumerNum = null;	
+if (consumerName != null) if(consumerName.equals("")) consumerName = null;	
+if (telNumber != null) if(telNumber.equals("")) telNumber = null;	
+if (meterNum != null) if(meterNum.equals("")) meterNum = null;																																				
 	
 	
 	
-	
-	ArrayList<AnalysisData> array_list = adctrl.returnDatas("인천광역시",null,null,null,null,null,null,"2015",null,null,"2015",null,null);
+	ArrayList<AnalysisData> array_list = adctrl.returnDatas(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,"2015",null,null,"2015",null,null);
 
 %>
 
 
 <div class="searchBy_searchbox">
-		<form action="main.jsp?MENU_NUM=1" method="post">
+		<form action="main.jsp?MENU_NUM=4" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td colspan="7"><select name="si" id="si_select">
