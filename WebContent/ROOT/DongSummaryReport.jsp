@@ -21,10 +21,44 @@
 	%>
 
 
+<<script type="text/javascript"> 
+var summaryReportList = new Array();
 
+<% for (int i=0; i < summaryReportList.size(); i++) { %>
+summaryReportList.push( {
+	gu:"<%= summaryReportList.get(i).getGuGun() %>",
+	dong:"<%= summaryReportList.get(i).getUmDong() %>",
+	detail:"<%= summaryReportList.get(i).getDetail() %>",
+	lat:"<%= summaryReportList.get(i).getLat() %>",
+	lng:"<%= summaryReportList.get(i).getLng() %>",
+	
+	leak:"<%= summaryReportList.get(i).getLeak() %>",
+	absence:"<%= summaryReportList.get(i).getAbsence() %>",
+	freezed:"<%= summaryReportList.get(i).getFreezed() %>",
+	reverse:"<%= summaryReportList.get(i).getReverse() %>",
+	fat:"<%= summaryReportList.get(i).getFat() %>",
+	breakage:"<%= summaryReportList.get(i).getBreakage()%>",
+
+	latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
+	latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
+	latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
+	latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
+	latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
+	latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
+	
+	day1:"<%= summaryReportList.get(i).getDay1()%>",
+	day2:"<%= summaryReportList.get(i).getDay2()%>",
+	day3:"<%= summaryReportList.get(i).getDay3()%>",
+	day4:"<%= summaryReportList.get(i).getDay4()%>",
+	day5:"<%= summaryReportList.get(i).getDay5()%>",
+	day6:"<%= summaryReportList.get(i).getDay6()%>",
+	day7:"<%= summaryReportList.get(i).getDay7()%>",
+});
+<% } %>
+</script>
 
 <div class="left_section_box_report" id="left_section_box_report"> 
-	<div class="info_date" id="info_date"><%=gu%></div>
+	<div class="info_date" id="info_date"><%= %></div>
 	<div class="info_icon">
 		<div class="info_wrapper">
 			<input type="checkbox"  id="checkBox_leak" class="checkBox" >

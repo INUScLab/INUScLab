@@ -16,12 +16,10 @@
 		"name":"visualization",
 		"version":"1",
 		"packages":["corechart","controls","table"]
-		}]
+		}] 
 	}'>
 </script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-
-<script type="text/javascript" src="dtree.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
@@ -30,7 +28,6 @@
 <%
 	ArrayList<DongInfo> dongInfoList = DongInfoCtrl.getDongInfoList();
 	ArrayList<SummaryReport> summaryReportList = SummaryReportCtrl.getSummaryReportList();
-
 %>
 <script type="text/javascript">	
 
@@ -61,6 +58,9 @@
 		detail:"<%= summaryReportList.get(i).getDetail() %>",
 		lat:"<%= summaryReportList.get(i).getLat() %>",
 		lng:"<%= summaryReportList.get(i).getLng() %>",
+
+		consumed:"<%= summaryReportList.get(i).getConsumed() %>",
+		predicted:"<%= summaryReportList.get(i).getPredicted() %>",
 		
 		leak:"<%= summaryReportList.get(i).getLeak() %>",
 		absence:"<%= summaryReportList.get(i).getAbsence() %>",
@@ -68,13 +68,6 @@
 		reverse:"<%= summaryReportList.get(i).getReverse() %>",
 		fat:"<%= summaryReportList.get(i).getFat() %>",
 		breakage:"<%= summaryReportList.get(i).getBreakage()%>",
-
-		latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
-		latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
-		latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
-		latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
-		latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
-		latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
 		
 		day1:"<%= summaryReportList.get(i).getDay1()%>",
 		day2:"<%= summaryReportList.get(i).getDay2()%>",
@@ -83,6 +76,14 @@
 		day5:"<%= summaryReportList.get(i).getDay5()%>",
 		day6:"<%= summaryReportList.get(i).getDay6()%>",
 		day7:"<%= summaryReportList.get(i).getDay7()%>",
+
+		latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
+		latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
+		latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
+		latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
+		latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
+		latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
+		
 	});
 	<% } %>
 	
