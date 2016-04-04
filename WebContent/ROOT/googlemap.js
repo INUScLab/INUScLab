@@ -15,7 +15,7 @@ var absence_flag = false;
 var abnormalColor = "FF0000";
 var normalColor = "2ECCFA";
 var incheon = "인천광역시";
-var infoWindow ;
+var infoWindow  = new google.maps.InfoWindow({ content: 'InfoWindow' });
 
 // 맵 초기화
 function initialize(x, y) {
@@ -114,24 +114,35 @@ function initialize(x, y) {
 				var optionSelected = $("option:selected", this);
 				var textSelected = optionSelected.text();
 
-				for (var i = 0; i < guDongLatLngList.length; i++) {
+				//초기화
+//				infoWindow.close();
+				hideDongMarkers();
+				hideConsumerMarkersMarkers();
+				
+				for (var i = 0; i < dongInfoList.length; i++) {
 					if (dongInfoList[i].dong == textSelected) {
 
-						// 초기 리포트hide
+						var addressArray = [ ];
+						addressArray[0] = incheon;
+						addressArray[1] = dongInfoList[i].gu;
+						addressArray[2] = dongInfoList[i].dong;
 
-						// 여기다가 요약 리포트 추가 코드 넣으셈 수창
-						var addressArray = [];
-						addressArray[0] = "인천광역시";
-						addressArray[1] = dongInfoList[i].guGun;
-						addressArray[2] = dongInfoList[i].umDong;
-						dongSummary(addressArray);
+						globalMap.setCenter( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng ) );
+						globalMap.setOptions({ 'zoom' : 15 });
 
-						globalMap.setOptions({
-							'zoom' : 16
-						});
-						globalMap.setCenter(new google.maps.LatLng(
-								dongInfoList[i].lat,
-								dongInfoList[i].lng));
+						//마커를 지우고 infoWindow 생성.
+						infoWindow.setContent( incheon + ' ' + dongInfoList[i].gu + ' ' + dongInfoList[i].dong );
+						infoWindow.setPosition( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng) ) ;
+						infoWindow.open( globalMap );
+
+						dongMarkers[i].setMap(null);
+						console.log(dongMarkers[i]);
+						console.log(textSelected);
+						
+						hideDongMarkers();
+						
+						drawDongSummaryReport(addressArray) // 요약 리포트
+						createConsumerMarkers(addressArray); //수용가 마커 생성. 
 					}
 				}
 			});
@@ -142,11 +153,10 @@ function initialize(x, y) {
 		var textSelected = optionSelected.text();
 
 		var umDong_select = document.getElementById("umDong_select");
-		for (var i = 0; i < DongSummaryReportList.length; i++) {
-			if (DongSummaryReportList[i].guGun == textSelected) {
+		for (var i = 0; i < dongInfoList.length; i++) {
+			if (dongInfoList [i].gu == textSelected) {
 				var option = document.createElement("option");
-				option.text = DongSummaryReportList[i].umDong;
-				console.log(option.text);
+				option.text = dongInfoList[i].dong;
 				umDong_select.add(option);
 			}
 		}
@@ -194,10 +204,10 @@ function createDongMarkers( ) {
 				globalMap.setOptions({ 'zoom' : 15 });
 
 				//마커를 지우고 infoWindow 생성.
-				this.setMap(null);
-				infoWindow = new google.maps.InfoWindow({ content: this.title });
+				infoWindow.setContent( this.title );
 				infoWindow.setPosition( this.position );
 				infoWindow.open( globalMap );
+				this.setMap(null);
 				
 				hideDongMarkers();
 
@@ -799,133 +809,6 @@ function drawDongSummaryReport(addressArray) {
 
 }
 
-
-// 사용자 요약 리포트
-function userSummary(addressArray) {
-
-	var len = addressArray.length;
-	var cons = 0;
-	var len_detail = detailMarkers.length;
-	var pred = 0;
-	var leak = 0;
-	var absence = 0;
-	var leak_date = "";
-	var absence_date = "null";
-	var freeze_date = "null";
-	var address = "";
-	var day1 = 0;
-	var day2 = 0;
-	var day3 = 0;
-	var day4 = 0;
-	var day5 = 0;
-	var day6 = 0;
-	var day7 = 0;
-	var monthAvg = 0;
-	var week_sum = 0;
-	var freeze = 0;
-
-	for (var i = 0; i < len; i++) {
-		address += addressArray[i] + ' ';
-	}
-
-	// 사용자 사용량 예측량
-	for (var j = 0; userConsumptionList[j] != null; j++) {
-
-		if (addressArray[len - 1] == userConsumptionList[j].detail) {
-			cons = Number(userConsumptionList[j].consumed);
-			pred = Number(userConsumptionList[j].predicted);
-
-			// 누수인 사람
-			if (userConsumptionList[j].leak == '1')
-				leak++;
-			// 부재중 알람
-			if (userConsumptionList[j].absence == '1')
-				absence++;
-			if (userConsumptionList[j].freezed == '1')
-				freeze++;
-		}
-	}
-
-	for (var j = 0; UserSummaryReportList[j]; j++) {
-		// 히스토리
-		if (addressArray[len - 1] == UserSummaryReportList[j].detail) {
-			day1 = Number(UserSummaryReportList[j].day1);
-			day2 = Number(UserSummaryReportList[j].day2);
-			day3 = Number(UserSummaryReportList[j].day3);
-			day4 = Number(UserSummaryReportList[j].day4);
-			day5 = Number(UserSummaryReportList[j].day5);
-			day6 = Number(UserSummaryReportList[j].day6);
-			day7 = Number(UserSummaryReportList[j].day7);
-			leak_date = UserSummaryReportList[j].latelyLeak;
-			monthAvg = Number(UserSummaryReportList[j].monthAverage);
-		}
-	}
-	weeks_sum = day1 + day2 + day3 + day4 + day5 + day6 + day7;
-
-	document.getElementById('info_date').innerHTML = address;
-	info_date.style.fontSize = "100%";
-	leak_text.style.fontSize = "80%";
-	absence_text.style.fontSize = "80%";
-	freeze_text.style.fontSize = "80%";
-
-	if (leak_date != "null")
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 :' + ' '
-				+ leak_date;
-	else
-		document.getElementById('leak_text').innerHTML = '최근 누수 날짜 : 없음';
-
-	if (absence_date != "null")
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 :' + ' '
-				+ absence_date;
-	else
-		document.getElementById('absence_text').innerHTML = '최근 부재중 날짜 : 없음';
-
-	if (freeze_date != "null")
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 :' + ' '
-				+ freeze_date;
-	else
-		document.getElementById('freeze_text').innerHTML = '최근 동파 날짜 : 없음';
-
-	drawColumn(Math.round(cons), Math.round(pred), Math.round(weeks_sum / 7),
-			Math.round(cons_sum / len_detail)); // column 그래프 (사용량, 예측량, 일주일 평균,
-												// 지역평균)
-	drawHistory(day7, day6, day5, day4, day3, day2, day1, monthAvg); // history
-																		// 그래프
-																		// 그리기
-	drawLeak(leak, (cnt_leak / len_detail).toFixed(2), addressArray[len - 2],
-			addressArray[len - 1]); // 누수횟수, 지역평균 누수횟수,
-	drawAbsence(absence, (cnt_absence / len_detail).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]); // 부재중 횟수, 지역평균 횟수
-	drawFreeze(freeze, (cnt_freeze / len_detail).toFixed(2),
-			addressArray[len - 2], addressArray[len - 1]);
-
-	if (leak != 0) {
-		$("#check_leak").text("누수");
-		$('#checkBox_leak').prop('checked', true);
-	} else {
-		$("#check_leak").text("누수");
-		$('#checkBox_leak').prop('checked', false);
-	}
-
-	if (freeze != 0) {
-		$("#check_freezed").text("동파");
-		$('#checkBox_freezed').prop('checked', true);
-	} else {
-		$("#check_freezed").text("동파");
-		$('#checkBox_freezed').prop('checked', false);
-	}
-
-	if (absence != 0) {
-		$("#check_absence").text("부재중");
-		$('#checkBox_absence').prop('checked', true);
-	} else {
-		$("#check_absence").text("부재중");
-		$('#checkBox_absence').prop('checked', false);
-	}
-
-}
-
-
 // 전체 동들의 마커를 지도에 출력
 function showDongMarkers() {
 	for (var i = 0; i < dongMarkers.length; i++) {
@@ -956,83 +839,6 @@ function hideConsumerMarkersMarkers() {
 		i++;
 	}
 	consumerMarkers = [ ];
-}
-
-// 동에 해당하는 사용자들의 마커를 생성하고 요약 리포트를 띄움
-function getDetailAreaInformation(addressArray) {
-
-	var abnormalColor = "FF0000";
-	var normalColor = "00FFBC";
-	var color = "";
-
-	// 모든 마커를 지움.
-//	hideEntireDongMarkers(); 3.8 initialize() 에서 생성하지 않아서 숨길 필요 없음.
-	hideDetailMarkers(); //초기화
-
-	// 구글맵에서 동을 검색했을때 확대되는 줌 값.
-	if (globalMap.getZoom() < 16) {
-		globalMap.setOptions({
-			'zoom' : 16
-		});
-	}
-
-	// 동에 해당하는 상세 주소 리스트를 받아오고 마커를 생성하고 띄움.
-	for (var i = 0; i < userConsumptionList.length; i++) {
-		
-		// 누수 아이콘이 켜져있고 해당하는 동에 누수인 사람들이 있으면
-		if ((entire_flag == true || leak_flag == true) && userConsumptionList[i].umDong == addressArray[2] ) {
-			
-			//해당 동인 수용가 중에서 한가지라도 이상있는 수용가가 있으면 빨간색 마커 
-			if( ( userConsumptionList[i].leak == 1 || userConsumptionList[i].freezed == 1 || userConsumptionList[i].absence == 1 ) ) {
-				color = abnormalColor;
-			}
-			//정상이면 초록초록
-			else{
-				color = normalColor;
-			}
-
-			// Create Marker
-			var pinImage = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-							+ color, new google.maps.Size(21, 34),
-					new google.maps.Point(0, 0), new google.maps.Point(10, 34));
-			var pinShadow = new google.maps.MarkerImage(
-					"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-					new google.maps.Size(40, 37), new google.maps.Point(0, 0),
-					new google.maps.Point(12, 35));
-
-			var marker = new google.maps.Marker(
-					{
-						title : addressArray[0] + " " + addressArray[1] + " "
-								+ addressArray[2] + " "
-								+ userConsumptionList[i].detail,
-						position : new google.maps.LatLng(
-								userConsumptionList[i].lat,
-								userConsumptionList[i].lng),
-						draggable : false,
-						icon : pinImage,
-						shadow : pinShadow,
-					});
-			detailMarkers.push(marker);
-		}
-
-	}
-	
-	//동에 해당하는 모든 마커를 만들고 나서 출력.
-	showDetailMarkers();
-
-	// 사용자를 클릭했을때 이벤트
-	for (var i = 0; i < detailMarkers.length; i++) {
-		detailMarkers[i].addListener('click', function() {
-
-			// globalMap.setCenter(this.position);
-			var address = this.title;
-			var addressArray = address.split(' ');
-
-			userSummary(addressArray); // 요약리포트
-		});
-	}
-
 }
 
 // 지도 검색 - 자동완성 기능을 사용했을때와 그냥 동 이름을 검색했을때를 다시 생각할것.
