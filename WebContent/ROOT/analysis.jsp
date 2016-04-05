@@ -42,50 +42,24 @@
 		/* tab 기능 */
 		
 						/* 주소 검색 기능 */
-						$('#report_guGun_select')
-								.change(
-										function(e) {
-											$('#analysis_umDong_select')
-													.html('')
-													.append(
-															"<option value=''>읍/면/동</option>");
-											var optionSelected = $(
-													"option:selected", this);
-											var textSelected = optionSelected
-													.text();
+						$('#analysis_guGun_select').change(
+						function(e) {
+							$('#analysis_umDong_select').html('').append(
+									"<option value=''>읍/면/동</option>");
+							var optionSelected = $("option:selected", this);
+							var textSelected = optionSelected.text();
 
-											var umDong_select = document
-													.getElementById("analysis_umDong_select");
-											for (var i = 0; i < DongSummaryReportList.length; i++) {
-												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document
-															.createElement("option");
-													option.text = DongSummaryReportList[i].umDong;
-													umDong_select.add(option);
-												}
-											}
-										});
-
-						$('#analysis_umDong_select')
-								.change(
-										function(e) {
-											var optionSelected = $(
-													"option:selected", this);
-											var textSelected = optionSelected
-													.text();
-
-											var umDong_select = document
-													.getElementById("analysis_umDong_select");
-											for (var i = 0; i < DongSummaryReportList.length; i++) {
-												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document
-															.createElement("option");
-													option.text = DongSummaryReportList[i].umDong;
-													console.log(option.text);
-													umDong_select.add(option);
-												}
-											}
-										});
+							var umDong_select = document
+									.getElementById("analysis_umDong_select");
+							for (var i = 0; i < dongInfoList.length; i++) {
+								if (dongInfoList[i].gu == textSelected) {
+									var option = document
+											.createElement("option");
+									option.text = dongInfoList[i].dong;
+									umDong_select.add(option);
+								}
+							}
+						});
 						/* 주소 검색 기능 */
 
 					});

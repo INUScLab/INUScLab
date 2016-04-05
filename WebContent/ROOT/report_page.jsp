@@ -23,102 +23,91 @@
 	String dateYear = request.getParameter("dateYear");
 	String dateMonth = request.getParameter("dateMonth");
 
-	if (dateYear == null || dateYear.equals("")) dateYear = "2015";
-	if (dateMonth == null || dateMonth.equals("")) dateMonth = "02";
-	if (si == null || si.equals("")) si = "인천광역시";
-	if (guGun == null || guGun.equals("")) guGun = "부평구";
-	if (umDong == null || umDong.equals("")) umDong = "전체";	
-	if (consumerNum != null) if(consumerNum.equals("")) consumerNum = null;	
-	if (consumerName != null) if(consumerName.equals("")) consumerName = null;	
-	if (telNumber != null) if(telNumber.equals("")) telNumber = null;	
-	if (meterNum != null) if(meterNum.equals("")) meterNum = null;
-	
+	if (dateYear == null || dateYear.equals(""))
+		dateYear = "2015";
+	if (dateMonth == null || dateMonth.equals(""))
+		dateMonth = "02";
+	if (si == null || si.equals(""))
+		si = "인천광역시";
+	if (guGun == null || guGun.equals(""))
+		guGun = "부평구";
+	if (umDong == null || umDong.equals(""))
+		umDong = "전체";
+	if (consumerNum != null)
+		if (consumerNum.equals(""))
+			consumerNum = null;
+	if (consumerName != null)
+		if (consumerName.equals(""))
+			consumerName = null;
+	if (telNumber != null)
+		if (telNumber.equals(""))
+			telNumber = null;
+	if (meterNum != null)
+		if (meterNum.equals(""))
+			meterNum = null;
+
 	ArrayList<DetailData> array_list = ddctrl.returnDatas(si, guGun, umDong, consumerNum, consumerName,
 			telNumber, meterNum, dateYear, dateMonth);
 	//ArrayList<DetailData> array_list = ddctrl.returnDatas("인천광역시","부평구","전체",consumerNum,consumerName,telNumber,meterNum,"2015","02");
-	ArrayList<DetailData> monthly_array_list = ddctrl2.returnDatas2(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,dateYear);
+	ArrayList<DetailData> monthly_array_list = ddctrl2.returnDatas2(si, guGun, umDong, consumerNum,
+			consumerName, telNumber, meterNum, dateYear);
 %>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-						$("#searchByMonth").addClass("tab_nonvisible");
-						
-						/* $("#form_monthly_search").click(function() {
-							$("#searchByMonth").addClass("tab_visible");
-							$("#searchByDay").addClass("tab_nonvisible");
+	$(document).ready(
+			function() {
+				$("#searchByMonth").addClass("tab_nonvisible");
+
+				/* $("#form_monthly_search").click(function() {
+					$("#searchByMonth").addClass("tab_visible");
+					$("#searchByDay").addClass("tab_nonvisible");
+				});
+				
+				$("#form_daily_search").click(function() {
+					$("#searchByMonth").addClass("tab_nonvisible");
+					$("#searchByDay").addClass("tab_visible");
+				}); */
+
+				/* tab 기능 */
+				$("#tab_searchByDay").click(function() {
+					$("#searchByDay").removeClass("tab_nonvisible");
+					$("#searchByMonth").removeClass("tab_visible");
+
+					$("#searchByDay").addClass("tab_visible");
+					$("#searchByMonth").addClass("tab_nonvisible");
+				});
+
+				$("#tab_searchByMonth").click(function() {
+					$("#searchByMonth").removeClass("tab_nonvisible");
+					$("#searchByDay").removeClass("tab_visible");
+
+					$("#searchByMonth").addClass("tab_visible");
+					$("#searchByDay").addClass("tab_nonvisible");
+				});
+				/* tab 기능 */
+
+				/* 주소 검색 기능 */
+				$('#report_guGun_select').change(
+						function(e) {
+							$('#report_umDong_select').html('').append(
+									"<option value=''>읍/면/동</option>");
+							var optionSelected = $("option:selected", this);
+							var textSelected = optionSelected.text();
+
+							var umDong_select = document
+									.getElementById("report_umDong_select");
+							for (var i = 0; i < dongInfoList.length; i++) {
+								if (dongInfoList[i].gu == textSelected) {
+									var option = document
+											.createElement("option");
+									option.text = dongInfoList[i].dong;
+									umDong_select.add(option);
+								}
+							}
 						});
-						
-						$("#form_daily_search").click(function() {
-							$("#searchByMonth").addClass("tab_nonvisible");
-							$("#searchByDay").addClass("tab_visible");
-						}); */
-						
-						/* tab 기능 */
-						$("#tab_searchByDay").click(function() {
-							$("#searchByDay").removeClass("tab_nonvisible");
-							$("#searchByMonth").removeClass("tab_visible");
+				/* 주소 검색 기능 */
 
-							$("#searchByDay").addClass("tab_visible");
-							$("#searchByMonth").addClass("tab_nonvisible");
-						});
-
-						$("#tab_searchByMonth").click(function() {
-							$("#searchByMonth").removeClass("tab_nonvisible");
-							$("#searchByDay").removeClass("tab_visible");
-
-							$("#searchByMonth").addClass("tab_visible");
-							$("#searchByDay").addClass("tab_nonvisible");
-						});
-						/* tab 기능 */
-
-						/* 주소 검색 기능 */
-						$('#report_guGun_select')
-								.change(
-										function(e) {
-											$('#report_umDong_select')
-													.html('')
-													.append(
-															"<option value=''>읍/면/동</option>");
-											var optionSelected = $(
-													"option:selected", this);
-											var textSelected = optionSelected
-													.text();
-
-											var umDong_select = document
-													.getElementById("report_umDong_select");
-											for (var i = 0; i < DongSummaryReportList.length; i++) {
-												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document
-															.createElement("option");
-													option.text = DongSummaryReportList[i].umDong;
-													umDong_select.add(option);
-												}
-											}
-										});
-
-						$('#report_umDong_select')
-								.change(
-										function(e) {
-											var optionSelected = $(
-													"option:selected", this);
-											var textSelected = optionSelected
-													.text();
-
-											var umDong_select = document
-													.getElementById("umDong_select");
-											for (var i = 0; i < DongSummaryReportList.length; i++) {
-												if (DongSummaryReportList[i].guGun == textSelected) {
-													var option = document
-															.createElement("option");
-													option.text = DongSummaryReportList[i].umDong;
-													console.log(option.text);
-													umDong_select.add(option);
-												}
-											}
-										});
-						/* 주소 검색 기능 */
-
-					});
+			});
 </script>
 
 
@@ -163,7 +152,8 @@
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
 					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" id="form_daily_search"/></td>
+					<td rowspan="2"><input type="submit" value="검색"
+						id="form_daily_search" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -214,9 +204,9 @@
 				<td width="200px">검침월</td>
 				<td width="200px">사용량</td>
 				<%
-				for (int day = 1; day<=31; day++){
+					for (int day = 1; day <= 31; day++) {
 				%>
-				<td width="100px"><%=day %>일</td>
+				<td width="100px"><%=day%>일</td>
 				<%
 					}
 				%>
@@ -231,21 +221,21 @@
 				<td><%=array_list.get(i).getNumber()%></td>
 				<td><%=array_list.get(i).getMeter_num()%></td>
 				<td><%=array_list.get(i).getMeter_type()%></td>
-				<td><%=dateYear %>-<%=dateMonth %></td>
+				<td><%=dateYear%>-<%=dateMonth%></td>
 				<td><%=array_list.get(i).getTotal_consumed()%></td>
 				<%
 					for (String a : array_list.get(i).getConsumed_days()) {
 				%>
 				<td><%=a%></td>
 				<%
-				}
-				
-				for(int j=31-array_list.get(i).getConsumed_days().length; j >0; j--) {
+					}
+
+						for (int j = 31 - array_list.get(i).getConsumed_days().length; j > 0; j--) {
 				%>
 				<td>0.00</td>
 				<%
-				}					
-			 	%>
+					}
+				%>
 			</tr>
 			<%
 				}
@@ -290,7 +280,8 @@
 					<td align="left"><input type="text" name="consumerName" /></td>
 					<td>지시부 번호</td>
 					<td align="left"><input type="text" name="telNumber" /></td>
-					<td rowspan="2"><input type="submit" value="검색" id="form_montyly_search"/></td>
+					<td rowspan="2"><input type="submit" value="검색"
+						id="form_montyly_search" /></td>
 				</tr>
 				<tr>
 					<td>미터 번호</td>
@@ -334,33 +325,33 @@
 				%>
 			</tr>
 			<%
-				for(int i=0 ; i < monthly_array_list.size(); i++) {
-			  %>
-			  <tr>
+				for (int i = 0; i < monthly_array_list.size(); i++) {
+			%>
+			<tr>
 				<td><%=monthly_array_list.get(i).getCode()%></td>
 				<td><%=monthly_array_list.get(i).getDetail()%></td>
 				<td><%=monthly_array_list.get(i).getNumber()%></td>
 				<td><%=monthly_array_list.get(i).getMeter_num()%></td>
 				<td><%=monthly_array_list.get(i).getMeter_type()%></td>
-				<td><%=dateYear %></td>
+				<td><%=dateYear%></td>
 				<td><%=monthly_array_list.get(i).getTotal_consumed()%></td>
 				<%
-				for(String  a : monthly_array_list.get(i).getConsumed_days()) {
+					for (String a : monthly_array_list.get(i).getConsumed_days()) {
 				%>
-				<td><%=a %></td>
-			 	<%
-				}
-				
-				for(int j=12-monthly_array_list.get(i).getConsumed_days().length; j >0; j--) {
+				<td><%=a%></td>
+				<%
+					}
+
+						for (int j = 12 - monthly_array_list.get(i).getConsumed_days().length; j > 0; j--) {
 				%>
 				<td>0.00</td>
 				<%
-				}					
-			 	%>
-				</tr>
-			  <%
-			  }
-			  %>
+					}
+				%>
+			</tr>
+			<%
+				}
+			%>
 		</table>
 	</div>
 </div>
