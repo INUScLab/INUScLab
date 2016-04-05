@@ -2,8 +2,9 @@ var globalGeocoder;
 var globalMap;
 var searchMarker = new google.maps.Marker();
 var searchMarkers = [ ];
-var dongMarkers = [ ];
+var abnormalDongmarkers = [ ];
 var consumerMarkers = [ ] ;
+var abnormalDongList = [ ];
 var cons_sum = 0;
 var cnt_leak = 0;
 var cnt_absence = 0;
@@ -48,7 +49,7 @@ function initialize(x, y) {
 			myOptions);
 	
 	//Create Entire Markers And Show all sign of abnormal dongs.
-	createDongMarkers();
+	createAbnormalDongmarkers();
 
 	// Search Box
 	var input = document.getElementById('pac-input');
@@ -57,7 +58,7 @@ function initialize(x, y) {
 	var colorBox = document.getElementById('color-interpolation');
 
 	// Appending boxes
-	// globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//	globalMap.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	globalMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(colorBox);
 
 
@@ -68,7 +69,7 @@ function initialize(x, y) {
 		if (globalMap.getZoom() <= 13) {
 			
 			//동 마커 출력하고 , 수용가 마커 감추기.
-			showDongMarkers();
+			showAbnormalDongmarkers();
 			hideConsumerMarkersMarkers();
 			
 			//infoWindow 닫기
@@ -84,9 +85,9 @@ function initialize(x, y) {
 			// 첫 로딩 & 모든 아이콘이 꺼졌을때
 			// if(absence_flag == false && leak_flag == false && freezed_flag ==
 			// false && entire_flag == false ) {
-			// showEntireDongMarkers();
-			// for (var i = 0; i <entireDongMarkers.length; i++) {
-			// entireDongMarkers[i].addListener('click', function() {
+			// showEntireabnormalDongmarkers();
+			// for (var i = 0; i <entireabnormalDongmarkers.length; i++) {
+			// entireabnormalDongmarkers[i].addListener('click', function() {
 			//
 			// //상세 주소만 띄우고 동 마커들은 숨김.
 			// globalMap.setCenter(this.position);
@@ -105,7 +106,7 @@ function initialize(x, y) {
 	});
 
 	// autoComplete Event
-//	var autocomplete = new google.maps.places.Autocomplete(input);
+	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addDomListener(window, 'load', initialize);
 
 	/* jQuery for SELECT BOX */
@@ -116,7 +117,7 @@ function initialize(x, y) {
 
 				//초기화
 //				infoWindow.close();
-				hideDongMarkers();
+				hideabnormalDongmarkers();
 				hideConsumerMarkersMarkers();
 				
 				for (var i = 0; i < dongInfoList.length; i++) {
@@ -135,11 +136,9 @@ function initialize(x, y) {
 						infoWindow.setPosition( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng) ) ;
 						infoWindow.open( globalMap );
 
-						dongMarkers[i].setMap(null);
-						console.log(dongMarkers[i]);
-						console.log(textSelected);
+						abnormalDongmarkers[i].setMap(null);
 						
-						hideDongMarkers();
+						hideabnormalDongmarkers();
 						
 						drawDongSummaryReport(addressArray) // 요약 리포트
 						createConsumerMarkers(addressArray); //수용가 마커 생성. 
@@ -161,11 +160,12 @@ function initialize(x, y) {
 			}
 		}
 	});
+	console.log(abnormalDongmarkers);
 
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중/역류/비만관/파손 에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
-function createDongMarkers( ) {
+function createAbnormalDongmarkers( ) {
 
 	for (var i = 0; i < dongInfoList.length; i++) {
 
@@ -193,8 +193,8 @@ function createDongMarkers( ) {
 				map:globalMap
 			});
 			
-			dongMarkers.push(marker);
-			
+			abnormalDongmarkers.push(marker);
+			abnormalDongList.push(dongInfoList[i].dong);
 			marker.set(globalMap);
 			
 			// 생성한 동들의 마커에 대한 클 이벤트 생성.
@@ -209,7 +209,7 @@ function createDongMarkers( ) {
 				infoWindow.open( globalMap );
 				this.setMap(null);
 				
-				hideDongMarkers();
+				hideabnormalDongmarkers();
 
 				var address = this.title;
 				var addressArray = address.split(' ');
@@ -220,7 +220,7 @@ function createDongMarkers( ) {
 			});
 		}
 	}
-//	showDongMarkers();
+//	showAbnormalDongmarkers();
 	
 }
 
@@ -279,7 +279,7 @@ function createConsumerMarkers ( addressArray ) {
 			// 생성한 동들의 마커에 대한 클 이벤트 생성.
 			marker.addListener('click', function() {
 				
-				globalMap.setCenter(this.position);
+//				globalMap.setCenter(this.position);
 				
 				var address = this.title;
 				var addressArray = address.split(' ');
@@ -810,17 +810,17 @@ function drawDongSummaryReport(addressArray) {
 }
 
 // 전체 동들의 마커를 지도에 출력
-function showDongMarkers() {
-	for (var i = 0; i < dongMarkers.length; i++) {
-		dongMarkers[i].setMap(globalMap);
+function showAbnormalDongmarkers() {
+	for (var i = 0; i < abnormalDongmarkers.length; i++) {
+		abnormalDongmarkers[i].setMap(globalMap);
 	}
 }
 
 // 전체 동들의 마커를 지도에서 숨김
-function hideDongMarkers() {
+function hideabnormalDongmarkers() {
 
-	for (var i = 0; i < dongMarkers.length; i++) {
-		dongMarkers[i].setMap(null);
+	for (var i = 0; i < abnormalDongmarkers.length; i++) {
+		abnormalDongmarkers[i].setMap(null);
 	}
 }
 
@@ -846,69 +846,82 @@ function codeAddress() {
 
 	// Get Address from HTML
 	var address = document.getElementById("pac-input").value;
-	var color = "0000FF";
 
-	var pinImage = new google.maps.MarkerImage(
-			"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
-					+ color, new google.maps.Size(21, 34),
-			new google.maps.Point(0, 0), new google.maps.Point(10, 34));
-	var pinShadow = new google.maps.MarkerImage(
-			"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-			new google.maps.Size(40, 37), new google.maps.Point(0, 0),
-			new google.maps.Point(12, 35));
-
-	console.log("codeAddress");
 	globalGeocoder.geocode({
 		'address' : address
 	}, function(results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
 
 			searchMarker.setMap(null);
+			
+			var inputDong = address;
+			var addressArray = address.split(' ');
+			var isDong = false;
+			var index ;
+			
+			//검색어가 자동완성 기능을 사용한 경우 
+			if( addressArray.length > 1) {
+				inputDong = addressArray[3];
+			}
+			
+			// 주소 배열을 만든다.
+			for ( var i = 0; i < dongInfoList.length ; i ++ ){
+				if ( inputDong == dongInfoList[i].dong ) {
+					isDong = true;
+					addressArray = [ ];
+					addressArray.push ( incheon , dongInfoList[i].gu , dongInfoList[i].dong );
+					index = i;
+				}
+			}
+			
+			//인천광역시 내의 동일 경우
+			if ( isDong ) {
+				//마커를 지우고 infoWindow 생성.
+				infoWindow.setContent( incheon + ' ' + addressArray[1] + ' ' + addressArray[2] );
+				infoWindow.setPosition( new google.maps.LatLng( dongInfoList[index].lat, dongInfoList[index].lng) ) ;
+				infoWindow.open( globalMap );
+				
+				console.log(index);
+				//입력 동이 비정상 일때 생성되어진 마커를 지움.
+				if ( abnormalDongList.indexOf(dongInfoList[index].dong ) != -1 ) {
+					abnormalDongmarkers[abnormalDongList.indexOf(dongInfoList[index].dong) ].setMap(null);
+				}
+				
+				//다른 동 마커를 지움. 
+				hideabnormalDongmarkers();
+				
+				//요약리포트를 그리고 수용가 마커를 생성함.
+				drawDongSummaryReport(addressArray) // 요약 리포트
+				createConsumerMarkers(addressArray); //수용가 마커 생성. 
+				
+			}
+			//그 외의 지명일 경우 마커를 생성한다.
+			else {
+				
+				var color = "0000FF";
 
+				var pinImage = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"
+								+ color, new google.maps.Size(21, 34),
+						new google.maps.Point(0, 0), new google.maps.Point(10, 34));
+				var pinShadow = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+						new google.maps.Size(40, 37), new google.maps.Point(0, 0),
+						new google.maps.Point(12, 35));
+				var marker = new google.maps.Marker({
+					title : "",
+					position : results[0].geometry.location,
+					draggable : false,
+					icon : pinImage,
+					shadow : pinShadow,
+					map:globalMap
+				});
+			}
+			
 			// Locate to map
 			globalMap.setCenter(results[0].geometry.location);
+			globalMap.setOptions({ 'zoom' : 14 });
 
-			var dongList = normalUsedDongList.concat(overUsedDongList);
-			var addressArray = address.split(' ');
-			addressArray = addressArray[1] + " " + addressArray[2] + " "
-					+ addressArray[3];
-			addressArray = addressArray.split(" ");
-
-			var i = 0;
-			while (i < guDongLatLngList.length) {
-				if (guDongLatLngList[i].umDong == address) {
-					addressArray[0] = "인천광역시";
-					addressArray[1] = guDongLatLngList[i].guGun;
-					addressArray[2] = guDongLatLngList[i].umDong;
-				}
-				i++;
-			}
-
-			dongSummary(addressArray);
-
-			// if address is dong or block or specific area , zoom level + 3
-			if (dongList.indexOf(addressArray[2]) != -1
-					|| dongList.indexOf(address) != -1) {
-
-				getDetailAreaInformation(addressArray);
-				// if address is not a dong or specific area , restore zoom
-				// level to 13
-			}
-
-			else {
-
-				globalMap.setOptions({
-					'zoom' : 13
-				});
-
-				// Create Marker
-				searchMarker = new google.maps.Marker({
-					map : globalMap,
-					position : results[0].geometry.location,
-					icon : pinImage,
-					shadow : pinShadow
-				});
-			}
 
 		} else {
 			alert('Geocode was not successful for the following reason: '
@@ -922,15 +935,15 @@ function codeAddress() {
 function showIcon() {
 
 	if (entire_flag) {
-		showEntireDongMarkers();
+		showEntireabnormalDongmarkers();
 		$('#img_entire').css("background-color", "yellow");
 		console.log("ddd");
 	} else {
-		hideEntireDongMarkers();
-		hideAbsenceDongMarkers();
-		hideFreezedDongMarkers();
-		hideLeakDongMarkers();
-		hideoverUsedDongMarkers();
+		hideEntireabnormalDongmarkers();
+		hideAbsenceabnormalDongmarkers();
+		hideFreezedabnormalDongmarkers();
+		hideLeakabnormalDongmarkers();
+		hideoverUsedabnormalDongmarkers();
 		$('#img_entire').css("background-color", "#FFFFFF");
 		$('#img_leak').css("background-color", "#FFFFFF");
 		$('#img_freezed').css("background-color", "#FFFFFF");
@@ -938,26 +951,26 @@ function showIcon() {
 	}
 
 	if (leak_flag) {
-		showLeakDongMarkers();
+		showLeakabnormalDongmarkers();
 		$('#img_leak').css("background-color", "yellow");
 	} else {
-		hideLeakDongMarkers();
+		hideLeakabnormalDongmarkers();
 		$('#img_leak').css("background-color", "#FFFFFF");
 	}
 
 	if (absence_flag) {
-		showAbsenceDongMarkers();
+		showAbsenceabnormalDongmarkers();
 		$('#img_absence').css("background-color", "yellow");
 	} else {
-		hideAbsenceDongMarkers();
+		hideAbsenceabnormalDongmarkers();
 		$('#img_absence').css("background-color", "#FFFFFF");
 	}
 
 	if (freezed_flag) {
-		showFreezedDongMarkers();
+		showFreezedabnormalDongmarkers();
 		$('#img_freezed').css("background-color", "yellow");
 	} else {
-		hideFreezedDongMarkers();
+		hideFreezedabnormalDongmarkers();
 		$('#img_freezed').css("background-color", "#FFFFFF");
 	}
 
