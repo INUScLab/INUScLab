@@ -136,7 +136,7 @@ function initialize(x, y) {
 						infoWindow.setPosition( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng) ) ;
 						infoWindow.open( globalMap );
 
-						abnormalDongmarkers[i].setMap(null);
+						abnormalDongmarkers[abnormalDongList.indexOf(dongInfoList[i].dong) ].setMap(null);
 						
 						hideabnormalDongmarkers();
 						
@@ -160,8 +160,6 @@ function initialize(x, y) {
 			}
 		}
 	});
-	console.log(abnormalDongmarkers);
-
 }
 
 // 전체 사용자들 가운데 누수/동파/부재중/역류/비만관/파손 에 해당하는 사용자들을 포함하는 동을 빨간색, 나머지는 초록색으로 표시
