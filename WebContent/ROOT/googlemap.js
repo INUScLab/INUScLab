@@ -366,7 +366,7 @@ function drawConsumerReport( addressArray ){
 			//4.요약 report history 그래프 그리기.
 			drawHistory ( Number(summaryReportList[i].day7) , Number ( summaryReportList[i].day6 ) , Number ( summaryReportList[i].day5 ) ,
 			Number ( summaryReportList[i].day4), Number ( summaryReportList[i].day3 ) , Number ( summaryReportList[i].day2 ) ,
-			Number (summaryReportList[i].day1));
+			Number (summaryReportList[i].day1) , sum_weeklyConsumption / 7);
 			console.log(summaryReportList[i].day1 , summaryReportList[i].day2 , summaryReportList[i].day3 , summaryReportList[i].day4 , summaryReportList[i].day5
 					, summaryReportList[i].day6 , summaryReportList[i].day7 , sum_weeklyConsumption/7)
 		}
@@ -879,7 +879,6 @@ function codeAddress() {
 				infoWindow.setPosition( new google.maps.LatLng( dongInfoList[index].lat, dongInfoList[index].lng) ) ;
 				infoWindow.open( globalMap );
 				
-				console.log(index);
 				//입력 동이 비정상 일때 생성되어진 마커를 지움.
 				if ( abnormalDongList.indexOf(dongInfoList[index].dong ) != -1 ) {
 					abnormalDongmarkers[abnormalDongList.indexOf(dongInfoList[index].dong) ].setMap(null);
