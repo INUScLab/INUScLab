@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <link rel="stylesheet" type="text/css" href="css/reportpage.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard_page.css">
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJHzLkYApb-mrj0mz7d8zakkvBuE0IZTE"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 
 <script type="text/javascript" src='https://www.google.com/jsapi?autoload={
 	"modules":[{
