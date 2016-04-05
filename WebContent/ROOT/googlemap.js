@@ -17,6 +17,7 @@ var abnormalColor = "FF0000";
 var normalColor = "2ECCFA";
 var incheon = "인천광역시";
 var infoWindow  = new google.maps.InfoWindow({ content: 'InfoWindow' });
+var centerPosition;
 
 // 맵 초기화
 function initialize(x, y) {
@@ -71,6 +72,7 @@ function initialize(x, y) {
 			//동 마커 출력하고 , 수용가 마커 감추기.
 			showAbnormalDongmarkers();
 			hideConsumerMarkersMarkers();
+			searchMarker.setMap(null);
 			
 			//infoWindow 닫기
 			infoWindow.close();
@@ -115,10 +117,11 @@ function initialize(x, y) {
 				var optionSelected = $("option:selected", this);
 				var textSelected = optionSelected.text();
 
-				//초기화
+				//초기화(다른 동 마커와 수용가 마커들을 모두 지워서 지도를 초기화 함.)
 //				infoWindow.close();
-				hideabnormalDongmarkers();
+				hideAbnormalDongmarkers();
 				hideConsumerMarkersMarkers();
+				searchMarker.setMap(null);
 				
 				for (var i = 0; i < dongInfoList.length; i++) {
 					if (dongInfoList[i].dong == textSelected) {
@@ -128,20 +131,25 @@ function initialize(x, y) {
 						addressArray[1] = dongInfoList[i].gu;
 						addressArray[2] = dongInfoList[i].dong;
 
-						globalMap.setCenter( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng ) );
+						//동 마커를 지움.
+						if( abnormalDongList.indexOf(dongInfoList[i].dong) != -1 ) {
+							abnormalDongmarkers[abnormalDongList.indexOf(dongInfoList[i].dong) ].setMap(null);
+						}
+						
+						//요약리포트 & 수용가 마커 생성.
+						drawDongSummaryReport(addressArray) 
+						createConsumerMarkers(addressArray);  
+						
+						//infoWindow 생성 & 지도를 마커들의 중점으로 이동. 
+//						infoWindow.setContent( incheon + ' ' + dongInfoList[i].gu + ' ' + dongInfoList[i].dong );
+//						infoWindow.setPosition( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng) ) ;
+//						infoWindow.setPosition( centerPosition ) ;
+//						infoWindow.open( globalMap );
+						
+						globalMap.setCenter( centerPosition );
+//						globalMap.setCenter( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng ) );
 						globalMap.setOptions({ 'zoom' : 15 });
-
-						//마커를 지우고 infoWindow 생성.
-						infoWindow.setContent( incheon + ' ' + dongInfoList[i].gu + ' ' + dongInfoList[i].dong );
-						infoWindow.setPosition( new google.maps.LatLng( dongInfoList[i].lat, dongInfoList[i].lng) ) ;
-						infoWindow.open( globalMap );
-
-						abnormalDongmarkers[abnormalDongList.indexOf(dongInfoList[i].dong) ].setMap(null);
 						
-						hideabnormalDongmarkers();
-						
-						drawDongSummaryReport(addressArray) // 요약 리포트
-						createConsumerMarkers(addressArray); //수용가 마커 생성. 
 					}
 				}
 			});
@@ -198,22 +206,25 @@ function createAbnormalDongmarkers( ) {
 			// 생성한 동들의 마커에 대한 클 이벤트 생성.
 			marker.addListener('click', function() {
 				
-				globalMap.setCenter(this.position);
-				globalMap.setOptions({ 'zoom' : 15 });
-
-				//마커를 지우고 infoWindow 생성.
-				infoWindow.setContent( this.title );
-				infoWindow.setPosition( this.position );
-				infoWindow.open( globalMap );
-				this.setMap(null);
-				
-				hideabnormalDongmarkers();
-
 				var address = this.title;
 				var addressArray = address.split(' ');
 				
-				drawDongSummaryReport(addressArray) // 요약 리포트
-				createConsumerMarkers(addressArray); //수용가 마커 생성. 
+				//지도 초기화.
+				this.setMap(null);
+				searchMarker.setMap(null);
+				hideAbnormalDongmarkers();
+				hideConsumerMarkersMarkers();
+				
+				//요약리포트 & 수용가 마커 생성.
+				drawDongSummaryReport(addressArray) 
+				createConsumerMarkers(addressArray);  
+				
+//				infoWindow.setContent( this.title );
+//				infoWindow.setPosition( centerPosition );
+//				infoWindow.open( globalMap );
+				
+				globalMap.setCenter ( centerPosition );
+				globalMap.setOptions({ 'zoom' : 15 });
 				
 			});
 		}
@@ -238,8 +249,22 @@ function createConsumerMarkers ( addressArray ) {
 	var dong = addressArray[2];
 	var color = "";
 	
+	var count = 0;
+	var sum_lat = 0;
+	var sum_lng = 0;
+	
+	var polygonCoords = [ ];
+	var bounds = new google.maps.LatLngBounds();
+	
 	for ( var i = 0 ; i < summaryReportList.length ; i ++ ) {
 		if( summaryReportList[i].gu == gu && summaryReportList[i].dong == dong ) {
+			
+			// The Bermuda Triangle
+			polygonCoords.push(  new google.maps.LatLng( summaryReportList[i].lat , summaryReportList[i].lng ) );
+			
+			count++;
+			sum_lat += summaryReportList[i].lat;
+			sum_lng += summaryReportList[i].lng;
 			
 			if ( summaryReportList[i].leak != 0 || summaryReportList[i].absence != 0 || summaryReportList[i].freezed != 0 ||
 					summaryReportList[i].reverse != 0 || summaryReportList[i].fat != 0 || summaryReportList[i].breakage != 0 ) {
@@ -286,6 +311,12 @@ function createConsumerMarkers ( addressArray ) {
 			});
 		}
 	}
+	//생성된 수용가 마커들의 중심 좌표 구하기.
+	for ( var i = 0; i < polygonCoords.length; i++) {
+		  bounds.extend(polygonCoords[i]);
+	}
+	
+	centerPosition = bounds.getCenter();
 }
 
 function drawConsumerReport( addressArray ){
@@ -815,7 +846,7 @@ function showAbnormalDongmarkers() {
 }
 
 // 전체 동들의 마커를 지도에서 숨김
-function hideabnormalDongmarkers() {
+function hideAbnormalDongmarkers() {
 
 	for (var i = 0; i < abnormalDongmarkers.length; i++) {
 		abnormalDongmarkers[i].setMap(null);
@@ -850,6 +881,7 @@ function codeAddress() {
 	}, function(results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
 
+			//검색 마커 초기화.
 			searchMarker.setMap(null);
 			
 			var inputDong = address;
@@ -874,10 +906,6 @@ function codeAddress() {
 			
 			//인천광역시 내의 동일 경우
 			if ( isDong ) {
-				//마커를 지우고 infoWindow 생성.
-				infoWindow.setContent( incheon + ' ' + addressArray[1] + ' ' + addressArray[2] );
-				infoWindow.setPosition( new google.maps.LatLng( dongInfoList[index].lat, dongInfoList[index].lng) ) ;
-				infoWindow.open( globalMap );
 				
 				//입력 동이 비정상 일때 생성되어진 마커를 지움.
 				if ( abnormalDongList.indexOf(dongInfoList[index].dong ) != -1 ) {
@@ -885,12 +913,21 @@ function codeAddress() {
 				}
 				
 				//다른 동 마커를 지움. 
-				hideabnormalDongmarkers();
+				hideAbnormalDongmarkers();
+				hideConsumerMarkersMarkers();
 				
 				//요약리포트를 그리고 수용가 마커를 생성함.
 				drawDongSummaryReport(addressArray) // 요약 리포트
 				createConsumerMarkers(addressArray); //수용가 마커 생성. 
+
+				//마커를 지우고 infoWindow 생성.
+//				infoWindow.setContent( incheon + ' ' + addressArray[1] + ' ' + addressArray[2] );
+//				infoWindow.setPosition( new google.maps.LatLng( dongInfoList[index].lat, dongInfoList[index].lng) ) ;
+//				infoWindow.open( globalMap );
 				
+				// Locate to map
+				globalMap.setCenter( centerPosition );
+				globalMap.setOptions({ 'zoom' : 14 });
 			}
 			//그 외의 지명일 경우 마커를 생성한다.
 			else {
@@ -913,11 +950,11 @@ function codeAddress() {
 					shadow : pinShadow,
 					map:globalMap
 				});
+				// Locate to map
+				globalMap.setCenter(results[0].geometry.location);
+				globalMap.setOptions({ 'zoom' : 14 });
 			}
 			
-			// Locate to map
-			globalMap.setCenter(results[0].geometry.location);
-			globalMap.setOptions({ 'zoom' : 14 });
 
 
 		} else {
