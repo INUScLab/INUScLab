@@ -110,7 +110,6 @@
 			});
 </script>
 
-<%--뭐가 잘목 되었을까... --%>
 <div class="searchBy">
 	<div id="tab_searchByDay" class="tab_searchBy">
 		<a href="#">일별 검색</a>
@@ -123,7 +122,7 @@
 <!-- 일별 -->
 <div id="searchByDay">
 	<div class="searchBy_searchbox">
-		<form action="main.jsp?MENU_NUM=1" method="post">
+		<form action="main.jsp?MENU_NUM=2" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td colspan="7"><select name="si" id="si_select">
@@ -251,7 +250,7 @@
 <!-- 월별 -->
 <div id="searchByMonth">
 	<div class="searchBy_searchbox">
-		<form action="main.jsp?MENU_NUM=1" method="post">
+		<form action="main.jsp?MENU_NUM=2" method="post">
 			<table border="1" cellspacing="0" width="100%">
 				<tr>
 					<td colspan="7"><select name="si" id="si_select">

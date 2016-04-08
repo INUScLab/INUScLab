@@ -113,7 +113,7 @@
 							<a href="main.jsp?MENU_NUM=0"><span>MAP</span></a>
 						</li>
 						<li role="presentation">
-							<a href="main.jsp?MENU_NUM=1"><span>REPORT</span></a>
+							<a href="main.jsp?MENU_NUM=2"><span>REPORT</span></a>
 						</li>
 						<!--li role="presentation">
 							<a href="main.jsp?MENU_NUM=2"><span>ALERT</span></a>
@@ -146,7 +146,7 @@
 					
 					switch(num)
 					{
-						case 1:
+						case 2:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
 							break;
 						case 4:
