@@ -110,7 +110,7 @@
 			});
 </script>
 
-
+<%--뭐가 잘목 되었을까... --%>
 <div class="searchBy">
 	<div id="tab_searchByDay" class="tab_searchBy">
 		<a href="#">일별 검색</a>
