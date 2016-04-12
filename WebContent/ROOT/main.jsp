@@ -147,10 +147,10 @@
 					switch(num)
 					{
 						case 1:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "analysis.jsp");
+							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
 							break;
 						case 4:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
+							pageContext.setAttribute("MAIN_CONTENTS_PATH", "analysis.jsp");
 							break;
 						default:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "map_page.jsp");
