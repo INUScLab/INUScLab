@@ -216,8 +216,9 @@ function createAbnormalDongmarkers( ) {
 				hideConsumerMarkersMarkers();
 				
 				//요약리포트 & 수용가 마커 생성.
-				drawDongSummaryReport(addressArray) 
-				createConsumerMarkers(addressArray);  
+				drawDongSummaryReport(addressArray); 
+				createConsumerMarkers(addressArray);
+				console.log(consumerMarkers);
 				
 //				infoWindow.setContent( this.title );
 //				infoWindow.setPosition( centerPosition );
@@ -1011,6 +1012,14 @@ function showIcon() {
 }
 
 // 전체 보기 아이콘을 클릭했을때
+/*
+ * 1.수용가 마커 배열이 0이 아니고 수 
+ * 	1.1 
+ * 1.지도를 초기화 한다.
+ * 2.전체 동 개수만큼 반복한다.
+ * 	2.1 누수인 동을 찾는다.
+ * 		2.1.1지도에서 표시한다.
+ */
 function entire_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.

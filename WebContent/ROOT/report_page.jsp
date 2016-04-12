@@ -11,7 +11,7 @@
 
 <jsp:useBean id="ddctrl" class="sclab.db.DetailDataCtrl" />
 <jsp:useBean id="ddctrl2" class="sclab.db.DetailDataCtrl" />
-
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <%
 	String si = request.getParameter("si");
 	String guGun = request.getParameter("guGun");
@@ -52,8 +52,8 @@
 	ArrayList<DetailData> monthly_array_list = ddctrl2.returnDatas2(si, guGun, umDong, consumerNum,
 			consumerName, telNumber, meterNum, dateYear);
 %>
-
 <script type="text/javascript">
+console.log(<%=monthly_array_list%>)
 	$(document).ready(
 			function() {
 				$("#searchByMonth").addClass("tab_nonvisible");
