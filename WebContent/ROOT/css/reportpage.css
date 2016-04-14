@@ -98,7 +98,74 @@
 
 
 /*new*/
+/* report Day tables */
+table.reportTableDay {
+   font-family:arial;
+   background-color: #C1CDCD;
+   margin:10px 0pt 15px;
+   font-size: 9pt;
+   width: 100%;
+   text-align:center;
+}
+table.reportTableDay thead tr th, table.reportTableDay tfoot tr th {
+   background-color: #e6EEEE;
+   border: 1px solid #FFF;
+   font-size: 8pt;
+   padding: 4px;
+}
+table.reportTableDay thead tr .header {
+   background-repeat: no-repeat;
+   background-position: center right;
+   cursor: pointer;
+}
+table.reportTableDay tbody td {
+   color: #3D3D3D;
+   padding: 4px;
+   background-color: #FFF;
+   vertical-align: top;
+}
+table.reportTableDay tbody tr.odd td {
+   background-color:#F0F0F6;
+}
 
+table.reportTableDay thead tr .headerSortDown, table.reportTableDay thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+
+
+/* report Month tables */
+table.reportTableMonth {
+   font-family:arial;
+   background-color: #C1CDCD;
+   margin:10px 0pt 15px;
+   font-size: 9pt;
+   width: 100%;
+   text-align:center;
+}
+table.reportTableMonth thead tr th, table.tablesorter tfoot tr th {
+   background-color: #e6EEEE;
+   border: 1px solid #FFF;
+   font-size: 8pt;
+   padding: 4px;
+}
+table.reportTableMonth thead tr .header {
+   background-repeat: no-repeat;
+   background-position: center right;
+   cursor: pointer;
+}
+table.reportTableMonth tbody td {
+   color: #3D3D3D;
+   padding: 4px;
+   background-color: #FFF;
+   vertical-align: top;
+}
+table.reportTableMonth tbody tr.odd td {
+   background-color:#F0F0F6;
+}
+
+table.reportTableMonth ahead tr .headerSortDown, table.tablesorter ahead tr .headerSortUp {
+background-color: #8dbdd8;
+}
 
 
 

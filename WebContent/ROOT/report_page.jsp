@@ -4,14 +4,20 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.io.Console"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+
+
+
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
+
 
 <jsp:useBean id="ddctrl" class="sclab.db.DetailDataCtrl" />
 <jsp:useBean id="ddctrl2" class="sclab.db.DetailDataCtrl" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
 <%
 	String si = request.getParameter("si");
 	String guGun = request.getParameter("guGun");
@@ -56,6 +62,9 @@
 	$(document).ready(
 			function() {
 				$("#searchByMonth").addClass("tab_nonvisible");
+				$("#reportTable").tablesorter();
+				$("#reportTableMonth").tablesorter();
+
 
 				/* $("#form_monthly_search").click(function() {
 					$("#searchByMonth").addClass("tab_visible");
@@ -192,19 +201,20 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table cellspacing="0" border="1">
+		<table id="reportTable" class="reportTableDay" cellspacing="0" border="1">
+			<thead>
 			<tr height="50px">
-				<td width="100px">수용가번호</td>
-				<td width="200px">수용가명</td>
-				<td width="200px">지시부번호</td>
-				<td width="200px">미터번호</td>
-				<td width="200px">미터타입</td>
-				<td width="200px">검침월</td>
-				<td width="200px">사용량</td>
+				<th>수용가번호</th>
+				<th>수용가명</th>
+				<th>지시부번호</th>
+				<th>미터번호</th>
+				<th>미터타입</th>
+				<th>검침월</th>
+				<th>사용량</th>
 				<%
 					for (int day = 1; day <= 31; day++) {
 				%>
-				<td width="100px"><%=day%>일</td>
+				<th><%=day%>일</th>
 				<%
 					}
 				%>
@@ -213,6 +223,8 @@
 				/* out.print("<script>console.log("+ array_list.size() + ");</script>"); */
 				for (int i = 0; i < array_list.size(); i++) {
 			%>
+			</thead>
+			
 			<tr>
 				<td><%=array_list.get(i).getCode()%></td>
 				<td><%=array_list.get(i).getDetail()%></td>
@@ -238,7 +250,9 @@
 			<%
 				}
 			%>
+			
 		</table>
+
 	</div>
 </div>
 
@@ -305,19 +319,20 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table cellspacing="0" border="1">
+		<table id="reportTableMonth" class="reportTableMonth" cellspacing="0" border="1">
+			<thead>
 			<tr>
-				<td width="100">수용가번호</td>
-				<td width="200">수용가명</td>
-				<td width="200">지시부번호</td>
-				<td width="200">미터번호</td>
-				<td width="200">미터타입</td>
-				<td width="200">검침월</td>
-				<td width="200">사용량</td>
+				<th> 수용가번호</th>
+				<th> 수용가명</th>
+				<th> 지시부번호</th>
+				<th> 미터번호</th>
+				<th> 미터타입</th>
+				<th> 검침월</th>
+				<th> 사용량</th>
 				<%
 					for (int time = 1; time <= 12; time++) {
 				%>
-				<td width="100px"><%=time%>월</td>
+				<th> <%=time%>월 </th>
 				<%
 					}
 				%>
@@ -325,6 +340,7 @@
 			<%
 				for (int i = 0; i < monthly_array_list.size(); i++) {
 			%>
+			</thead>
 			<tr>
 				<td><%=monthly_array_list.get(i).getCode()%></td>
 				<td><%=monthly_array_list.get(i).getDetail()%></td>
@@ -351,5 +367,6 @@
 				}
 			%>
 		</table>
+
 	</div>
 </div>
