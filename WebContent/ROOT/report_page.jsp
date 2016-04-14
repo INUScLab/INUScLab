@@ -53,7 +53,6 @@
 			consumerName, telNumber, meterNum, dateYear);
 %>
 <script type="text/javascript">
-console.log(<%=monthly_array_list%>)
 	$(document).ready(
 			function() {
 				$("#searchByMonth").addClass("tab_nonvisible");
