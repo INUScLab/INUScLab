@@ -444,7 +444,11 @@ function drawColumn(cons, pred, week, region) {
 }
 
 //요약 리포트 부가 서비스별 최근 발생 횟수 및 한달간 발생 빈도 그래프
-function drawVarGraph( ) {
+function drawBarGraph( latelyLeak , latelyAbsence , latelyFreezed , latelyReverse , latelyFat , latelyBreakage ,
+				countLeak , countAbsence , countFreezed , countReverse , countFat , countBreakage ) {
+	
+	
+	
 	
 }
 // 부가서비스 누수 column 그 래프
@@ -726,7 +730,7 @@ function drawDongSummaryReport(addressArray) {
 	}
 	
 	//1.주소칸
-	document.getElementById('info_date').innerHTML = address; // 주소 출력
+	document.getElementById('info_date').innerHTML = address + "(" + userCount + ")"; // 주소 출력
 	info_date.style.fontSize = "90%"; // 주소 출력 폰트 사이즈
 	
 	$(".checkBox").prop('checked', false) ;
