@@ -33,21 +33,27 @@ public class SummaryReport {
 	double day6;
 	double day7;
 	
+	int countLeak;
+	int countAbsence;
+	int countFreezed;
+	int countReverse;
+	int countFat;
+	int countBreakage;
 	
 	public SummaryReport() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
 	public SummaryReport(String guGun, String umDong, String detail,
 			double lat, double lng, double consumed, double predicted,
 			int leak, int absence, int freezed, int reverse, int fat,
 			int breakage, String latelyLeak, String latelyAbsence,
 			String latelyFreezed, String latelyReverse, String latelyFat,
 			String latelyBreakage, double day1, double day2, double day3,
-			double day4, double day5, double day6, double day7) {
-		
+			double day4, double day5, double day6, double day7, int countLeak,
+			int countAbsence, int countFreezed, int countReverse, int countFat,
+			int countBreakage) {
+		super();
 		this.guGun = guGun;
 		this.umDong = umDong;
 		this.detail = detail;
@@ -74,9 +80,49 @@ public class SummaryReport {
 		this.day5 = day5;
 		this.day6 = day6;
 		this.day7 = day7;
+		this.countLeak = countLeak;
+		this.countAbsence = countAbsence;
+		this.countFreezed = countFreezed;
+		this.countReverse = countReverse;
+		this.countFat = countFat;
+		this.countBreakage = countBreakage;
 	}
-	
-	
+	public int getCountLeak() {
+		return countLeak;
+	}
+	public void setCountLeak(int countLeak) {
+		this.countLeak = countLeak;
+	}
+	public int getCountAbsence() {
+		return countAbsence;
+	}
+	public void setCountAbsence(int countAbsence) {
+		this.countAbsence = countAbsence;
+	}
+	public int getCountFreezed() {
+		return countFreezed;
+	}
+	public void setCountFreezed(int countFreezed) {
+		this.countFreezed = countFreezed;
+	}
+	public int getCountReverse() {
+		return countReverse;
+	}
+	public void setCountReverse(int countReverse) {
+		this.countReverse = countReverse;
+	}
+	public int getCountFat() {
+		return countFat;
+	}
+	public void setCountFat(int countFat) {
+		this.countFat = countFat;
+	}
+	public int getCountBreakage() {
+		return countBreakage;
+	}
+	public void setCountBreakage(int countBreakage) {
+		this.countBreakage = countBreakage;
+	}
 	public String getGuGun() {
 		return guGun;
 	}

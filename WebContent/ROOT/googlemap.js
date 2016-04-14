@@ -405,7 +405,7 @@ function drawConsumerReport( addressArray ){
 	}
 }
 	
-//요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균
+//요약 report column 그래프(사용량, 예측량, 일주일 평균, 지역 평균)
 function drawColumn(cons, pred, week, region) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -443,7 +443,11 @@ function drawColumn(cons, pred, week, region) {
 	chart.draw(view, options);
 }
 
-// 부가서비스 누수 column 그래프
+//요약 리포트 부가 서비스별 최근 발생 횟수 및 한달간 발생 빈도 그래프
+function drawVarGraph( ) {
+	
+}
+// 부가서비스 누수 column 그 래프
 function drawLeak(cons, pred, upperName, Name) {
 	var data = google.visualization.arrayToDataTable([ [ 'Element', 'value', {
 		role : "style"
@@ -1061,7 +1065,6 @@ function entire_clicked(id) {
  * 누수 플래그가 true가 되고 나머지 플래그는 false가 됨. 
  * 수용가 마커들은 숨김.
  */
-
 function leak_clicked(id) {
 
 	// 초기 리포트 페이지를 띄우고 초기 상태로 돌아감.

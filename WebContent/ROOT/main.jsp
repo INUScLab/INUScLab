@@ -74,12 +74,20 @@
 		day5:"<%= summaryReportList.get(i).getDay5()%>",
 		day6:"<%= summaryReportList.get(i).getDay6()%>",
 		day7:"<%= summaryReportList.get(i).getDay7()%>",
+		
 		latelyLeak:"<%= summaryReportList.get(i).getLatelyLeak()%>",
 		latelyAbsence:"<%= summaryReportList.get(i).getLatelyAbsence()%>",
 		latelyFreezed:"<%= summaryReportList.get(i).getLatelyFreezed()%>",
 		latelyReverse:"<%= summaryReportList.get(i).getLatelyReverse()%>",
 		latelyFat:"<%= summaryReportList.get(i).getLatelyFat()%>",
 		latelyBreakage:"<%= summaryReportList.get(i).getLatelyBreakage()%>",
+		
+		countLeak:"<%= summaryReportList.get(i).getCountLeak()%>",
+		countAbsence:"<%= summaryReportList.get(i).getAbsence()%>",
+		countFreezed:"<%= summaryReportList.get(i).getFreezed()%>",
+		countReverse:"<%= summaryReportList.get(i).getCountReverse()%>",
+		countFat:"<%= summaryReportList.get(i).getCountFat()%>",
+		countBreakage:"<%= summaryReportList.get(i).getCountBreakage()%>",
 		
 	});
 	<% } %>
