@@ -5,15 +5,13 @@
 <%@page import="java.io.Console"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-
-
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+
 <script type="text/javascript" src="jquery-latest.js"></script>
 <script type="text/javascript" src="jquery.tablesorter.js"></script>
-
 
 <jsp:useBean id="ddctrl" class="sclab.db.DetailDataCtrl" />
 <jsp:useBean id="ddctrl2" class="sclab.db.DetailDataCtrl" />
@@ -62,7 +60,9 @@
 	$(document).ready(
 			function() {
 				$("#searchByMonth").addClass("tab_nonvisible");
-				$("#reportTable").tablesorter();
+				
+				/* table sort 기능 */
+				$("#reportTableDay").tablesorter();
 				$("#reportTableMonth").tablesorter();
 
 
@@ -201,10 +201,11 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table id="reportTable" class="reportTableDay" cellspacing="0" border="1">
+		<table id="reportTableDay" class="reportTable" cellspacing="0" border="1">
+    
 			<thead>
 			<tr height="50px">
-				<th>수용가번호</th>
+				<th width="20%">수용가번호</th>
 				<th>수용가명</th>
 				<th>지시부번호</th>
 				<th>미터번호</th>
@@ -319,7 +320,7 @@
 		</form>
 	</div>
 	<div class="data_view">
-		<table id="reportTableMonth" class="reportTableMonth" cellspacing="0" border="1">
+		<table id="reportTableMonth" class="reportTable" cellspacing="0" border="1">
 			<thead>
 			<tr>
 				<th> 수용가번호</th>

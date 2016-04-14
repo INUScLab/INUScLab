@@ -28,7 +28,6 @@ if (telNumber != null) if(telNumber.equals("")) telNumber = null;
 if (meterNum != null) if(meterNum.equals("")) meterNum = null;																																				
 	
 	
-	
 	ArrayList<AnalysisData> array_list = adctrl.returnDatas(si,guGun,umDong,consumerNum,consumerName,telNumber,meterNum,"2015","01","31","2015","02","28");
 %>
 
@@ -81,18 +80,20 @@ if (meterNum != null) if(meterNum.equals("")) meterNum = null;
 		</form>
 	</div>
 	<div class="data_view">
-		<table cellspacing="0" border="1">
+		<table id="AnaTableDay" class="AnalysisTable" cellspacing="0" border="1">
+		<thead>
 			<tr height="50px">
-				<td width="100px">수용가번호</td>
-				<td width="200px">수용가명</td>
-				<td width="200px">지시부번호</td>
-				<td width="200px">미터번호</td>
-				<td width="200px">미터타입</td>
-				<td width="200px">검침기간</td>
-				<td width="200px">총사용량</td>
-				<td width="200px">일수</td>
-				<td width="200px">일 평균 사용량</td>
+				<th>수용가번호</th>
+				<th>수용가명</th>
+				<th>지시부번호</th>
+				<th>미터번호</th>
+				<th>미터타입</th>
+				<th>검침기간</th>
+				<th>총사용량</th>
+				<th>일수</th>
+				<th>일 평균 사용량</th>
 			</tr>
+			</thead>
 			<%
 				for(int i=0 ; i < array_list.size(); i++) {
 			  %>
