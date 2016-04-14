@@ -133,18 +133,20 @@ if (meterNum != null) if(meterNum.equals("")) meterNum = null;
 		</form>
 	</div>
 	<div class="data_view">
-		<table cellspacing="0" border="1">
+		<table id="AnaTableMonth" class="AnalysisTable" cellspacing="0" border="1">
+		<thead>
 			<tr height="50px">
-				<td width="100px">수용가번호</td>
-				<td width="200px">수용가명</td>
-				<td width="200px">지시부번호</td>
-				<td width="200px">미터번호</td>
-				<td width="200px">미터타입</td>
-				<td width="200px">검침기간</td>
-				<td width="200px">총사용량</td>
-				<td width="200px">월수</td>
-				<td width="200px">월 평균 사용량</td>
+				<th>수용가번호</th>
+				<th>수용가명</th>
+				<th>지시부번호</td>
+				<th>미터번호</th>
+				<th>미터타입</td>
+				<th>검침기간</th>
+				<th>총사용량</th>
+				<th>월수</th>
+				<th>월 평균 사용량</th>
 			</tr>
+			</thead>
 			<%
 				for(int i=0 ; i < array_list.size(); i++) {
 			  %>

@@ -4,8 +4,17 @@
 	String cp = request.getContextPath();
 %>
 
+<script type="text/javascript" src="jquery-latest.js"></script>
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
+		/* table sort 기능 */
+		$("#AnaTableDay").tablesorter();
+		$("#AnaTableMonth").tablesorter();
+		$("#AnaTableYear").tablesorter();
+		
 		$("#searchByMonth").addClass("tab_nonvisible");
 		$("#searchByYear").addClass("tab_nonvisible");
 		

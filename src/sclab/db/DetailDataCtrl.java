@@ -76,7 +76,7 @@ public class DetailDataCtrl {
 		ArrayList<DetailData> datas = new ArrayList<DetailData>();
 		String sql = null;
 		
-		sql = "select u.code, u.detail, u.number, u.meter_num, u.meter_type, sum(consumed), group_concat(consumed) from (select * from USER where sido like \"" + sido + "\" and sigoon like \"" + sigoon + "\" and umdong like \"" + umdong + "\") u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail=" + detail + " or u.number= " + number + " or u.meter_num=" + meter_num + " or " + allnull + ") group by u.code";
+		sql = "select u.code, u.detail, u.number, u.meter_num, u.meter_type, sum(consumed), group_concat(consumed) from (select * from USER where sido like \"" + sido + "\" and sigoon like \"" + sigoon + "\" and umdong like \"" + umdong + "\") u inner join CONSUMPTION c on u.code = c.code where (date between '" + startday + "' and '" + endday + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "' or " + allnull + ") group by u.code";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -111,7 +111,7 @@ public class DetailDataCtrl {
 			ArrayList<DetailData> datas = new ArrayList<DetailData>();
 			String sql = null;
 			
-			sql = "select code, detail, number, meter_num, meter_type, sum(c), group_concat(c order by d) from (select u.code, u.detail, u.number, u.meter_num, u.meter_type, date_format(date,'%Y-%m') as d, sum(consumed) as c from (select * from USER where sido like \"" + sido + "\" and sigoon like \"" + sigoon + "\" and umdong like \"" + umdong + "\") u inner join CONSUMPTION c on u.code = c.code where (date_format(date,'%Y')='" + year + "') and (u.code=" + code + " or u.detail=" + detail + " or u.number= " + number + " or u.meter_num=" + meter_num + " or " + allnull + ") group by u.code ,date_format(date,'%Y-%m')) a group by code;";
+			sql = "select code, detail, number, meter_num, meter_type, sum(c), group_concat(c order by d) from (select u.code, u.detail, u.number, u.meter_num, u.meter_type, date_format(date,'%Y-%m') as d, sum(consumed) as c from (select * from USER where sido like \"" + sido + "\" and sigoon like \"" + sigoon + "\" and umdong like \"" + umdong + "\") u inner join CONSUMPTION c on u.code = c.code where (date_format(date,'%Y')='" + year + "') and (u.code=" + code + " or u.detail='" + detail + "' or u.number= " + number + " or u.meter_num='" + meter_num + "' or " + allnull + ") group by u.code ,date_format(date,'%Y-%m')) a group by code;";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);

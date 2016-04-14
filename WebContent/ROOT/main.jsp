@@ -19,8 +19,11 @@
 		}] 
 	}'>
 </script>
+
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="googlemap.js"></script>
+
 <jsp:useBean id="DongInfo" class="sclab.db.DongInfo" />
 <jsp:useBean id="DongInfoCtrl" class="sclab.db.DongInfoCtrl" />
 <jsp:useBean id="SummaryReport" class="sclab.db.SummaryReport" />
