@@ -979,7 +979,7 @@ function codeAddress() {
 				
 				// Locate to map
 				globalMap.setCenter( centerPosition );
-				globalMap.setOptions({ 'zoom' : 14 });
+				globalMap.setOptions({ 'zoom' : 15 });
 			}
 			//그 외의 지명일 경우 마커를 생성한다.
 			else {
@@ -994,7 +994,7 @@ function codeAddress() {
 						"http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
 						new google.maps.Size(40, 37), new google.maps.Point(0, 0),
 						new google.maps.Point(12, 35));
-				var marker = new google.maps.Marker({
+				searchMarker = new google.maps.Marker({
 					title : "",
 					position : results[0].geometry.location,
 					draggable : false,
@@ -1004,7 +1004,7 @@ function codeAddress() {
 				});
 				// Locate to map
 				globalMap.setCenter(results[0].geometry.location);
-				globalMap.setOptions({ 'zoom' : 14 });
+				globalMap.setOptions({ 'zoom' : 15 });
 			}
 			
 
