@@ -124,6 +124,7 @@ table.reportTable tbody td {
    padding: 4px;
    background-color: #FFF;
    vertical-align: top;
+   white-space: nowrap;
 }
 table.reportTable tbody tr.odd td {
    background-color:#F0F0F6;
@@ -160,6 +161,7 @@ table.AnalysisTable tbody td {
    padding: 4px;
    background-color: #FFF;
    vertical-align: top;
+   white-space: nowrap;
 }
 table.AnalysisTable tbody tr.odd td {
    background-color:#F0F0F6;

@@ -185,20 +185,7 @@
 		<div class="freeze_info" id="freeze_info"></div>
 	</div>
 
-	<div class="info_service" id="info_service">
-		<div class="info_leak" id="info_leak">
-			<div class="leak_text" id="leak_text"></div>
-			<div class="leak_graph" id="leak_graph">
-			</div>
-		</div>
-		<div class="info_absence" id="info_absence">
-			<div class="absence_text" id="absence_text"></div>
-			<div class="absence_graph" id="absence_graph"></div>
-		</div>
-		<div class="info_freezed" id="info_freezed">
-			<div class="freeze_text" id="freeze_text"></div>
-			<div class="freeze_graph" id="freeze_graph"></div>
-		</div>
+	<div class="info_service" id="info_service" style="width:100%; height:100%">
 	</div>
 </div>
 
