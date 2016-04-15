@@ -116,15 +116,15 @@
 						<li role="presentation">
 							<a href="main.jsp?MENU_NUM=1"><span>REPORT</span></a>
 						</li>
-						<!--li role="presentation">
-							<a href="main.jsp?MENU_NUM=2"><span>ALERT</span></a>
+						<li role="presentation">
+							<a href="main.jsp?MENU_NUM=2"><span>ANALYSIS</span></a>
 						</li>
 						<li role="presentation">
-							<a href="main.jsp?MENU_NUM=3"><span>SERVICE</span></a-->
+							<a href="main.jsp?MENU_NUM=3"><span>RANKING</span></a>
 						</li>
-						<li role="presentation">
+						<!-- <li role="presentation">
 							<a href="main.jsp?MENU_NUM=4"><span>ANALYSIS</span></a>
-						</li>
+						</li> -->
 					</ul>
 					<ul class="main_logo_list">
 						<img src="img/istec.jpg" class="logo_istec">
@@ -150,8 +150,11 @@
 						case 1:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
 							break;
-						case 4:
+						case 2:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "analysis.jsp");
+							break;
+						case 3:
+							pageContext.setAttribute("MAIN_CONTENTS_PATH", "dashboard.jsp");
 							break;
 						default:
 							pageContext.setAttribute("MAIN_CONTENTS_PATH", "map_page.jsp");
