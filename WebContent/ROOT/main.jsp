@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/headerCSS.css">
+<link rel="stylesheet" type="text/css" href="css/header.css">
 <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 <link rel="stylesheet" type="text/css" href="css/reportpage.css">
 <link rel="stylesheet" type="text/css" href="css/dashboard_page.css">
@@ -105,15 +105,10 @@
 		<!--헤더 태그-->
 		<div id="main_header">
 			<nav class="info_r">
+			
 				<!--title-->
 				<h1>WATER FOOTPRINTS VISUALIZING WEB</h1>
-				<!--메뉴 태그-->
-				<div class="info_r_list">
-					<a href="#" class="info_r_ADMIN">ADMIN</a>
-					<a href="#"	class="info_r_LOGOUT">LOGOUT</a>
-					<a href="#"	class="info_r_SETTING">SETTINGS</a>
-					<a href="#"	class="info_r_HELP">HELP</a>
-				</div>
+				
 			</nav>
 			<div class="main_title">
 				<nav class="main_menu">
@@ -134,45 +129,41 @@
 							<a href="main.jsp?MENU_NUM=4"><span>ANALYSIS</span></a>
 						</li> -->
 					</ul>
-					<ul class="main_logo_list">
-						<img src="img/istec.jpg" class="logo_istec">
-						<img src="img/sclab.jpg" class="logo_sclab">
-						<img src="img/inu.jpg" class="logo_inu">
-					</ul>
 				</nav>
 			</div>	
 		</div>
 		<!--본문-->
 		<div id="main_content">
-			<div id="included_contents"> 
-				<%
-					int num = 0;
-					
-					try {
-						num = Integer.parseInt( request.getParameter("MENU_NUM") );
-					}
-					catch(Exception e) {}
-					
-					switch(num)
-					{
-						case 1:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
-							break;
-						case 2:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "analysis.jsp");
-							break;
-						case 3:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "dashboard.jsp");
-							break;
-						default:
-							pageContext.setAttribute("MAIN_CONTENTS_PATH", "map_page.jsp");
-							break;
-					}
-				%>
+			<%
+				int num = 0;
 				
-				<jsp:include page="${MAIN_CONTENTS_PATH}" />
-			</div>
+				try {
+					num = Integer.parseInt( request.getParameter("MENU_NUM") );
+				}
+				catch(Exception e) {}
+				
+				switch(num)
+				{
+					case 1:
+						pageContext.setAttribute("MAIN_CONTENTS_PATH", "report_page.jsp");
+						break;
+					case 2:
+						pageContext.setAttribute("MAIN_CONTENTS_PATH", "analysis.jsp");
+						break;
+					case 3:
+						pageContext.setAttribute("MAIN_CONTENTS_PATH", "dashboard.jsp");
+						break;
+					default:
+						pageContext.setAttribute("MAIN_CONTENTS_PATH", "map_page.jsp");
+						break;
+				}
+			%>
+			
+			<jsp:include page="${MAIN_CONTENTS_PATH}" />
 		</div>
+		
+		
+		
 		<!--footer-->
 		<div id="footer">
 			<a href="https://sites.google.com/site/uisclab" target="_blank">©ScLab. All rights reserved.</a>

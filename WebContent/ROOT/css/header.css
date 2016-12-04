@@ -50,10 +50,7 @@ input[type="text"]{
 
 /*main page*/
 .wrapper {
-	top: 0; left: 0;
-	background-color: #2c6965;
-	margin: 0 auto;
-	width: 90%;
+	background-color: #04474E;
 	height: 100%;
 	/*min-width: 970px;*/
 }

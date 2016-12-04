@@ -46,8 +46,12 @@ function initialize(x, y) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 
-	globalMap = new google.maps.Map(document.getElementById("map_canvas"),
-			myOptions);
+	globalMap = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+//    var map = new google.maps.Map(document.getElementById('map_canvas'), {
+//        center: {lat: -34.397, lng: 150.644},
+//        scrollwheel: false,
+//        zoom: 8
+//      });
 	
 	//Create Entire Markers And Show all sign of abnormal dongs.
 	createAbnormalDongmarkers();

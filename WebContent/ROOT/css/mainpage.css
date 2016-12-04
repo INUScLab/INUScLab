@@ -1,54 +1,38 @@
+html , body {
+	height: 99.7%;
+	margin: 0;
+	padding: 0;
+}
+
+.container{
+	padding: 0 0 0 300px; /*ì™¼ìª½ ì¹¼ëŸ¼ ì˜ì—­ì„ í™•ë³´í•˜ê¸° ìœ„í•œ íŒ¨ë”© */
+}
+
 /*main content*/
 #main_content {
-	top: 75px; left: 0;
-	margin-top: 5px;
+	top: 75px; 
 	position: relative;
-	width: 100%;
 	height: 85%;
 	background-color: #E6E6E6;
 }
 
-#main_content .left_section_box {
-	border: thin solid black;
-	position: absolute;
-	top: 0.5%; left: 0;
-	width: 200px;
-	height: 99%;
-	background-color: #ffffff;
-	z-index:1;
-}
-
-.left_section_box .graph_section_box {
-	position: absolute;
-	bottom: 0; left: 0;
-	width: 100%;
-	height: 30%;
-}
-
-.graph_section_box .graph {
-	text-align: center;
-	vertical-align : middle;
-}
-
 /* initialize */
 .left_section_box_init{
-	position: absolute;
-	top: 0.5%; left: 0;
+	float:left;
 	width: 300px;
+	margin-right:-300px;
+	position:relative;
+	left:-300px;
 	height: 99%;
 	background-color: #ffffff;
-	z-index:50;
 }
 
 .init_info{
 	height: 14%;
 	border: thin solid black;
-	margin-bottom: 1%;
 }
 
 .init_info_sub {
-	/* margin-top: 5%;
-	margin-bottom: 10px; */
 	overflow: hidden;
 }
 
@@ -73,12 +57,13 @@
 
 /*temp*/
 #main_content .left_section_box_report {
-	position: absolute;
-	top: 0.5%; left: 0;
+	float:left;
 	width: 300px;
+	margin-right:-300px;
+	position:relative;
+	left:-300px;
 	height: 99%;
 	background-color: #ffffff;
-	z-index:2;
 }
 
 .left_section_box_report .info_date {
@@ -213,67 +198,21 @@
 	margin-bottom: 5px;
 }
 
-/*temp*/
-
-/*tree part*/
-.left_section_box .tree_section_box {
-	position: absolute;
-	top: 0; left: 0;
-	overflow-y: auto;
-	width: 100%;
-	height: 70%;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 25px;
-	color: #666;
-	white-space: nowrap;
-	text-align: left;
-}
-
-.tree_section_box .tree{
-	position: absolute;
-	top: 0; left: 0;
-	padding: 10px 10px 10px 10px;
-}
-.tree_section_box img {
-	border: 0px;
-	vertical-align: middle;
-}
-.tree_section_box a {
-	color: #333;
-	text-decoration: none;
-}
-.tree_section_box a.node, .tree_section_box a.nodeSel {
-	white-space: nowrap;
-	padding: 1px 2px 1px 2px;
-}
-.tree_section_box a.node:hover, .tree_section_box a.nodeSel:hover {
-	color: #333;
-	text-decoration: underline;
-}
-.tree_section_box a.nodeSel {
-	background-color: #c0d2ec;
-}
-.tree_section_box .clip {
-	overflow: hidden;
-}
-
 /* map part*/
-#include_contents{
-	width:100%;
-	margin:0 auto;
-	top: 0; left: 0;
-	width: 99%;
-	height: 100%;
 
-}
 #main_content .map_section_box {
-	border: thin solid black;
-	position: absolute;
-	top: 0.5%; right:5%; left:303px;
-	width: 80%;
+	float:right;
+	width: 100%;
 	height: 99%;
-	margin-right:5%;
 	background-color: #ffffff;
+}
+
+#map_canvas {
+	width:79%;
+	height:100%;
+	background-color: #ffffff
+	display:block;
+	
 }
 
 /* footer*/
@@ -285,11 +224,7 @@
 	color: white;
 }
 
-html, body {
-	height: 99.7%;
-	margin: 0;
-	padding: 0;
-}
+
 .map_controll_box{
 	height: 5%;
 	width: 100%;
